@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">    
+        <link rel="shortcut icon" href="{{asset('img/favicon.png')}}">
+  <!-- Icons -->
+        <link href="{{asset('vendors/css/font-awesome.min.css')}}" rel="stylesheet">
+        <link href="{{asset('vendors/css/simple-line-icons.min.css')}}" rel="stylesheet">
+  <!-- Main styles for this application -->
+        <link href="{{asset('css/style.css')}}" rel="stylesheet">
+        <title>
+            {% block title %}     
+                Admin - Cuckeat
+            {% endblock %}
+        </title>
+        {% block stylesheets %}
+        {% endblock %}
+        
+    </head>
+    <body class="{% block classBody %} {% endblock %}">
+     
+        
+         {% block header %}
+              {% include 'header.html.twig' %}
+         {% endblock %}
+        
+        {% block body %}{% endblock %}
+        
+        {% block sidebar %}
+        {% include 'sidebar.html.twig' %}
+        {% endblock %}
+        
+        {% block javascripts %}
+            <script src="{{asset('vendors/js/jquery.min.js')}}"></script>
+            <script src="{{asset('vendors/js/popper.min.js')}}"></script>
+            <script src="{{asset('vendors/js/bootstrap.min.js')}}"></script>
+        {% endblock %}
+        
+        {% block footer %}
+            {% include 'footer.html.twig' %}
+        {% endblock %}
+       
+    </body>
+    
+    {%block modals %}
+    {%endblock %}
+    
+</html>

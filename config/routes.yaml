@@ -1,0 +1,7 @@
+adminLogin:
+    path: /admin/login
+    controller: App\Controller\AdminController::login
+
+dashboard:
+    path: /admin/dashboard
+    controller: App\Controller\AdminController::index
