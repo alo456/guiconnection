@@ -4,7 +4,7 @@ adminLogin:
 
 dashboard:
     path: /admin/dashboard
-    controller: App\Controller\AdminController::index
+    controller: App\Controller\AdminController::dashboard
 
 menuCategory:
     path: /admin/menu/category
@@ -18,10 +18,11 @@ menuProduct:
     path: /admin/menu/product
     controller: App\Controller\AdminController::menuProduct
     
-POSAccsess:
+POSAccess:
     path: /admin/pos/access
     controller: App\Controller\AdminController::POSAccess
   
 POSRecord:
     path: /admin/pos/record
-    controller: App\Controller\AdminController::POSRecord        
+    controller: App\Controller\AdminController::POSRecord 
+

@@ -68,12 +68,12 @@ class AdminController extends Controller
         return $response;
 //        
     }
-    public function index(Request $request){
+    public function dashboard(Request $request){
 //        var_dump($request->cookies->get('TOKEN'));
-//         $cookie = Cookie::fromString($request->cookies->get('TOKEN'));
-//         $response = $this->render("index.html");
-//         $response->headers->setCookie($cookie);
-         return $this->render('index.html.twig');
+         $cookie = Cookie::fromString($request->cookies->get('TOKEN'));
+         $response = $this->render("dashboard.html.twig");
+         $response->headers->setCookie($cookie);
+         return $this->render('dashboard.html.twig');
     }
     
     public function menuCategory(Request $request){
