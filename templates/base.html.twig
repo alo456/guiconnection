@@ -25,19 +25,24 @@
          {% block header %}
               {% include 'header.html.twig' %}
          {% endblock %}
+        <div class="app-body">
+            {% block body %}
+            {% endblock %}
+            
+            {% block sidebar %}
+            {% include 'sidebar.html.twig' %}
+            {% endblock %}
         
-        {% block body %}{% endblock %}
-        
-        {% block sidebar %}
-        {% include 'sidebar.html.twig' %}
-        {% endblock %}
-        
+        </div>
         {% block javascripts %}
-            <script src="{{asset('vendors/js/jquery.min.js')}}"></script>
-            <script src="{{asset('vendors/js/popper.min.js')}}"></script>
-            <script src="{{asset('vendors/js/bootstrap.min.js')}}"></script>
+            
         {% endblock %}
-        
+        <script src="{{asset('vendors/js/jquery.min.js')}}"></script>
+        <script src="{{asset('vendors/js/popper.min.js')}}"></script>
+        <script src="{{asset('vendors/js/bootstrap.min.js')}}"></script>
+        <script src="{{asset('vendors/js/pace.min.js')}}"></script>
+        <script src="{{asset('vendors/js/Chart.min.js')}}"></script>
+        <script src="{{asset('js/views/shared.js')}}"></script>
         {% block footer %}
             {% include 'footer.html.twig' %}
         {% endblock %}

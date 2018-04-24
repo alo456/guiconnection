@@ -1,0 +1,132 @@
+{% extends 'base.html.twig' %}
+{% set title = 'Record'%}
+{% block classBody 'app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden aside-menu-off-canvas' %}
+{% block body %}
+<main class="main">   
+    <div class="animated fadeIn">
+        <!-- Page Header-->
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h3 class="display-4">Empleados</h3>
+                <p class="lead">Genera cuentas de usuario para que tus empleados puedan acceder al sistema, recuerda que solo
+                pueden ser de dos tipos:cajero o entregas. Al ingresar el nombre del empleado ese sera su nombre de usuario para acceder
+                al sistema asi que te recomendamos escribas solo su primer nombre y apellido en minusculas. </p>
+            </div>
+        </div>
+    <!-- PRIMERA CARTA -->
+        <div class="row">
+            <div class="col-md-12 mb-4">
+                <div class="row">
+                    <div class="col-sm-5">
+                      <h3 class="card-title clearfix mb-0"> </h3>
+                    </div>
+                </div>
+                  <!-- TABLAS -->
+                <table class= "table table-responsive-sm table-hover table-outline mb-0 ">
+                    <!-- TITULOS DE TABLA -->
+                    <thead class="thead-light ">
+                        <tr>
+                            <th>#</th>
+                            <th>Puesto</th>
+                            <th>Nombre de empleado</th>
+                            <th>Contraseña</th>
+                            <th>Añadir</th>
+                            <th>Eliminar</th>
+                        </tr>
+                    </thead>
+                    <!-- tbody de tabla -->
+                    <tbody>
+                    <!-- FILA 1 -->
+                        <tr> <!-- etiqueta tr inicia la fila -->
+                        <!-- # -->
+                            <td> 1 </td>
+                          <!-- tipo de empleados -->
+                            <td> <!-- Inicia las opciones -->
+                                <select class="form-control form-control-sm">
+                                    <option selected>Puesto</option>
+                                    <option value="1">Cajero</option>
+                                    <option value="2">Entregas</option>
+                            </td> <!-- Termina las opciones -->
+                            <!-- nombre empleado -->
+                            <!-- form-control-auto se adapta al tamaño de la oracion mas grande -->
+                            <td>
+                                <input type="text" class="form-control" id=""  placeholder="Nombre de usuario">
+                            </td>
+                            <!-- contraseña  -->
+                            <td>
+                                <input type="password" class="form-control" id=""  placeholder="Contraseña de usuario">
+                            </td>
+                            <!-- guardar cambios -->
+                            <td>
+                                <a>
+                                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalconfirmarempleado">
+                                    Añadir
+                                    </button>
+                                </a>
+                            </td>
+                            <!-- eliminar empleado -->
+                            <td>
+                                <a>
+                                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modaleliminarempleado">
+                                    Eliminar
+                                    </button>
+                                </a>
+                            </td>
+
+                        </tr> <!-- Termina la fila 1 -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
+{% block modals %}
+<!-- INICIO MODAL CONFIRMAR EMPLEADO-->
+<!-- Modal --> <!-- El id que recibe id="modal#" tiene que ser el mismo que se pone en el buton en
+  data-target ="#modal#" -->
+<div class="modal fade" id="modalconfirmarempleado" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modalconfirmardiaespecial">Confirmación de empleado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                Confirma la configuración que has realizado, si no estas seguro oprime cancelar o cierra esta ventana.
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary">Confirmar cambios</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- FIN MODAL -->
+<!-- INICIO MODAL ELIMIANR EMPLEADO-->
+<!-- Modal --> <!-- El id que recibe id="modal#" tiene que ser el mismo que se pone en el buton en
+data-target ="#modal#" -->
+<div class="modal fade" id="modaleliminarempleado" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modaleliminarempleado">Confirmación de eliminación de empleado</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+            ¿Esta seguro de eliminar a este empleado?, si no estas seguro oprime cancelar o cierra esta ventana.
+            </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancelar</button>
+              <button type="button" class="btn btn-primary">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- FIN MODAL -->
+
+{% endblock %}

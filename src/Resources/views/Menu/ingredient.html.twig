@@ -1,0 +1,84 @@
+{% extends 'base.html.twig' %}
+{% block javascripts %}
+<script>
+  loadCSS("{{asset('vendors/css/daterangepicker.min.css')}}");
+  loadCSS("{{asset('vendors/css/select2.min.css')}}");
+        var requireJS = [
+            "{{asset('vendors/js/jquery.maskedinput.min.js')}}",
+            "{{asset('vendors/js/moment.min.js')}}",
+            "{{asset('vendors/js/select2.min.js')}}",
+            "{{asset('vendors/js/daterangepicker.min.js')}}"
+        ];
+        loadJS(requireJS, "{{asset('js/views/advanced-forms.js')}}");
+</script>
+{% endblock %}
+{% set title = 'Ingredient'%}
+{% block classBody 'app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden aside-menu-off-canvas' %}
+{% block body %}
+<main class="main"> 
+    {% include 'header_main.html.twig' %}
+    <div class="animated fadeIn">
+        <!-- Page Header-->
+        <div class="jumbotron jumbotron-fluid">
+            <div class="container">
+                <h3 class="display-4">Vamos a crear los ingredientes que utilizan tus productos</h3>
+                <p class="lead">Esto te ayudara a llevar un mejor control de tus gastos</p>
+            </div>
+        </div>
+        <!-- COMFIGURACION DE CATEGORIAS   -->
+        <div class="card">
+            <!-- TITULO -->
+            <div class="card-header">
+                <h4 class="card-title">Ingredientes</h4>
+            </div>
+            <div class="card-body">
+                <form>
+                    <div class="form-group">
+                        <div class="row">
+                            <div class="col-l-12 col-md-12 col-xs-12 ml-auto ">
+                                <fieldset class="form-group">
+                                    <label>Selecciona un ingrediente</label>
+                                    <select id="select2-2" class="form-control select2-multiple" multiple >
+                                        <option>Option 1</option>
+                                        <option>Option 2</option>
+                                        <option>Option 3</option>
+                                        <option>Option 4</option>
+                                        <option>Option 5</option>
+                                    </select>
+                                </fieldset>
+                                <label >Si el ingrediente tiene un nombre diferente para ti, puedes llamarlo como tu lo conoces</label>
+                                <input type="text" class="form-control" id=""  placeholder="Alias">
+                                <label >¿Es ingrediente extra de algun producto? </label>
+                                <select type="text" class="form-control" id=""  placeholder="disabled">
+                                    <option>No</option>
+                                    <option>Si</option>
+                                </select>
+                                <label >Unidad</label>
+                                <select type="text" class="form-control" id=""  placeholder="disabled">
+                                    <option>Escoge la unidad</option>
+                                    <option>Gramos</option>
+                                    <option>Cucharaditas</option>
+                                    <option>Pieza</option>
+                                    <option>Mililitros</option>
+                                </select>
+                                <label >Cantidad</label>
+                                <select type="text" class="form-control" id=""  placeholder="disabled">
+                                    <option>Escoge la cantidad</option>
+                                    <option>1</option>
+                                    <option>2</option>
+                                    <option>3</option>
+                                    <option>4</option>
+                                </select>
+                                <label >Costo por cantidad </label>
+                                <input type="number" class="form-control" id="disabled-input"  placeholder="">
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <button  class="btn btn-outline-primary col-auto">Guardar</button>
+                <button  class="btn btn-outline-primary col-auto">Cancelar</button>
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}
