@@ -8,23 +8,19 @@ dashboard:
 
 menuCategory:
     path: /admin/menu/category
-    controller: App\Controller\AdminController::menuCategory
+    controller: App\Controller\MenuController::category
     
 menuIngredient:
     path: /admin/menu/ingredient
-    controller: App\Controller\AdminController::menuIngredient
+    controller: App\Controller\MenuController::ingredient
     
 menuProduct:
     path: /admin/menu/product
-    controller: App\Controller\AdminController::menuProduct
+    controller: App\Controller\MenuController::product
     
 POSAccess:
     path: /admin/pos/access
-    controller: App\Controller\AdminController::POSAccess
-  
-POSRecord:
-    path: /admin/pos/record
-    controller: App\Controller\AdminController::POSRecord 
+    controller: App\Controller\POSController::access
 
 personal:
     path: /admin/personal
@@ -33,3 +29,51 @@ personal:
 settings:
     path: /admin/settings
     controller: App\Controller\AdminController::settings
+    
+income:
+    path: /admin/data/income
+    controller: App\Controller\ReportsController\::income
+    
+session:
+    path: /admin/data/session
+    controller: App\Controller\ReportsController\::session
+    
+dataProduct:
+    path: /admin/data/product
+    controller: App\Controller\ReportsController\::product
+    
+account:
+    path: /admin/account
+    controller: App\Controller\AdminController::account
+    
+activity:
+    path: /admin/activity
+    controller: App\Controller\AdminController::activity
+    
+balance:
+    path: /admin/balance
+    controller: App\Controller\AdminController::balance
+    
+creator:
+    path: /admin/appcreator
+    controller: App\Controller\AppCreatorController::dragdrop
+
+aboutUs:
+    path: /admin/about/us
+    controller: App\Controller\AboutController::aboutUs
+    
+privacy:
+    path: /admin/about/privacynterms
+    controller: App\Controller\AboutController::privavyNTerms
+    
+help:
+    path: /admin/about/help
+    controller: App\Controller\AboutController::help
+    
+tutorial:
+    path: /admin/about/tutorial
+    controller: App\Controller\AboutController::tutorial
+    
+    
+    
+    
