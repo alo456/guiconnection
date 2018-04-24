@@ -12,8 +12,6 @@ use Unirest\Request\Body;
 class AdminController extends Controller
 {
     public function login(Request $request){
-        
-        
         $data = array();
          $form = $this->createFormBuilder($data)
         ->add('username', TextType::class, array ('label' => false,
@@ -53,7 +51,7 @@ class AdminController extends Controller
             //RequestAPI::cookie($cookie);
             $response->headers->setCookie($cookie);
             $response->send();
-            var_dump($cookie);
+            //var_dump($cookie);
             return $this->redirectToRoute('dashboard', array(
                                                 'TOKEN' => $cookie
             )); 
@@ -63,16 +61,17 @@ class AdminController extends Controller
     }
 
     if($request->cookies->has('TOKEN')){
-        //var_dump($request);
+            var_dump($request->cookies->get('TOKEN'));
+            //return null;
            return $this->redirectToRoute('dashboard');
     }
         return $response;
 //        
     }
     public function index(Request $request){
-        var_dump($request->cookies->get('TOKEN'));
+        //var_dump($request->cookies->get('TOKEN'));
          $cookie = Cookie::fromString($request->cookies->get('TOKEN'));
-         $response = $this->render("index.html");
+         $response = $this->render("dashboard.html.twig");
          $response->headers->setCookie($cookie);
          return $response;
     }
