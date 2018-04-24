@@ -69,14 +69,52 @@ class AdminController extends Controller
 //        
     }
     public function index(Request $request){
-        //var_dump($request->cookies->get('TOKEN'));
-         $cookie = Cookie::fromString($request->cookies->get('TOKEN'));
-         $response = $this->render("dashboard.html.twig");
-         $response->headers->setCookie($cookie);
-         return $response;
+//        var_dump($request->cookies->get('TOKEN'));
+//         $cookie = Cookie::fromString($request->cookies->get('TOKEN'));
+//         $response = $this->render("index.html");
+//         $response->headers->setCookie($cookie);
+         return $this->render('index.html.twig');
     }
+    
+    public function menuCategory(Request $request){
+        
+        return $this->render('Menu/category.html.twig');
+        $data = array();
+        $cafeterias = array();
+        //Get all menus from cafeteria for add a subcategory
+        $headers = array('Accept' => 'application/json');
+        $data['cafeteria'] = $request->request->get('id_cafeteria');
+        $data['action'] = 'getMenus';
+        $responseAPI = RequestAPI::post('http://localhost/taiuniversityapi/public/admin/login',$headers,$body);
+        $body  = $responseAPI->body;
+        if($body->status == 'OK'){ 
+            $cafeterias = $body->message;
+        }else{
+            echo($body->message);
+        }
+        $body = Body::form($data);
+        
+        $response = $this->render('Menu/category.html.twig', array(
+                                        'cafeterias' => $cafeterias
+                                  ));
+        $response->headers->setCookie($cookie);
+        return $response;
+    }
+    
+    public function menuIngredient(){
+        return $this->render('Menu/ingredient.html.twig');
+    }
+    
+    public function menuProduct(){
+        return $this->render('Menu/product.html.twig');
+    }
+    
+    public function POSAccess(){
+        return $this->render('POS/access.html.twig');
+    }
+    
+    public function POSrecord(){
+        return $this->render('POS/record.html.twig');
+    }
+    
 }
-
-
-
-
