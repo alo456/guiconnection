@@ -70,10 +70,10 @@ class AdminController extends Controller
     }
     public function dashboard(Request $request){
 //        var_dump($request->cookies->get('TOKEN'));
-         $cookie = Cookie::fromString($request->cookies->get('TOKEN'));
-         $response = $this->render("dashboard.html.twig");
-         $response->headers->setCookie($cookie);
-         return $this->render('Administrator/dashboard.html.twig');
+//         $cookie = Cookie::fromString($request->cookies->get('TOKEN'));
+//         $response = $this->render("dashboard.html.twig");
+//         $response->headers->setCookie($cookie);
+         return $this->render('dashboard.html.twig');
     }
     
     public function personal(Request $request){
