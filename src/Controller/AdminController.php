@@ -73,55 +73,26 @@ class AdminController extends Controller
          $cookie = Cookie::fromString($request->cookies->get('TOKEN'));
          $response = $this->render("dashboard.html.twig");
          $response->headers->setCookie($cookie);
-         return $this->render('dashboard.html.twig');
+         return $this->render('Administrator/dashboard.html.twig');
     }
     
-    public function menuCategory(Request $request){
-        
-        return $this->render('Menu/category.html.twig');
-        $data = array();
-        $cafeterias = array();
-        //Get all menus from cafeteria for add a subcategory
-        $headers = array('Accept' => 'application/json');
-        $data['cafeteria'] = $request->request->get('id_cafeteria');
-        $data['action'] = 'getMenus';
-        $responseAPI = RequestAPI::post('http://localhost/taiuniversityapi/public/admin/login',$headers,$body);
-        $body  = $responseAPI->body;
-        if($body->status == 'OK'){ 
-            $cafeterias = $body->message;
-        }else{
-            echo($body->message);
-        }
-        $body = Body::form($data);
-        
-        $response = $this->render('Menu/category.html.twig', array(
-                                        'cafeterias' => $cafeterias
-                                  ));
-        $response->headers->setCookie($cookie);
-        return $response;
+    public function personal(Request $request){
+        return $this->render('Administrator/personal.html.twig');
     }
     
-    public function menuIngredient(){
-        return $this->render('Menu/ingredient.html.twig');
+    public function settings(Request $request){
+        return $this->render('Administrator/settings.html.twig');
     }
     
-    public function menuProduct(){
-        return $this->render('Menu/product.html.twig');
+    public function activity(Request $request){
+        return $this->render('Administrator/activity.html.twig');
     }
     
-    public function POSAccess(){
-        return $this->render('POS/access.html.twig');
+    public function balance(Request $request){
+        return $this->render('Administrator/balance.html.twig');
     }
     
-    public function POSrecord(){
-        return $this->render('POS/record.html.twig');
-    }
-    
-    public function personal(){
-        
-    }
-    
-    public function settings(){
-        
+    public function account(Request $request){
+        return $this->render('Administrator/account.html.twig');
     }
 }
