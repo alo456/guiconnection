@@ -11,11 +11,11 @@ use Unirest\Request as RequestAPI;
 use Unirest\Request\Body;
 class AboutController extends Controller
 {
-    public function aboutus(Request $request){
+    public function aboutUs(Request $request){
         return $this->render('About/aboutus.html.twig');
     }
     
-    public function privacynterms(Request $request){
+    public function privacyNTerms(Request $request){
         return $this->render('About/privacynterms.html.twig');
     }
     
