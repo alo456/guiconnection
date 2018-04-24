@@ -26,3 +26,10 @@ POSRecord:
     path: /admin/pos/record
     controller: App\Controller\AdminController::POSRecord 
 
+personal:
+    path: /admin/personal
+    controller: App\Controller\AdminController::personal
+    
+settings:
+    path: /admin/settings
+    controller: App\Controller\AdminController::settings

@@ -117,4 +117,11 @@ class AdminController extends Controller
         return $this->render('POS/record.html.twig');
     }
     
+    public function personal(){
+        
+    }
+    
+    public function settings(){
+        
+    }
 }
