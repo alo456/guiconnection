@@ -1,21 +1,9 @@
 {% extends 'base.html.twig' %}
-{% block javascripts %}
-<script>
-  loadCSS("{{asset('vendors/css/daterangepicker.min.css')}}");
-  loadCSS("{{asset('vendors/css/select2.min.css')}}");
-        var requireJS = [
-            "{{asset('vendors/js/jquery.maskedinput.min.js')}}",
-            "{{asset('vendors/js/moment.min.js')}}",
-            "{{asset('vendors/js/select2.min.js')}}",
-            "{{asset('vendors/js/daterangepicker.min.js')}}"
-        ];
-        loadJS(requireJS, "{{asset('js/views/advanced-forms.js')}}");
-</script>
-{% endblock %}
 {% set title = 'Product'%}
 {% block classBody 'app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden aside-menu-off-canvas' %}
 {% block body %}
 <main class="main">   
+    {% include 'header_main.html.twig' %}
     <div class="animated fadeIn">
         <!-- Page Header-->
         <div class="jumbotron jumbotron-fluid">
@@ -63,4 +51,17 @@
         </div>
     </div>
 </main>
+{% endblock %}
+{% block javascripts %}
+<script>
+  loadCSS("{{asset('vendors/css/daterangepicker.min.css')}}");
+  loadCSS("{{asset('vendors/css/select2.min.css')}}");
+        var requireJS = [
+            "{{asset('vendors/js/jquery.maskedinput.min.js')}}",
+            "{{asset('vendors/js/moment.min.js')}}",
+            "{{asset('vendors/js/select2.min.js')}}",
+            "{{asset('vendors/js/daterangepicker.min.js')}}"
+        ];
+        loadJS(requireJS, "{{asset('js/views/advanced-forms.js')}}");
+</script>
 {% endblock %}
