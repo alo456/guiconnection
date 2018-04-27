@@ -1,0 +1,100 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    Activity
+{% endblock %}
+{% block classBody 'app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden aside-menu-off-canvas' %}
+{% block body %}
+<main class="main">
+    {% include 'header_main.html.twig' %}
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <!-- Page Header-->
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                    <h3 class="display-4">Movimientos y mas</h3>
+                    <p class="lead">Revisa tu actividad con Cuckeat</p>
+                </div>
+            </div>
+
+            <div class="row">
+
+                <!-- TABLA DE MOVIMIENTOS  -->
+                <div class="col-lg-12 col-sm-12">
+                    <div class="card">
+                        <div class="card-header">
+                            <strong>Movimientos</strong>
+                        </div>
+                        <div class="card-body">
+                            <table class="table table-responsive-sm table-bordered table-striped table-sm">
+                                <thead>
+                                    <tr>
+                                        <th>Sesion</th>
+                                        <th>Fecha</th>
+                                        <th>POS/APP</th>
+                                        <th>Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>S01032018</td>
+                                        <td>2012/01/01</td>
+                                        <td>POS</td>
+                                        <td>
+                                            <span class="badge badge-success">Realizado</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>S01032018</td>
+                                        <td>2012/02/01</td>
+                                        <td>APP</td>
+                                        <td>
+                                            <span class="badge badge-warning">Pendiente</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>S01032018</td>
+                                        <td>2012/02/01</td>
+                                        <td>APP</td>
+                                        <td>
+                                            <span class="badge badge-success">Realizado</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>S01032018</td>
+                                        <td>2012/03/01</td>
+                                        <td>POS</td>
+                                        <td>
+                                            <span class="badge badge-warning">Pendiente</span>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>S01032018</td>
+                                        <td>2012/01/21</td>
+                                        <td>APP</td>
+                                        <td>
+                                            <span class="badge badge-success">Realizado</span>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                            <nav>
+                                <ul class="pagination">
+                                    <li class="page-item"><a class="page-link" href="#">Atras</a></li>
+                                    <li class="page-item active">
+                                        <a class="page-link" href="#">1</a>
+                                    </li>
+                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">4</a></li>
+                                    <li class="page-item"><a class="page-link" href="#">Siguiente</a></li>
+                                </ul>
+                            </nav>
+                        </div>
+                    </div>
+                </div>
+                <!-- FIN TABLA DE MOVIMIENTOS  -->
+            </div>
+        </div>
+    </div>
+</main>
+{% endblock %}

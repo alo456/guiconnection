@@ -3,50 +3,26 @@
 {% block classBody 'app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden aside-menu-off-canvas' %}
 {% block body %}
 <main class="main">   
-    {% include 'header_main.html.twig' %}
-    <div class="animated fadeIn">
-        <!-- Page Header-->
-        <div class="jumbotron jumbotron-fluid">
-            <div class="container">
-                <h3 class="display-4">Vamos a crear los productos de tu menu</h3>
-                <p class="lead">Crea tus productos</p>
+    {% include 'header_cafeteria.html.twig' %}
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <!-- Page Header-->
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                    <h3 class="display-4">Vamos a crear los productos de tu menu</h3>
+                    <p class="lead">Crea tus productos</p>
+                </div>
             </div>
-        </div>
-        <!-- COMFIGURACION DE CATEGORIAS   -->
-        <div class="card">
-            <!-- TITULO -->
-            <div class="card-header">
-                <h4 class="card-title">Productos</h4>
-            </div>
-            <div class="card-body">
-                <form>
-                    <div class="form-group">
-                        <div class="row">
-                            <div class="col-l-12 col-md-12 col-xs-12 ml-auto ">
-                                <label >Nombre</label>
-                                <input type="text" class="form-control" id="cliente.categoria"  placeholder="[nombre.producto]">
-                                <label >Categoria</label>
-                                <select type="text" class="form-control" id="cliente.categoria"  placeholder="[Cliente.categoriapadre]">
-                                    <option>Selecciona una categoria</option>
-                                    <option>Categoria 1</option>
-                                    <option>Categoria 2</option>
-                                </select>
-                                <fieldset class="form-group">
-                                    <label>Ingredientes de tu producto</label>
-                                    <select id="select2-2" class="form-control select2-multiple" multiple>
-                                        <option>Option 1</option>
-                                        <option>Option 2</option>
-                                        <option>Option 3</option>
-                                        <option>Option 4</option>
-                                        <option>Option 5</option>
-                                    </select>
-                                </fieldset>
-                            </div>
-                        </div>
-                    </div>
-                </form>
-                <button  class="btn btn-outline-primary col-auto">Guardar</button>
-                <button  class="btn btn-outline-primary col-auto">Cancelar</button>
+            <!-- COMFIGURACION DE CATEGORIAS   -->
+            <div class="card">
+                <!-- TITULO -->
+                <div class="card-header">
+                    <h4 class="card-title">Productos</h4>
+                </div>
+                <div class="card-body">
+                   {{form_start (form) }}
+                    {{form_end (form) }}
+                </div>
             </div>
         </div>
     </div>

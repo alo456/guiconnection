@@ -3,466 +3,467 @@
 {% block classBody 'app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden aside-menu-off-canvas' %}
 {% block body %}
 <main class="main">
-{% include 'header_main.html.twig' %}
-<div class="animated fadeIn">
+    {% include 'header_main.html.twig' %}
+    <div class="container-fluid">
+    <div class="animated fadeIn">
 
-<!-- TARJETAS -->
-  <div class="row">
-<!-- 1ERA TARJETA -->
-    <div class="col-sm-6 col-lg-3">
-      <div class="card text-white bg-primary">
-        <div class="card-body pb-0">
-          <h4 class="mb-0">[#]</h4>
-          <p>Ventas en app</p>
-        </div>
-        <div class="chart-wrapper px-3" style="height:70px;">
-          <canvas id="card-chart1" class="chart" height="70"></canvas>
-        </div>
-      </div>
-    </div>
-    <!-- FIN 1 -->
-
-<!-- 2DA TARJETA -->
-    <div class="col-sm-6 col-lg-3">
-      <div class="card text-white bg-info">
-        <div class="card-body pb-0">
-          <h4 class="mb-0">[#]</h4>
-          <p>Ventas en POS</p>
-        </div>
-        <div class="chart-wrapper px-3" style="height:70px;">
-          <canvas id="card-chart2" class="chart" height="70"></canvas>
-        </div>
-      </div>
-    </div>
-    <!-- FIN 2 -->
-
-<!-- 3RA TARJETA -->
-    <div class="col-sm-6 col-lg-3">
-      <div class="card text-white bg-warning">
-        <div class="card-body pb-0">
-          <h4 class="mb-0">[#]</h4>
-          <p>Transacciones</p>
-        </div>
-        <div class="chart-wrapper" style="height:70px;">
-          <canvas id="card-chart3" class="chart" height="70"></canvas>
-        </div>
-      </div>
-    </div>
-    <!-- FIN 3 -->
-
-
-<!-- 4TA TARJETA -->
-    <div class="col-sm-6 col-lg-3">
-      <div class="card text-white bg-danger">
-        <div class="card-body pb-0">
-          <h4 class="mb-0">[#]</h4>
-          <p>Productos vendidos</p>
-        </div>
-        <div class="chart-wrapper px-3" style="height:70px;">
-          <canvas id="card-chart4" class="chart" height="70"></canvas>
-        </div>
-      </div>
-    </div>
-    <!-- FIN 4TA TARJETA -->
-  </div>
-  <!-- FIN TARJETAS -->
-
-
-<!-- GRAFICA PRODUCTOS MAS VENDIDOS -->
-  <div class="card">
-    <div class="card-body">
+    <!-- TARJETAS -->
       <div class="row">
-        <div class="col-sm-5">
-          <h3 class="card-title clearfix mb-0">Productos mas vendidos</h3>
-        </div>
-        <!--/.col-->
-        <div class="col-sm-7 hidden-sm-down">
-
-          <!-- DATARANGEPICKER -->
-          <div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar with button groups">
-            <div class="btn-group mr-3" data-toggle="buttons" aria-label="First group">
-              <fieldset class="form-group float-right">
-                <div class="input-group float-right" style="width:240px;">
-                  <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                  <input name="daterange2" class="form-control date-picker" type="text" />
-                </div>
-              </fieldset>
+    <!-- 1ERA TARJETA -->
+        <div class="col-sm-6 col-lg-3">
+          <div class="card text-white bg-primary">
+            <div class="card-body pb-0">
+              <h4 class="mb-0">[#]</h4>
+              <p>Ventas en app</p>
+            </div>
+            <div class="chart-wrapper px-3" style="height:70px;">
+              <canvas id="card-chart1" class="chart" height="70"></canvas>
             </div>
           </div>
-
         </div>
-        <!--/.col-->
-      </div>
-      <!--/.row-->
-      <div class="chart-wrapper" style="height:300px;margin-top:40px;">
-        <!--<canvas id="main-chart" class="chart" height="300"></canvas> CHECAR JS-->
-      </div>
-    </div>
-    <div class="card-footer">
-      <ul>
-        <li>
-          <div class="text-muted">[Producto1]</div>
-          <strong>[#ventas]</strong>
-          <div class="progress progress-xs mt-2">
-            <div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+        <!-- FIN 1 -->
+
+    <!-- 2DA TARJETA -->
+        <div class="col-sm-6 col-lg-3">
+          <div class="card text-white bg-info">
+            <div class="card-body pb-0">
+              <h4 class="mb-0">[#]</h4>
+              <p>Ventas en POS</p>
+            </div>
+            <div class="chart-wrapper px-3" style="height:70px;">
+              <canvas id="card-chart2" class="chart" height="70"></canvas>
+            </div>
           </div>
-        </li>
-        <li class="hidden-sm-down">
-          <div class="text-muted">[Producto2]</div>
-          <strong>[#ventas]</strong>
-          <div class="progress progress-xs mt-2">
-            <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+        </div>
+        <!-- FIN 2 -->
+
+    <!-- 3RA TARJETA -->
+        <div class="col-sm-6 col-lg-3">
+          <div class="card text-white bg-warning">
+            <div class="card-body pb-0">
+              <h4 class="mb-0">[#]</h4>
+              <p>Transacciones</p>
+            </div>
+            <div class="chart-wrapper" style="height:70px;">
+              <canvas id="card-chart3" class="chart" height="70"></canvas>
+            </div>
           </div>
-        </li>
-        <li>
-          <div class="text-muted">[Producto3]</div>
-          <strong>[#ventas]</strong>
-          <div class="progress progress-xs mt-2">
-            <div class="progress-bar bg-warning" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
-          </div>
-        </li>
-        <li class="hidden-sm-down">
-          <div class="text-muted">[Producto4]</div>
-          <strong>[#ventas]</strong>
-          <div class="progress progress-xs mt-2">
-            <div class="progress-bar bg-danger" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
-          </div>
-        </li>
-        <li class="hidden-sm-down">
-          <div class="text-muted">[Producto5]</div>
-          <strong>[#ventas]</strong>
-          <div class="progress progress-xs mt-2">
-            <div class="progress-bar" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
-          </div>
-        </li>
-      </ul>
-    </div>
-  </div>
-  <!--FIN GRAFICA 1-->
+        </div>
+        <!-- FIN 3 -->
 
 
-<!-- DATOS DE TRAFICO Y VENTAS -->
-  <div class="row">
-    <div class="col-md-12">
+    <!-- 4TA TARJETA -->
+        <div class="col-sm-6 col-lg-3">
+          <div class="card text-white bg-danger">
+            <div class="card-body pb-0">
+              <h4 class="mb-0">[#]</h4>
+              <p>Productos vendidos</p>
+            </div>
+            <div class="chart-wrapper px-3" style="height:70px;">
+              <canvas id="card-chart4" class="chart" height="70"></canvas>
+            </div>
+          </div>
+        </div>
+        <!-- FIN 4TA TARJETA -->
+      </div>
+      <!-- FIN TARJETAS -->
+
+
+    <!-- GRAFICA PRODUCTOS MAS VENDIDOS -->
       <div class="card">
         <div class="card-body">
           <div class="row">
             <div class="col-sm-5">
-              <h3 class="card-title clearfix mb-0">Trafico &amp; Ventas</h3>
-            </div>
-            <div class="col-sm-7">
-              <fieldset class="form-group float-right">
-                <div class="input-group float-right" style="width:240px;">
-                  <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-                  <input name="daterange" class="form-control date-picker" type="text" />
-                </div>
-              </fieldset>
-            </div>
-          </div>
-          <hr class="m-0">
-          <div class="row">
-            <div class="col-sm-12 col-lg-4">
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="callout callout-info">
-                    <small class="text-muted">Nuevos clientes</small>
-                    <br>
-                    <strong class="h4">[#]</strong>
-                    <div class="chart-wrapper">
-                      <canvas id="sparkline-chart-1" width="100" height="30"></canvas>
-                    </div>
-                  </div>
-                </div>
-                <!--/.col-->
-                <div class="col-sm-6">
-                  <div class="callout callout-danger">
-                    <small class="text-muted">Clientes recurrentes</small>
-                    <br>
-                    <strong class="h4">[#]</strong>
-                    <div class="chart-wrapper">
-                      <canvas id="sparkline-chart-2" width="100" height="30"></canvas>
-                    </div>
-                  </div>
-                </div>
-                <!--/.col-->
-              </div>
-              <!--/.row-->
-              <hr class="mt-0">
-              <ul class="horizontal-bars">
-                <li>
-                  <div class="title">
-                    Menores de 18
-                  </div>
-                  <div class="bars">
-                    <div class="progress progress-xs">
-                      <div class="progress-bar bg-info" role="progressbar" style="width: 34%" aria-valuenow="34" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <div class="progress progress-xs">
-                      <div class="progress-bar bg-danger" role="progressbar" style="width: 78%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="title">
-                    Entre 18 y 25
-                  </div>
-                  <div class="bars">
-                    <div class="progress progress-xs">
-                      <div class="progress-bar bg-info" role="progressbar" style="width: 56%" aria-valuenow="56" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <div class="progress progress-xs">
-                      <div class="progress-bar bg-danger" role="progressbar" style="width: 94%" aria-valuenow="94" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="title">
-                    Mayores de 25
-                  </div>
-                  <div class="bars">
-                    <div class="progress progress-xs">
-                      <div class="progress-bar bg-info" role="progressbar" style="width: 12%" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <div class="progress progress-xs">
-                      <div class="progress-bar bg-danger" role="progressbar" style="width: 67%" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="title">
-                    Universitarios
-                  </div>
-                  <div class="bars">
-                    <div class="progress progress-xs">
-                      <div class="progress-bar bg-info" role="progressbar" style="width: 43%" aria-valuenow="43" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <div class="progress progress-xs">
-                      <div class="progress-bar bg-danger" role="progressbar" style="width: 91%" aria-valuenow="91" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="title">
-                    Administrativos
-                  </div>
-                  <div class="bars">
-                    <div class="progress progress-xs">
-                      <div class="progress-bar bg-info" role="progressbar" style="width: 22%" aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <div class="progress progress-xs">
-                      <div class="progress-bar bg-danger" role="progressbar" style="width: 73%" aria-valuenow="73" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <div class="title">
-                    Otros
-                  </div>
-                  <div class="bars">
-                    <div class="progress progress-xs">
-                      <div class="progress-bar bg-info" role="progressbar" style="width: 53%" aria-valuenow="53" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                    <div class="progress progress-xs">
-                      <div class="progress-bar bg-danger" role="progressbar" style="width: 82%" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                  </div>
-                </li>
-
-                <!-- 2DO BLOQUE -->
-                <li class="legend">
-                  <span class="badge badge-pill badge-info"></span>
-                  <small>Nuevos clientes</small> &nbsp;
-                  <span class="badge badge-pill badge-danger"></span>
-                  <small>Clientes recurrentes</small>
-                </li>
-              </ul>
+              <h3 class="card-title clearfix mb-0">Productos mas vendidos</h3>
             </div>
             <!--/.col-->
-            <div class="col-sm-6 col-lg-4">
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="callout callout-warning">
-                    <small class="text-muted">Visitas a tu cafeteria</small>
-                    <br>
-                    <strong class="h4">[#]</strong>
-                    <div class="chart-wrapper">
-                      <canvas id="sparkline-chart-3" width="100" height="30"></canvas>
+            <div class="col-sm-7 hidden-sm-down">
+
+              <!-- DATARANGEPICKER -->
+              <div class="btn-toolbar float-right" role="toolbar" aria-label="Toolbar with button groups">
+                <div class="btn-group mr-3" data-toggle="buttons" aria-label="First group">
+                  <fieldset class="form-group float-right">
+                    <div class="input-group float-right" style="width:240px;">
+                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                      <input name="daterange2" class="form-control date-picker" type="text" />
                     </div>
-                  </div>
+                  </fieldset>
                 </div>
-                <!--/.col-->
-                <div class="col-sm-6">
-                  <div class="callout callout-success">
-                    <small class="text-muted">Consejos</small>
-                    <br>
-                    <strong class="h4">[#]</strong>
-                    <div class="chart-wrapper">
-                      <canvas id="sparkline-chart-4" width="100" height="30"></canvas>
-                    </div>
-                  </div>
-                </div>
-                <!--/.col-->
               </div>
-              <!--/.row-->
-              <hr class="mt-0">
-              <ul class="horizontal-bars type-2">
-                <li>
-                  <i class="icon-user"></i>
-                  <span class="title">Hombre</span>
-                  <span class="value">[%]</span>
-                  <div class="bars">
-                    <div class="progress progress-xs">
-                      <div class="progress-bar bg-warning" role="progressbar" style="width: 43%" aria-valuenow="43" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <i class="icon-user-female"></i>
-                  <span class="title">Mujer</span>
-                  <span class="value">[%]</span>
-                  <div class="bars">
-                    <div class="progress progress-xs">
-                      <div class="progress-bar bg-warning" role="progressbar" style="width: 37%" aria-valuenow="37" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                  </div>
-                </li>
-                <li class="divider"></li>
-                <li>
-                  <i class="icon-like"></i>
-                  <span class="title">Me gustó</span>
-                  <span class="value">[#]
-
-                  </span>
-                  <div class="bars">
-                    <div class="progress progress-xs">
-                      <div class="progress-bar bg-success" role="progressbar" style="width: 56%" aria-valuenow="56" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <i class="icon-dislike"></i>
-                  <span class="title">No me gusto</span>
-                  <span class="value">[#]
-
-                  </span>
-                  <div class="bars">
-                    <div class="progress progress-xs">
-                      <div class="progress-bar bg-success" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <i class="icon-heart"></i>
-                  <span class="title">Consejos</span>
-                  <span class="value">[#]
-                  </span>
-                  <div class="bars">
-                    <div class="progress progress-xs">
-                      <div class="progress-bar bg-success" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <!--FIN 2DO BLOQUE-->
-
-            <!-- 3ER BLOQUE -->
-            <div class="col-sm-6 col-lg-4">
-              <div class="row">
-                <div class="col-sm-6">
-                  <div class="callout">
-                    <small class="text-muted">Ingresos</small>
-                    <br>
-                    <strong class="h4">[#]%</strong>
-                    <div class="chart-wrapper">
-                      <canvas id="sparkline-chart-5" width="100" height="30"></canvas>
-                    </div>
-                  </div>
-                </div>
-                <!--/.col-->
-                <div class="col-sm-6">
-                  <div class="callout callout-primary">
-                    <small class="text-muted">Pagos</small>
-                    <br>
-                    <strong class="h4">[#]</strong>
-                    <div class="chart-wrapper">
-                      <canvas id="sparkline-chart-6" width="100" height="30"></canvas>
-                    </div>
-                  </div>
-                </div>
-                <!--/.col-->
-              </div>
-              <!--/.row-->
-              <hr class="mt-0">
-              <ul class="horizontal-bars type-2">
-                <li>
-                  <i class="icon-user"></i>
-                  <span class="title">POS</span>
-                  <span class="value">[%]</span>
-                  <div class="bars">
-                    <div class="progress progress-xs">
-                      <div class="progress-bar bg-secondary" role="progressbar" style="width: 43%" aria-valuenow="43" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <i class="icon-user-female"></i>
-                  <span class="title">App</span>
-                  <span class="value">[%]</span>
-                  <div class="bars">
-                    <div class="progress progress-xs">
-                      <div class="progress-bar bg-secondary" role="progressbar" style="width: 37%" aria-valuenow="37" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                  </div>
-                </li>
-                <li class="divider"></li>
-                <li>
-                  <i class="icon-credit-card"></i>
-                  <span class="title">Tarjetas de credito/debito</span>
-                  <span class="value">[#]</span>
-                  <div class="bars">
-                    <div class="progress progress-xs">
-                      <div class="progress-bar bg-primary" role="progressbar" style="width: 56%" aria-valuenow="56" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <i class="icon-wallet"></i>
-                  <span class="title">Cuckwallet</span>
-                  <span class="value">[#]</span>
-                  <div class="bars">
-                    <div class="progress progress-xs">
-                      <div class="progress-bar bg-primary" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                  </div>
-                </li>
-                <li>
-                  <i class="icon-support"></i>
-                  <span class="title">Efectivo</span>
-                  <span class="value">[#]</span>
-                  <div class="bars">
-                    <div class="progress progress-xs">
-                      <div class="progress-bar bg-primary" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-            </div>
-            <!-- FIN 3ER BLOQUE -->
 
             </div>
             <!--/.col-->
           </div>
           <!--/.row-->
-          <br/>
-
+          <div class="chart-wrapper" style="height:300px;margin-top:40px;">
+            <!--<canvas id="main-chart" class="chart" height="300"></canvas> CHECAR JS-->
+          </div>
+        </div>
+        <div class="card-footer">
+          <ul>
+            <li>
+              <div class="text-muted">[Producto1]</div>
+              <strong>[#ventas]</strong>
+              <div class="progress progress-xs mt-2">
+                <div class="progress-bar bg-success" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </li>
+            <li class="hidden-sm-down">
+              <div class="text-muted">[Producto2]</div>
+              <strong>[#ventas]</strong>
+              <div class="progress progress-xs mt-2">
+                <div class="progress-bar bg-info" role="progressbar" style="width: 20%" aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </li>
+            <li>
+              <div class="text-muted">[Producto3]</div>
+              <strong>[#ventas]</strong>
+              <div class="progress progress-xs mt-2">
+                <div class="progress-bar bg-warning" role="progressbar" style="width: 60%" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </li>
+            <li class="hidden-sm-down">
+              <div class="text-muted">[Producto4]</div>
+              <strong>[#ventas]</strong>
+              <div class="progress progress-xs mt-2">
+                <div class="progress-bar bg-danger" role="progressbar" style="width: 80%" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </li>
+            <li class="hidden-sm-down">
+              <div class="text-muted">[Producto5]</div>
+              <strong>[#ventas]</strong>
+              <div class="progress progress-xs mt-2">
+                <div class="progress-bar" role="progressbar" style="width: 40%" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
+              </div>
+            </li>
+          </ul>
         </div>
       </div>
-    </div>
-    <!--/.col-->
-  </div>
-  <!--/.row-->
+      <!--FIN GRAFICA 1-->
 
+
+    <!-- DATOS DE TRAFICO Y VENTAS -->
+      <div class="row">
+        <div class="col-md-12">
+          <div class="card">
+            <div class="card-body">
+              <div class="row">
+                <div class="col-sm-5">
+                  <h3 class="card-title clearfix mb-0">Trafico &amp; Ventas</h3>
+                </div>
+                <div class="col-sm-7">
+                  <fieldset class="form-group float-right">
+                    <div class="input-group float-right" style="width:240px;">
+                      <span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+                      <input name="daterange" class="form-control date-picker" type="text" />
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+              <hr class="m-0">
+              <div class="row">
+                <div class="col-sm-12 col-lg-4">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="callout callout-info">
+                        <small class="text-muted">Nuevos clientes</small>
+                        <br>
+                        <strong class="h4">[#]</strong>
+                        <div class="chart-wrapper">
+                          <canvas id="sparkline-chart-1" width="100" height="30"></canvas>
+                        </div>
+                      </div>
+                    </div>
+                    <!--/.col-->
+                    <div class="col-sm-6">
+                      <div class="callout callout-danger">
+                        <small class="text-muted">Clientes recurrentes</small>
+                        <br>
+                        <strong class="h4">[#]</strong>
+                        <div class="chart-wrapper">
+                          <canvas id="sparkline-chart-2" width="100" height="30"></canvas>
+                        </div>
+                      </div>
+                    </div>
+                    <!--/.col-->
+                  </div>
+                  <!--/.row-->
+                  <hr class="mt-0">
+                  <ul class="horizontal-bars">
+                    <li>
+                      <div class="title">
+                        Menores de 18
+                      </div>
+                      <div class="bars">
+                        <div class="progress progress-xs">
+                          <div class="progress-bar bg-info" role="progressbar" style="width: 34%" aria-valuenow="34" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="progress progress-xs">
+                          <div class="progress-bar bg-danger" role="progressbar" style="width: 78%" aria-valuenow="78" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="title">
+                        Entre 18 y 25
+                      </div>
+                      <div class="bars">
+                        <div class="progress progress-xs">
+                          <div class="progress-bar bg-info" role="progressbar" style="width: 56%" aria-valuenow="56" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="progress progress-xs">
+                          <div class="progress-bar bg-danger" role="progressbar" style="width: 94%" aria-valuenow="94" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="title">
+                        Mayores de 25
+                      </div>
+                      <div class="bars">
+                        <div class="progress progress-xs">
+                          <div class="progress-bar bg-info" role="progressbar" style="width: 12%" aria-valuenow="12" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="progress progress-xs">
+                          <div class="progress-bar bg-danger" role="progressbar" style="width: 67%" aria-valuenow="67" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="title">
+                        Universitarios
+                      </div>
+                      <div class="bars">
+                        <div class="progress progress-xs">
+                          <div class="progress-bar bg-info" role="progressbar" style="width: 43%" aria-valuenow="43" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="progress progress-xs">
+                          <div class="progress-bar bg-danger" role="progressbar" style="width: 91%" aria-valuenow="91" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="title">
+                        Administrativos
+                      </div>
+                      <div class="bars">
+                        <div class="progress progress-xs">
+                          <div class="progress-bar bg-info" role="progressbar" style="width: 22%" aria-valuenow="22" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="progress progress-xs">
+                          <div class="progress-bar bg-danger" role="progressbar" style="width: 73%" aria-valuenow="73" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <div class="title">
+                        Otros
+                      </div>
+                      <div class="bars">
+                        <div class="progress progress-xs">
+                          <div class="progress-bar bg-info" role="progressbar" style="width: 53%" aria-valuenow="53" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                        <div class="progress progress-xs">
+                          <div class="progress-bar bg-danger" role="progressbar" style="width: 82%" aria-valuenow="82" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </div>
+                    </li>
+
+                    <!-- 2DO BLOQUE -->
+                    <li class="legend">
+                      <span class="badge badge-pill badge-info"></span>
+                      <small>Nuevos clientes</small> &nbsp;
+                      <span class="badge badge-pill badge-danger"></span>
+                      <small>Clientes recurrentes</small>
+                    </li>
+                  </ul>
+                </div>
+                <!--/.col-->
+                <div class="col-sm-6 col-lg-4">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="callout callout-warning">
+                        <small class="text-muted">Visitas a tu cafeteria</small>
+                        <br>
+                        <strong class="h4">[#]</strong>
+                        <div class="chart-wrapper">
+                          <canvas id="sparkline-chart-3" width="100" height="30"></canvas>
+                        </div>
+                      </div>
+                    </div>
+                    <!--/.col-->
+                    <div class="col-sm-6">
+                      <div class="callout callout-success">
+                        <small class="text-muted">Consejos</small>
+                        <br>
+                        <strong class="h4">[#]</strong>
+                        <div class="chart-wrapper">
+                          <canvas id="sparkline-chart-4" width="100" height="30"></canvas>
+                        </div>
+                      </div>
+                    </div>
+                    <!--/.col-->
+                  </div>
+                  <!--/.row-->
+                  <hr class="mt-0">
+                  <ul class="horizontal-bars type-2">
+                    <li>
+                      <i class="icon-user"></i>
+                      <span class="title">Hombre</span>
+                      <span class="value">[%]</span>
+                      <div class="bars">
+                        <div class="progress progress-xs">
+                          <div class="progress-bar bg-warning" role="progressbar" style="width: 43%" aria-valuenow="43" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <i class="icon-user-female"></i>
+                      <span class="title">Mujer</span>
+                      <span class="value">[%]</span>
+                      <div class="bars">
+                        <div class="progress progress-xs">
+                          <div class="progress-bar bg-warning" role="progressbar" style="width: 37%" aria-valuenow="37" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                      <i class="icon-like"></i>
+                      <span class="title">Me gustó</span>
+                      <span class="value">[#]
+
+                      </span>
+                      <div class="bars">
+                        <div class="progress progress-xs">
+                          <div class="progress-bar bg-success" role="progressbar" style="width: 56%" aria-valuenow="56" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <i class="icon-dislike"></i>
+                      <span class="title">No me gusto</span>
+                      <span class="value">[#]
+
+                      </span>
+                      <div class="bars">
+                        <div class="progress progress-xs">
+                          <div class="progress-bar bg-success" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <i class="icon-heart"></i>
+                      <span class="title">Consejos</span>
+                      <span class="value">[#]
+                      </span>
+                      <div class="bars">
+                        <div class="progress progress-xs">
+                          <div class="progress-bar bg-success" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <!--FIN 2DO BLOQUE-->
+
+                <!-- 3ER BLOQUE -->
+                <div class="col-sm-6 col-lg-4">
+                  <div class="row">
+                    <div class="col-sm-6">
+                      <div class="callout">
+                        <small class="text-muted">Ingresos</small>
+                        <br>
+                        <strong class="h4">[#]%</strong>
+                        <div class="chart-wrapper">
+                          <canvas id="sparkline-chart-5" width="100" height="30"></canvas>
+                        </div>
+                      </div>
+                    </div>
+                    <!--/.col-->
+                    <div class="col-sm-6">
+                      <div class="callout callout-primary">
+                        <small class="text-muted">Pagos</small>
+                        <br>
+                        <strong class="h4">[#]</strong>
+                        <div class="chart-wrapper">
+                          <canvas id="sparkline-chart-6" width="100" height="30"></canvas>
+                        </div>
+                      </div>
+                    </div>
+                    <!--/.col-->
+                  </div>
+                  <!--/.row-->
+                  <hr class="mt-0">
+                  <ul class="horizontal-bars type-2">
+                    <li>
+                      <i class="icon-user"></i>
+                      <span class="title">POS</span>
+                      <span class="value">[%]</span>
+                      <div class="bars">
+                        <div class="progress progress-xs">
+                          <div class="progress-bar bg-secondary" role="progressbar" style="width: 43%" aria-valuenow="43" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <i class="icon-user-female"></i>
+                      <span class="title">App</span>
+                      <span class="value">[%]</span>
+                      <div class="bars">
+                        <div class="progress progress-xs">
+                          <div class="progress-bar bg-secondary" role="progressbar" style="width: 37%" aria-valuenow="37" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </div>
+                    </li>
+                    <li class="divider"></li>
+                    <li>
+                      <i class="icon-credit-card"></i>
+                      <span class="title">Tarjetas de credito/debito</span>
+                      <span class="value">[#]</span>
+                      <div class="bars">
+                        <div class="progress progress-xs">
+                          <div class="progress-bar bg-primary" role="progressbar" style="width: 56%" aria-valuenow="56" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <i class="icon-wallet"></i>
+                      <span class="title">Cuckwallet</span>
+                      <span class="value">[#]</span>
+                      <div class="bars">
+                        <div class="progress progress-xs">
+                          <div class="progress-bar bg-primary" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </div>
+                    </li>
+                    <li>
+                      <i class="icon-support"></i>
+                      <span class="title">Efectivo</span>
+                      <span class="value">[#]</span>
+                      <div class="bars">
+                        <div class="progress progress-xs">
+                          <div class="progress-bar bg-primary" role="progressbar" style="width: 15%" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                        </div>
+                      </div>
+                    </li>
+                  </ul>
+                </div>
+                <!-- FIN 3ER BLOQUE -->
+
+                </div>
+                <!--/.col-->
+              </div>
+              <!--/.row-->
+              <br/>
+
+            </div>
+          </div>
+        </div>
+        <!--/.col-->
+      </div>
+  <!--/.row-->
+    </div>
 </main>
 {% endblock %}
 {% block javascripts %}

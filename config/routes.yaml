@@ -7,19 +7,19 @@ dashboard:
     controller: App\Controller\AdminController::dashboard
 
 menuCategory:
-    path: /admin/menu/category
+    path: /admin/{cafeteria}/menu/category
     controller: App\Controller\MenuController::category
     
 menuIngredient:
-    path: /admin/menu/ingredient
+    path: /admin/{cafeteria}/menu/ingredient
     controller: App\Controller\MenuController::ingredient
     
 menuProduct:
-    path: /admin/menu/product
+    path: /admin/{cafeteria}/menu/product
     controller: App\Controller\MenuController::product
     
 POSAccess:
-    path: /admin/pos/access
+    path: /admin/{cafeteria}/pos/access
     controller: App\Controller\POSController::access
 
 personal:
