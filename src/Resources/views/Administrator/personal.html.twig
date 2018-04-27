@@ -1,0 +1,65 @@
+{% extends 'base.html.twig' %}
+{% block title %}
+    Información Personal
+{% endblock %}
+{% block body %}
+    <main class="main">
+        <div class ="container-fluid">
+    {% include 'header_main.html.twig' %}
+    
+    <div class="animated fadeIn">
+    <!-- Page Header-->
+    <div class="jumbotron jumbotron-fluid">
+        <div class="container">
+            <h3 class="display-4">Tener tus datos actualizados siempre es importante</h3>
+            <p class="lead"> Configuremos tus datos personales</p>
+        </div>
+    </div>
+
+
+      <!-- CONFIGURACION DATOS DE LA CUENTA   -->
+      <div class="card">
+        <!-- TITULO -->
+        <div class="card-header">
+        <h4 class="card-title">Datos de la cuenta </h4>
+        </div>
+
+        <div class="card-body">
+
+          <form>
+
+                  <div class="form-group ">
+
+                  <div class="row">
+                    <div class="col-xs-12 col-md-4 col-lg-3">
+                        <img src="{{asset("img/avatars/avatar.png")}}" class="rounded mx-auto d-block img-fluid" alt="Avatar  ">
+                        <input type="file" value="Subir imagen">
+                    </div>
+                    <div class="col-xs-12 col-md-8 col-lg-9 ml-auto">                          
+                       {{form_start (form) }}
+                       {{form_end (form) }}
+
+                      </div>
+                    </div>
+                  </div>
+        </form>
+        </div>
+
+      </div>
+            <!-- CONFIGURACION DATOS PERSONALES -->
+            <div class="card">
+              <!-- TITULO -->
+              <div class="card-header">
+              <h4 class="card-title">Datos personales </h4>
+              </div>
+
+              <div class="card-body">
+                  
+                    {{form_start (personalData) }}
+                    {{form_end (personalData) }}
+          </div>
+      </div>
+  </div>
+        </div>
+    </main>
+{% endblock %}
