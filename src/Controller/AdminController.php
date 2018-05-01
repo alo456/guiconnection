@@ -15,7 +15,7 @@ class AdminController extends Controller
 {
     public function login(Request $request){
         $data = array();
-         $form = $this->createFormBuilder($data)
+        $form = $this->createFormBuilder($data)
         ->add('username', TextType::class, array ('label' => false,
                                                                 'attr' => array(
                                                                     'class' =>'form-control',
@@ -80,7 +80,7 @@ class AdminController extends Controller
     
     public function personal(Request $request){
         $data = array();
-         $form = $this->createFormBuilder($data)
+        $form = $this->createFormBuilder($data)
         ->add('clientName', TextType::class, array ('label' => 'Nombre',
                                                                 'attr' => array(
                                                                     'class' =>'form-control',
@@ -114,7 +114,7 @@ class AdminController extends Controller
         $body = Body::form($data);
      
         $responseAPI = RequestAPI::post('http://localhost/taiuniversityapi/public/admin/login',$headers,$body);
-        $body  = $responseAPI->body;
+        $body  = $this->APICall($data,'getMenus',$cookie);
         if($body->status == 'OK'){ 
             $token = $responseAPI->headers['Set-Cookie'];
             $cookie = Cookie::fromString($token);

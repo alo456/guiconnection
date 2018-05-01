@@ -11,6 +11,9 @@
                 <div class="container">
                     <h3 class="display-4">Vamos a crear los productos de tu menu</h3>
                     <p class="lead">Crea tus productos</p>
+                    {% if message is not empty %}
+                        <p class="lead">{{message}}</p>
+                    {% endif %}
                 </div>
             </div>
             <!-- COMFIGURACION DE CATEGORIAS   -->
@@ -20,15 +23,28 @@
                     <h4 class="card-title">Productos</h4>
                 </div>
                 <div class="card-body">
-                   {{form_start (form) }}
-                    {{form_end (form) }}
+
+                    {% form_theme formj 'bootstrap_4_horizontal_layout.html.twig' 'form-theme.html.twig' %}
+                    {{ form_start(formj) }}
+                        <div>{{form_row(formj.name)}}</div>
+                        <div>{{form_widget(formj.ingredients)}}</div>
+                    {{ form_end(formj) }}
+                    <hr/>
                 </div>
+                <!--<div class="card-body">
+                   {#form_start (form) #}
+                    {#form_end (form) #}
+                </div>-->
             </div>
         </div>
     </div>
 </main>
 {% endblock %}
 {% block javascripts %}
+<script src="{{ asset('vendors/js/jquery.min.js') }}"></script>
+<script src="{{ asset('js/jquery.collection.js') }}"></script>
+
+
 <script>
   loadCSS("{{asset('vendors/css/daterangepicker.min.css')}}");
   loadCSS("{{asset('vendors/css/select2.min.css')}}");
@@ -40,4 +56,21 @@
         ];
         loadJS(requireJS, "{{asset('js/views/advanced-forms.js')}}");
 </script>
+
+         <script type="text/javascript">
+        $('.ingredient-collection').collection({
+            allow_duplicate: false,
+            allow_up: false,
+            allow_down: false,
+            
+            add: '<a href="#" id="{{formj.vars.name}}_add_button" class="float-right text-success" title="Add element"><i class="fa fa-lg fa-plus-circle"></i></a>',
+            init_with_n_elements:1,
+            add_at_the_end: true,
+            // here is the magic!
+            elements_selector: 'tr.ingredient',
+            elements_parent_selector: '%id% tbody'
+        });
+        $("#{{formj.vars.name}}_add_button").appendTo($('#{{formj.ingredients.vars.name}}_action'));
+    </script>
+
 {% endblock %}

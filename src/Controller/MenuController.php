@@ -1,7 +1,9 @@
 <?php
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Form\ProductType;
+use Doctrine\Common\Collections\ArrayCollection;
+use App\Helper\ConnectionController as Controller;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -19,16 +21,18 @@ class MenuController extends Controller
         $data = array();
         $headers = array('Accept' => 'application/json');
         $data['cafeteria'] = $cafeteria_name;
+        $cookie = $request->cookies->get('TOKEN');
+        $body = $this->APICall($data,'getMenus',$cookie);
+        var_dump($body);
+        die;
+        
         $data['action'] = 'getMenus';
         $body = Body::form($data);
-        $cookie = $request->cookies->get('TOKEN');
         RequestAPI::cookie("TOKEN=" . $cookie);
         $responseAPI = RequestAPI::post('http://localhost/taiuniversityapi/public/admin', $headers, $body);
-//        var_dump($responseAPI);
-//        die;
         $body = $responseAPI->body;
         if ($body->status == 'OK') {
-            $menus  = get_object_vars($responseAPI->body->payload);
+            $menus  =  is_object($body->payload) ? get_object_vars($body->payload) : $body->payload;
         } else {
             $message = $body->message;
         }
@@ -104,12 +108,22 @@ class MenuController extends Controller
         return $response;
     }
     
-    public function ingredient(Request $request){
-        return $this->render('Menu/category.html.twig');
+    public function ingredient(Request $request, $cafeteria){
+        $message = "";
+        $menus = [];
+        $ingredients = [];
+        //Get menus from cafeteria
+        $cafeteria_name = strtolower(str_replace("_", " ", $cafeteria));
+        return $this->render('Menu/ingredient.html.twig' , array(
+                                                'cafeteria' => $cafeteria_name,
+                                                'message' => $message
+        ));
     }
 
     public function product(Request $request, $cafeteria){
         $message = "";
+        $menus = [];
+        $ingredients = [];
         //Get menus from cafeteria
         $cafeteria_name = strtolower(str_replace("_", " ", $cafeteria));
         $data = array();
@@ -120,7 +134,13 @@ class MenuController extends Controller
         $cookie = $request->cookies->get('TOKEN');
         RequestAPI::cookie("TOKEN=" . $cookie);
         $responseAPI = RequestAPI::post('http://localhost/taiuniversityapi/public/admin', $headers, $body);
-        $menus  = get_object_vars($responseAPI->body->payload);
+        $body = $responseAPI->body;
+        if ($body->status == 'OK') {
+            $menus  =  is_object($body->payload) ? get_object_vars($body->payload) : $body->payload;
+        } else {
+            $message .= $body->message;
+            
+        }
         //------------------
         
         
@@ -133,9 +153,57 @@ class MenuController extends Controller
         $cookie = $request->cookies->get('TOKEN');
         RequestAPI::cookie("TOKEN=" . $cookie);
         $responseAPI = RequestAPI::post('http://localhost/taiuniversityapi/public/admin', $headers, $body);
-        $ingredients  = get_object_vars($responseAPI->body->payload);
+        $body = $responseAPI->body;
+        if ($body->status == 'OK') {
+            $ingredients  =  is_object($body->payload) ? get_object_vars($body->payload) : $body->payload;
+        } else {
+            $message .= $body->message;
+            
+        }
         //------------------
         
+        //FORM JQUERY 
+      
+        
+        $data = ['values' => ['a', 'b', 'c']];
+
+       $arr = new ArrayCollection();
+       $arr->add('a');
+       $arr->add('b');
+       $arr->add('c');
+        
+       $data = array();
+/*
+        $formj = $this
+           ->createFormBuilder($data)
+           ->add('values', CollectionType::class, [
+               'entry_type'    => IngredientType::class,
+               'entry_options' => [
+                   'label' => 'Value',
+                   'attr'=>[
+                       'class' => 'withPlugin',
+                   ],
+               ],
+               'label'        => 'Add, move, remove values and press Submit.',
+               'allow_add'    => true,
+               'allow_delete' => true,
+               'prototype'    => true,
+               'required'     => false,
+               'attr'         => [
+                   'class' => 'table discount-collection',
+               ],
+           ])
+           ->add('submit', SubmitType::class)
+           ->getForm()
+        ;
+        */
+       $data = array();
+       
+       $form = $this->get('form.factory');
+       $formj = $form->createNamedBuilder("Producto", ProductType::class,$data)->getForm();
+       
+
+        //----------------------
         //Form Builder 
         $form = $this->createFormBuilder($data)
                 ->add('name', TextType::class, array(
@@ -216,10 +284,13 @@ class MenuController extends Controller
             }
         }
         //-----------------
+         $data = ['values' => ['a', 'b', 'c']];
         $response = $this->render('Menu/product.html.twig',array(
                                                             'cafeteria'=>$cafeteria_name,
                                                             'form'=>$form->createView(),
-                                                            'message' =>$message
+                                                            'message' =>$message,
+                                                            'formj' => $formj->createView(),
+                                                            'data' => $data
                                                             ));
         return $response;
     }

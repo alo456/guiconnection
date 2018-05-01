@@ -1,0 +1,15 @@
+{% block Text_Type_label %}{% endblock %}
+
+{% block text_widget %}
+
+    <div class="row">
+        <div class="col-md-5">
+            {{ form_widget(form) }}
+        </div>
+        <div class="col-md-3">
+            <a href="#" class="collection-remove btn btn-default" title="Delete fruit"><span class="fa fa-minus-circle"></span></a>
+            <a href="#" class="collection-add btn btn-default" title="Add fruit"><span class="fa fa-plus-circle"></span></a>
+        </div>
+    </div>
+
+{% endblock %}
