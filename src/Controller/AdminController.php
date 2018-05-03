@@ -1,8 +1,7 @@
 <?php
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Symfony\Component\Form\Extension\Core\Type\DateType;
+use App\Helper\ConnectionController as Controller;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
@@ -81,19 +80,19 @@ class AdminController extends Controller
     public function personal(Request $request){
         $data = array();
         $form = $this->createFormBuilder($data)
-        ->add('clientName', TextType::class, array ('label' => 'Nombre',
+        ->add('firstname', TextType::class, array ('label' => 'Nombre',
                                                                 'attr' => array(
                                                                     'class' =>'form-control',
                                                                     'placeholder' => 'Nombre'
                                                                 )
             ))
-       ->add('clientSecondName', TextType::class, array ('label' => 'Apellido',
+       ->add('lastname', TextType::class, array ('label' => 'Apellido',
                                                                 'attr' => array(
                                                                     'class' =>'form-control',
                                                                     'placeholder' => 'Apellido'
                                                                 )
             ))        
-        ->add('clientEmail', TextType::class, array ('label' => 'Email',
+        ->add('email', TextType::class, array ('label' => 'Email',
                                                                 'attr' => array(
                                                                     'class' =>'form-control',
                                                                     'placeholder' => 'Email'
@@ -109,75 +108,22 @@ class AdminController extends Controller
     $form->handleRequest($request);
     
     if ($form->isSubmitted() && $form->isValid()) {
-        $data = $form->getData();
-        $headers = array('Accept' => 'application/json');
-        $body = Body::form($data);
-     
-        $responseAPI = RequestAPI::post('http://localhost/taiuniversityapi/public/admin/login',$headers,$body);
-        $body  = $this->APICall($data,'getMenus',$cookie);
-        if($body->status == 'OK'){ 
-            $token = $responseAPI->headers['Set-Cookie'];
-            $cookie = Cookie::fromString($token);
-            //RequestAPI::cookie($cookie);
-            $response->headers->setCookie($cookie);
-            $response->send();
-            //var_dump($cookie);
-            return $this->redirectToRoute('dashboard', array(
-                                                'TOKEN' => $cookie
-            )); 
+        $data = $form->getData();        
+        $cookie = $request->cookies->get('TOKEN');
+        $body  = $this->APICall($data,"updateInformation",$cookie);
+       
+        if(isset($body->status) && $body->status == 'OK'){
+            echo("Cambios realizados");
         }else{
+             var_dump($data);
+        var_dump($body);
+        die;
             echo($body->message);
         }
     }
     
-    $personal = array();
-    
-    $personalData = $this->createFormBuilder($personal)
-        ->add('cellphone', TextType::class, array ('label' => 'Celular',
-                                                                'attr' => array(
-                                                                    'class' =>'form-control',
-                                                                    'placeholder' => 'Celular'
-                                                                )
-            ))
-       ->add('birthday', DateType::class, array ('label' => 'Fecha de Nacimiento',
-                                                                'attr' => array(
-                                                                    'class' =>'form-control'
-                                                                )
-            ))        
-        ->add('address', TextType::class, array ('label' => 'Calle y número',
-                                                                'attr' => array(
-                                                                    'class' =>'form-control',
-                                                                    'placeholder' => 'Calle #'
-                                                                )
-            ))
-            
-        ->add('colony', TextType::class, array ('label' => 'Colonia y municipio',
-                                                                'attr' => array(
-                                                                    'class' =>'form-control',
-                                                                    'placeholder' => 'Colonia '
-                                                                )
-            ))
-        ->add('state', TextType::class, array ('label' => 'Estado',
-                                                                'attr' => array(
-                                                                    'class' =>'form-control',
-                                                                    'placeholder' => 'Estado'
-                                                                )
-            ))
-        ->add('submit', SubmitType::class, array('label' => 'Guardar',
-                                                                'attr' => array(
-                                                                    'class' =>'btn btn-primary px-4'
-                                                                )
-                ))
-        ->getForm();
-     
-    $personalData->handleRequest($request);
-    
-    
-    
-    
     $response = $this->render('Administrator/personal.html.twig', array(
-            'form' => $form->createView(),
-            'personalData' => $personalData->createView()
+            'form' => $form->createView()
             ));
     
         return $response;
@@ -213,16 +159,9 @@ class AdminController extends Controller
      
     if ($form->isSubmitted() && $form->isValid()) {
         $data = $form->getData();
-        $headers = array(
-                                'Accept' => 'application/json'
-            );
-        $data['action'] = 'changePassword';
-        $body = Body::form($data);
-        requestAPI::cookie("TOKEN=" . $request->cookies->get('TOKEN'));
-        $responseAPI = RequestAPI::post('http://localhost/taiuniversityapi/public/admin',$headers,$body);
-        $body  = $responseAPI->body;
-//        var_dump($body);
-//        var_dump($body->status);
+        $cookie = $request->cookies->get('TOKEN');
+        $body  = $this->APICall($data, "changePassword", $cookie);
+
         if(isset($body->status) && $body->status == 'OK'){
 //            $token = $responseAPI->headers['Set-Cookie'];
 //            $cookie = Cookie::fromString($token);

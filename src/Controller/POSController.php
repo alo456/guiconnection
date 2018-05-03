@@ -1,7 +1,7 @@
 <?php
 namespace App\Controller;
 
-use Symfony\Bundle\FrameworkBundle\Controller\Controller;
+use App\Helper\ConnectionController as Controller;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -16,17 +16,11 @@ class POSController extends Controller
         //Get menus from cafeteria
         $cafeteria_name = strtolower(str_replace("_", " ", $cafeteria));
         $data = array();
-        $headers = array('Accept' => 'application/json');
         $data['cafeteria'] = $cafeteria_name;
-        $data['action'] = 'getEmployees';
-        $body = Body::form($data);
         $cookie = $request->cookies->get('TOKEN');
-        RequestAPI::cookie("TOKEN=" . $cookie);
-        $responseAPI = RequestAPI::post('http://localhost/taiuniversityapi/public/admin', $headers, $body);
- 
-        $body = $responseAPI->body;
+        $body = $this->APICall($data, 'getEmployees', $cookie);
         if ($body->status == 'OK') {
-            $employees  = get_object_vars($responseAPI->body->payload);
+            $employees  = get_object_vars($body->payload);
         } else {
             $message = $body->message;
         }
@@ -76,15 +70,9 @@ class POSController extends Controller
         $formAddEmp->handleRequest($request);
         if ($formAddEmp->isSubmitted() && $formAddEmp->isValid()) {
             $data = $formAddEmp->getData();
-            $headers = array('Accept' => 'application/json');
-            $data['action'] = 'createEmployee';
             $data['cafeteria'] = $cafeteria_name;
-            $body = Body::form($data);
-            RequestAPI::cookie("TOKEN=" . $cookie);
-//            var_dump($body);
-//            die;
-            $responseAPI = RequestAPI::post('http://localhost/taiuniversityapi/public/admin', $headers, $body);
-            $body = $responseAPI->body;
+             $cookie = $request->cookies->get('TOKEN');
+            $body = $this->APICall($data, 'createEmployee', $cookie);
             if ($body->status == 'OK') {
                 $message = "Empleado creado";
             } else {
