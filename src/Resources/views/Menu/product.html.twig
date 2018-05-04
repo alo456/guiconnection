@@ -24,11 +24,11 @@
                 </div>
                 <div class="card-body">
 
-                    {% form_theme formj 'bootstrap_4_horizontal_layout.html.twig' 'form-theme.html.twig' %}
-                    {{ form_start(formj) }}
-                        <div>{{form_row(formj.name)}}</div>
-                        <div>{{form_widget(formj.ingredients)}}</div>
-                    {{ form_end(formj) }}
+                    {% form_theme formIngredients 'bootstrap_4_horizontal_layout.html.twig' 'form-theme.html.twig' %}
+                    {{ form_start(formIngredient) }}
+                        <div>{{form_row(formIngredients.name)}}</div>
+                        <div>{{form_widget(formIngredients.ingredients)}}</div>
+                    {{ form_end(formIngredients) }}
                     <hr/>
                 </div>
                 <!--<div class="card-body">
@@ -41,7 +41,6 @@
 </main>
 {% endblock %}
 {% block javascripts %}
-<script src="{{ asset('vendors/js/jquery.min.js') }}"></script>
 <script src="{{ asset('js/jquery.collection.js') }}"></script>
 
 

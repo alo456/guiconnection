@@ -27,4 +27,6 @@ class ConnectionController extends Controller {
         $responseAPI = RequestAPI::post("$url", $headers, $body);
         return $responseAPI->body;
     }
+    
+    
 }

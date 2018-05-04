@@ -116,12 +116,12 @@
                                     <td> {{employee.name}} </td>
                                     <td> {{employee.username}}</td>
                                     <td>
-                                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalconfirmarempleado">
+                                        <button data-pos='{"id_employee": "{{employee.id}}"}' type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalconfirmarempleado">
                                             Editar
                                         </button>
                                     </td>
                                     <td>
-                                        <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modaleliminarempleado">
+                                        <button  data-pos='{"id_employee": "{{employee.id}}"}'  onclick="deleteEmployee(this)" type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modaleliminarempleado">
                                             Eliminar
                                         </button>
                                     </td>
@@ -167,7 +167,7 @@
 <!-- INICIO MODAL ELIMIANR EMPLEADO-->
 <!-- Modal --> <!-- El id que recibe id="modal#" tiene que ser el mismo que se pone en el buton en
 data-target ="#modal#" -->
-<div class="modal fade" id="modaleliminarempleado" tabindex="-1" role="dialog" aria-hidden="true">
+<!--<div class="modal fade" id="modaleliminarempleado" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -185,7 +185,11 @@ data-target ="#modal#" -->
             </div>
         </div>
     </div>
-</div>
-<!-- FIN MODAL -->
-
+</div>-->
+{% endblock %}
+{% block javascripts %}
+<script src="{{ asset('js/helper.js') }}"></script>
+<script src="{{ asset('js/views/access.js') }}"></script>
+<script src="{{ asset('vendors/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('vendors/js/bootbox.min.js') }}"></script>
 {% endblock %}
