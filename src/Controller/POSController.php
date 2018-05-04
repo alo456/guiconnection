@@ -20,7 +20,7 @@ class POSController extends Controller
         $cookie = $request->cookies->get('TOKEN');
         $body = $this->APICall($data, 'getEmployees', $cookie);
         if ($body->status == 'OK') {
-            $employees  = get_object_vars($body->payload);
+            $employees  =  is_object($body->payload) ? get_object_vars($body->payload) : $body->payload;
         } else {
             $message = $body->message;
         }
