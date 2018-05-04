@@ -1,31 +1,40 @@
- <div class="sidebar">
+
+    <div class="sidebar">
       <nav class="sidebar-nav">
         <ul class="nav">
           <li class="nav-item">
-            <a class="nav-link" href="main.html"><i class="icon-speedometer"></i> Dashboard <span class="badge badge-info">NEW</span></a>
+            <a class="nav-link" href="{{path('dashboard')}}"><i class="icon-speedometer"></i> Dashboard </a>
           </li>
           <li class="divider"></li>
 
-<!-- CUCKEAT PERFIL -->
+<!-- CUCKEAT ADMIN -->
 <li class="nav-title">
   CUCKEAT PERFIL
 </li>
 
 <li class="nav-item nav-dropdown">
-  <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-user"></i>Perfil</a>
+  <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-user"></i>Administrador</a>
   <ul class="nav-dropdown-items">
 
     <li class="nav-item">
-      <a class="nav-link" href="profile/settings.html"><i class="icon-settings"></i>Configuración</a>
+      <a class="nav-link" href="profile/settings.html"><i class="icon-settings"></i>Información personal</a>
     </li>
-
     <li class="nav-item">
-      <a class="nav-link" href="profile/payment.html"><i class="icon-credit-card"></i>Pagos</a>
+      <a class="nav-link" href="profile/payment.html"><i class="icon-credit-card"></i>Configuración</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="profile/payment.html"><i class="icon-credit-card"></i>Actividad</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="profile/payment.html"><i class="icon-credit-card"></i>Balance</a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link" href="profile/payment.html"><i class="icon-credit-card"></i>Bancos y tarjetas</a>
     </li>
 
   </ul>
 </li>
-<!-- FIN CUCKEAT PERFIL -->
+<!-- FIN CUCKEAT ADMIN -->
 
 <!-- CUCKEAT MENU -->
           <li class="nav-title">
@@ -74,10 +83,6 @@
               <li class="nav-item">
                 <a class="nav-link" href="pointofsale/access.html"><i class="icon-check"></i>Acceso</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="pointofsale/record.html"><i class="icon-calendar"></i>Historial</a>
-              </li>
-
             </ul>
           </li>
 <!-- FIN CUKEAT POS -->
@@ -154,3 +159,4 @@
       </nav>
       <button class="sidebar-minimizer brand-minimizer" type="button"></button>
     </div>
+ 

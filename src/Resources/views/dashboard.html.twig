@@ -1,9 +1,10 @@
 {% extends 'base.html.twig' %}
-{% set title = 'Dashboard'%}
+{% block title %} Dashboard {% endblock %}
 {% block classBody 'app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden aside-menu-off-canvas' %}
 {% block body %}
 <main class="main">
 {% include 'header_main.html.twig' %}
+<div class="container-fluid">
 <div class="animated fadeIn">
 
 <!-- TARJETAS -->
@@ -451,17 +452,13 @@
             <!-- FIN 3ER BLOQUE -->
 
             </div>
-            <!--/.col-->
           </div>
-          <!--/.row-->
           <br/>
-
         </div>
       </div>
     </div>
-    <!--/.col-->
   </div>
-  <!--/.row-->
+</div>
 
 </main>
 {% endblock %}
@@ -478,5 +475,4 @@
   ];
   loadJS(requireJS, "{{asset('js/views/main.js')}}");
 </script>
-
 {% endblock %}
