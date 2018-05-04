@@ -3,80 +3,138 @@
 {% block classBody 'app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden aside-menu-off-canvas' %}
 {% block body %}
 <main class="main">
-    {% include 'header_main.html.twig' %}
-    <div class="animated fadeIn">
-        <!-- Page Header-->
-        <div class="jumbotron jumbotron-fluid">
-            <div class="container">
-                <h3 class="display-4">Empleados</h3>
-                <p class="lead">Genera cuentas de usuario para que tus empleados puedan acceder al sistema, recuerda que solo
-                pueden ser de dos tipos:cajero o entregas. Al ingresar el nombre del empleado ese sera su nombre de usuario para acceder
-                al sistema asi que te recomendamos escribas solo su primer nombre y apellido en minusculas. </p>
+    {% include 'header_cafeteria.html.twig' %}
+    <div class="container-fluid">
+        <div class="animated fadeIn">
+            <!-- Page Header-->
+            <div class="jumbotron jumbotron-fluid">
+                <div class="container">
+                    <h3 class="display-4">Empleados</h3>
+                    <p class="lead">Genera cuentas de usuario para que tus empleados puedan acceder al sistema, recuerda que solo
+                    pueden ser de dos tipos:cajero o entregas. Al ingresar el nombre del empleado ese sera su nombre de usuario para acceder
+                    al sistema asi que te recomendamos escribas solo su primer nombre y apellido en minusculas. </p>
+                    {% if message is not empty %}
+                    <p>{{message}} </p>
+                    {% endif %}
+                </div>
             </div>
-        </div>
-    <!-- PRIMERA CARTA -->
-        <div class="row">
-            <div class="col-md-12 mb-4">
-                <div class="row">
-                    <div class="col-sm-5">
-                      <h3 class="card-title clearfix mb-0"> </h3>
+        <!-- PRIMERA CARTA -->
+            <div class="row">
+                <div class="col-md-12 mb-4">
+                    <div class="row">
+                        <div class="col-sm-5">
+                          <h3 class="card-title clearfix mb-0"> </h3>
+                        </div>
+                    </div>
+                      <!-- TABLAS -->
+                    <table class= "table table-responsive-sm table-hover table-outline mb-0 ">
+                        <!-- TITULOS DE TABLA -->
+                        <thead class="thead-light ">
+                            <tr>
+                                <th>#</th>
+                                <th>Puesto</th>
+                                <th>Nombre de empleado</th>
+                                <th>Contraseña</th>
+                                <th>Añadir</th>
+                                <th>Eliminar</th>
+                            </tr>
+                        </thead>
+                        <!-- tbody de tabla -->
+                        <tbody>
+                        <!-- FILA 1 -->
+                            <tr> <!-- etiqueta tr inicia la fila -->
+                            <!-- # -->
+                                <td> 1 </td>
+                              <!-- tipo de empleados -->
+                                <td> <!-- Inicia las opciones -->
+                                    <select class="form-control form-control-sm">
+                                        <option selected>Puesto</option>
+                                        <option value="1">Cajero</option>
+                                        <option value="2">Entregas</option>
+                                </td> <!-- Termina las opciones -->
+                                <!-- nombre empleado -->
+                                <!-- form-control-auto se adapta al tamaño de la oracion mas grande -->
+                                <td>
+                                    <input type="text" class="form-control" id=""  placeholder="Nombre de usuario">
+                                </td>
+                                <!-- contraseña  -->
+                                <td>
+                                    <input type="password" class="form-control" id=""  placeholder="Contraseña de usuario">
+                                </td>
+                                <!-- guardar cambios -->
+                                <td>
+                                    <a>
+                                        <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalconfirmarempleado">
+                                        Añadir
+                                        </button>
+                                    </a>
+                                </td>
+                                <!-- eliminar empleado -->
+                                <td>
+                                    <a>
+                                        <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modaleliminarempleado">
+                                        Eliminar
+                                        </button>
+                                    </a>
+                                </td>
+
+                            </tr> <!-- Termina la fila 1 -->
+                        </tbody>
+                    </table>
+                    <div class="card-body">
+                        {{form_start (formAddEmp) }}
+                        {{form_end (formAddEmp) }}
                     </div>
                 </div>
-                  <!-- TABLAS -->
-                <table class= "table table-responsive-sm table-hover table-outline mb-0 ">
-                    <!-- TITULOS DE TABLA -->
-                    <thead class="thead-light ">
-                        <tr>
-                            <th>#</th>
-                            <th>Puesto</th>
-                            <th>Nombre de empleado</th>
-                            <th>Contraseña</th>
-                            <th>Añadir</th>
-                            <th>Eliminar</th>
-                        </tr>
-                    </thead>
-                    <!-- tbody de tabla -->
-                    <tbody>
-                    <!-- FILA 1 -->
-                        <tr> <!-- etiqueta tr inicia la fila -->
-                        <!-- # -->
-                            <td> 1 </td>
-                          <!-- tipo de empleados -->
-                            <td> <!-- Inicia las opciones -->
-                                <select class="form-control form-control-sm">
-                                    <option selected>Puesto</option>
-                                    <option value="1">Cajero</option>
-                                    <option value="2">Entregas</option>
-                            </td> <!-- Termina las opciones -->
-                            <!-- nombre empleado -->
-                            <!-- form-control-auto se adapta al tamaño de la oracion mas grande -->
-                            <td>
-                                <input type="text" class="form-control" id=""  placeholder="Nombre de usuario">
-                            </td>
-                            <!-- contraseña  -->
-                            <td>
-                                <input type="password" class="form-control" id=""  placeholder="Contraseña de usuario">
-                            </td>
-                            <!-- guardar cambios -->
-                            <td>
-                                <a>
-                                    <button type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalconfirmarempleado">
-                                    Añadir
-                                    </button>
-                                </a>
-                            </td>
-                            <!-- eliminar empleado -->
-                            <td>
-                                <a>
-                                    <button type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modaleliminarempleado">
-                                    Eliminar
-                                    </button>
-                                </a>
-                            </td>
-
-                        </tr> <!-- Termina la fila 1 -->
-                    </tbody>
-                </table>
+            </div>
+            <!-- PRIMERA CARTA -->
+            <div class="row">
+                <div class="col-md-12 mb-4">
+                    <div class="row">
+                        <div class="col-sm-5">
+                          <h3 class="card-title clearfix mb-0"> </h3>
+                        </div>
+                    </div>
+                      <!-- TABLAS -->
+                    <table class= "table table-responsive-sm table-hover table-outline mb-0 ">
+                        <!-- TITULOS DE TABLA -->
+                        <thead class="thead-light ">
+                            <tr>
+                                <th>#</th>
+                                <th>Nombre de empleado</th>
+                                <th>Nombre de Usuario</th>
+                                <th>Editar</th>
+                                <th>Eliminar</th>
+                            </tr>
+                        </thead>
+                        <!-- tbody de tabla -->
+                        <tbody>
+                        <!-- FILA 1 -->
+                            {% for employee in employees %}
+                                <tr>
+                                    <td> {{loop.index}} </td>
+                                    <td> {{employee.name}} </td>
+                                    <td> {{employee.username}}</td>
+                                    <td>
+                                        <button data-pos='{"id_employee": "{{employee.id}}"}' type="button" class="btn btn-outline-primary" data-toggle="modal" data-target="#modalconfirmarempleado">
+                                            Editar
+                                        </button>
+                                    </td>
+                                    <td>
+                                        <button  data-pos='{"id_employee": "{{employee.id}}"}'  onclick="deleteEmployee(this)" type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modaleliminarempleado">
+                                            Eliminar
+                                        </button>
+                                    </td>
+                                </tr>    
+                            {% endfor %}
+                            
+                        </tbody>
+                    </table>
+                    <div class="card-body">
+                        {{form_start (formAddEmp) }}
+                        {{form_end (formAddEmp) }}
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -109,7 +167,7 @@
 <!-- INICIO MODAL ELIMIANR EMPLEADO-->
 <!-- Modal --> <!-- El id que recibe id="modal#" tiene que ser el mismo que se pone en el buton en
 data-target ="#modal#" -->
-<div class="modal fade" id="modaleliminarempleado" tabindex="-1" role="dialog" aria-hidden="true">
+<!--<div class="modal fade" id="modaleliminarempleado" tabindex="-1" role="dialog" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -127,7 +185,11 @@ data-target ="#modal#" -->
             </div>
         </div>
     </div>
-</div>
-<!-- FIN MODAL -->
-
+</div>-->
+{% endblock %}
+{% block javascripts %}
+<script src="{{ asset('js/helper.js') }}"></script>
+<script src="{{ asset('js/views/access.js') }}"></script>
+<script src="{{ asset('vendors/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('vendors/js/bootbox.min.js') }}"></script>
 {% endblock %}
