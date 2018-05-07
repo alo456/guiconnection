@@ -3,7 +3,7 @@ adminLogin:
     controller: App\Controller\AdminController::login
 
 dashboard:
-    path: /admin/dashboard
+    path: /admin/{cafeteria}/dashboard
     controller: App\Controller\AdminController::dashboard
 
 menuCategory:
@@ -73,7 +73,7 @@ help:
 tutorial:
     path: /admin/about/tutorial
     controller: App\Controller\AboutController::tutorial
-    
-    
-    
-    
+ 
+resources:
+    path: /admin/resources/{context}/{id}
+    controller: App\Controller\RDL::update

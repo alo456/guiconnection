@@ -1,0 +1,21 @@
+<div class="container-fluid">
+    <div class="row">
+        {{form_start(form,{'action': path('resources',{'context': 'employee', 'id': employee.id })})}}
+    
+    
+        {{ form_row(form.firstname, {'attr': {'placeholder': employee.firstName }}) }}
+  
+    
+        {{ form_row(form.lastname, {'attr': {'placeholder': employee.lastName }}) }}
+ 
+   
+        {{ form_row(form.username, {'attr': {'placeholder' : employee.username }}) }}
+ 
+    
+        {{form_row(form.password)}}
+    
+        {{form_row(form.submit, { 'label': 'Confirmar Cambios' })}}
+    {{form_end(form)}}
+    </div>
+</div>
+ 

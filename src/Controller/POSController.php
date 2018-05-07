@@ -2,15 +2,12 @@
 namespace App\Controller;
 
 use App\Helper\ConnectionController as Controller;
-use Symfony\Component\Form\Extension\Core\Type\PasswordType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
-use Unirest\Request as RequestAPI;
-use Unirest\Request\Body;
+use App\Form\EmployeeType;
 class POSController extends Controller
 {
     public function access(Request $request,$cafeteria){
+        $form = $this->get('form.factory');
         $message = "";
         $employees = [];
         //Get menus from cafeteria
@@ -28,48 +25,13 @@ class POSController extends Controller
         //------------------
         
         //Form Builder  ADD EMPLOYEE
-        $formAddEmp = $this->createFormBuilder($data)
-                ->add('firstname', TextType::class, array(
-                    'label' => false,
-                    'attr' => array(
-                        'class' => 'form-control',
-                        'placeholder' => 'Nombre'
-                    )
-                ))
-                ->add('lastname', TextType::class, array(
-                    'label' => false,
-                    'attr' => array(
-                        'class' => 'form-control',
-                        'placeholder' => 'Apellidos'
-                    )
-                ))
-                ->add('username', TextType::class, array(
-                    'label' => false,
-                    'attr' => array(
-                        'class' => 'form-control',
-                        'placeholder' => 'Nombre de Usuario'
-                    )
-                ))
-                ->add('password', PasswordType::class, array(
-                    'label' => false,
-                    'attr' => array(
-                        'class' => 'form-control',
-                        'placeholder' => 'password'
-                    )
-                ))
-                ->add('submit', SubmitType::class, array(
-                    'label' => 'Añadir',
-                    'attr' => array(
-                        'class' => 'btn btn-outline-primary'
-                    )
-                ))
-                ->getForm();
+        $formCreateEmp = $form->createNamedBuilder("CreateEmployee", EmployeeType::class,$data)->getForm();
         //------------------
         
         //Form Request
-        $formAddEmp->handleRequest($request);
-        if ($formAddEmp->isSubmitted() && $formAddEmp->isValid()) {
-            $data = $formAddEmp->getData();
+        $formCreateEmp ->handleRequest($request);
+        if ($formCreateEmp ->isSubmitted() && $formCreateEmp ->isValid()) {
+            $data = $formCreateEmp ->getData();
             $data['cafeteria'] = $cafeteria_name;
              $cookie = $request->cookies->get('TOKEN');
             $body = $this->APICall($data, 'createEmployee', $cookie);
@@ -82,10 +44,13 @@ class POSController extends Controller
         //-----------------
         $response = $this->render('POS/access.html.twig',array(
                                                             'cafeteria'=>$cafeteria_name,
-                                                            'formAddEmp'=>$formAddEmp->createView(),
+                                                            'formCreateEmp'=>$formCreateEmp ->createView(),
                                                             'message' =>$message,
                                                             'employees' => $employees
                                                             ));
         return $response;
+    }
+    public function helper(){
+        
     }
 }

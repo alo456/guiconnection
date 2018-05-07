@@ -19,7 +19,6 @@ class MenuController extends Controller
         //Get menus from cafeteria
         $cafeteria_name = strtolower(str_replace("_", " ", $cafeteria));
         $data = array();
-        $headers = array('Accept' => 'application/json');
         $data['cafeteria'] = $cafeteria_name;
         $cookie = $request->cookies->get('TOKEN');
         $body = $this->APICall($data,'getMenus',$cookie);
@@ -128,8 +127,7 @@ class MenuController extends Controller
         $data['cafeteria'] = $cafeteria_name;
         $cookie = $request->cookies->get('TOKEN');
         $body = $this->APICall($data, 'getIngredients', $cookie);
-        var_dump($body);
-        die;
+        
         if ($body->status == 'OK') {
             $ingredients  =  is_object($body->payload) ? get_object_vars($body->payload) : $body->payload;
         } else {

@@ -69,12 +69,13 @@ class AdminController extends Controller
         return $response;
 //        
     }
-    public function dashboard(Request $request){
+    public function dashboard(Request $request, $cafeteria){
+        $cafeteria_name = strtolower(str_replace("_", " ", $cafeteria));
 //        var_dump($request->cookies->get('TOKEN'));
 //         $cookie = Cookie::fromString($request->cookies->get('TOKEN'));
 //         $response = $this->render("dashboard.html.twig");
 //         $response->headers->setCookie($cookie);
-         return $this->render('dashboard.html.twig');
+        return $this->render('dashboard.html.twig', array('cafeteria'=>$cafeteria_name));
     }
     
     public function personal(Request $request){

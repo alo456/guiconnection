@@ -81,4 +81,17 @@ function deleteEmployee(button){
     });
 }
 
+function updateEmployee(url, button){
+    var data = $(button).data('data');
+    data['action'] = 'updateEmployee';
+    $.get(url, function (data) {
+        bootbox.dialog({
+            className: 'modal',
+            closeButton: false,
+            title: 'Editar Empleado',
+            message: data
+        });
+        
+    });         
+}
 
