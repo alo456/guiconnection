@@ -1,16 +1,13 @@
 <?php
 namespace App\Controller;
 
-use App\Form\ProductType;
-use Doctrine\Common\Collections\ArrayCollection;
 use App\Helper\ConnectionController as Controller;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
-use Unirest\Request as RequestAPI;
-use Unirest\Request\Body;
+use App\Form\IngredientProductType;
 class MenuController extends Controller
 {
     public function category(Request $request,$cafeteria) {
@@ -139,7 +136,7 @@ class MenuController extends Controller
         //FORM JQUERY 
        $data = array();
        $form = $this->get('form.factory');
-       $formIngredients = $form->createNamedBuilder("Producto", ProductType::class,$data)->getForm();
+       $formIngredients = $form->createNamedBuilder("Producto", IngredientPerProductType::class,$data)->getForm();
        
         //----------------------
         

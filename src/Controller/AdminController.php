@@ -124,7 +124,8 @@ class AdminController extends Controller
     }
     
     $response = $this->render('Administrator/personal.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
+            'cafeteria'=> 'cuckoo'
             ));
     
         return $response;
@@ -209,7 +210,10 @@ class AdminController extends Controller
     }
     
     public function activity(Request $request){
-        return $this->render('Administrator/activity.html.twig');
+        return $this->render('Administrator/activity.html.twig', array(
+                                                    'cafeteria' => 'cuckoo'
+                    
+                                                            ));
     }
     
     public function balance(Request $request){
