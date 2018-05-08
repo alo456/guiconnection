@@ -13,6 +13,7 @@ class IngredientPerProductType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
+       
         $builder
            ->add('ingredients', CollectionType::class, [
                 'entry_type'   => IngredientType::class,
@@ -21,6 +22,7 @@ class IngredientPerProductType extends AbstractType
                     'attr' => [
                         'class' => 'ingredient', // we want to use 'tr.item' as collection elements' selector
                     ],
+                    'data' => $options['data']
                 ],
                 'allow_add'    => true,
                 'allow_delete' => true,
