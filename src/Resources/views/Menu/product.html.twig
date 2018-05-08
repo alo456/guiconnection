@@ -16,26 +16,122 @@
                     {% endif %}
                 </div>
             </div>
-            <!-- COMFIGURACION DE CATEGORIAS   -->
-            <div class="card">
-                <!-- TITULO -->
-                <div class="card-header">
-                    <h4 class="card-title">Productos</h4>
-                </div>
-                <div class="card-body">
+            <div class="row">
+                <div class="col-lg-12 col-md-6 mb-4">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link active" data-toggle="tab" href="#create" role="tab" aria-controls="tablas"><i class="fa fa-file-text-o"></i>Crear</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" data-toggle="tab" href="#exist" role="tab" aria-controls="graficas"><i class="fa fa-bar-chart"></i>Existentes</a>
+                        </li>
+                    </ul>
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="create" role="tabpanel">
+                            <div class="animated fadeIn">
+                                <div class="card">
+                                    <div class="card-header">
+                                         <h4 class="card-title">Información del producto</h4>
+                                    </div>
+                                    <div class="card-body">
+                                        {% form_theme formProduct 'bootstrap_4_horizontal_layout.html.twig' 'form-theme.html.twig' %}
+                                        {{ form_start(formProduct) }}
+                                        {{ form_end(formProduct) }}
+                                        <hr/>
+                                    </div>
+                                </div>
+                                <div class="col-lg-12 col-md-6 mb-4">
+                                    <ul class="nav nav-tabs" role="tablist">
+                                        <li class="nav-item">
+                                            <a class="nav-link active" data-toggle="tab" href="#ingredients" role="tab" aria-controls="tablas"><i class="fa fa-file-text-o"></i>Ingredientes</a>
+                                        </li>
+                                        <li class="nav-item">
+                                            <a class="nav-link" data-toggle="tab" href="#extras" role="tab" aria-controls="graficas"><i class="fa fa-bar-chart"></i>Extras</a>
+                                        </li>
+                                    </ul>
+                                    <div class="tab-content">
+                                        <div class="tab-pane active" id="ingredients" role="tabpanel">
+                                            <div class="animated fadeIn">
+                                                {% form_theme formIngredients 'bootstrap_4_horizontal_layout.html.twig' 'form-theme.html.twig' %}
+                                                {{ form_start(formIngredients) }}
+                                                <div>{{form_widget(formIngredients.ingredients)}}</div>
+                                                {{ form_end(formIngredients) }}
+                                                <hr/>
+                                            </div>
+                                        </div>
+                                        <div class="tab-pane" id="extras" role="tabpanel">
+                                            <div class="animated fadeIn">
+                                                <div class="card">
+                                                    <div class="card-body">
+                                                        extras
+                                                        <hr/>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                
+                            </div>
+                        </div>
+                        <div class="tab-pane" id="exist" role="tabpanel">
+                            <div class="animated fadeIn">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="row">
+                                            <div class="col-md-12 mb-4">
+                                                <div class="row">
+                                                    <div class="col-sm-5">
+                                                        <h3 class="card-title clearfix mb-0"> </h3>
+                                                    </div>
+                                                </div>
+                                                <!-- TABLAS -->
+                                                <table class= "table table-responsive-sm table-hover table-outline mb-0 ">
+                                                    <!-- TITULOS DE TABLA -->
+                                                    <thead class="thead-light ">
+                                                        <tr>
+                                                            <th>#</th>
+                                                            <th>Nombre del Producto</th>
+                                                            <th>Descripción</th>
+                                                            <th>Costo</th>
+                                                            <th>Editar</th>
+                                                            <th>Eliminar</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <!-- tbody de tabla -->
+                                                    <tbody>
+                                                        <!-- FILA 1 -->
+                                                        {% for item in items %}
+                                                            <tr>
+                                                                <td> {{loop.index}} </td>
+                                                                <td> {{item.name}} </td>
+                                                                <td> {{item.description}}</td>
+                                                                <td> {{item.cost}}</td>
+                                                                <td>
+                                                                    <button  type="button" class="btn btn-outline-primary" >
+                                                                        Editar
+                                                                    </button>
+                                                                </td>
+                                                                <td>
+                                                                    <button  type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modaleliminarempleado">
+                                                                        Eliminar
+                                                                    </button>
+                                                                </td>
+                                                            </tr>    
+                                                        {% endfor %}
 
-                    {% form_theme formIngredients 'bootstrap_4_horizontal_layout.html.twig' 'form-theme.html.twig' %}
-                    {{ form_start(formIngredient) }}
-                        <div>{{form_row(formIngredients.name)}}</div>
-                        <div>{{form_widget(formIngredients.ingredients)}}</div>
-                    {{ form_end(formIngredients) }}
-                    <hr/>
+                                                    </tbody>
+                                                </table>
+                                            </div>
+                                        </div>
+                                        <hr/>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
-                <!--<div class="card-body">
-                   {#form_start (form) #}
-                    {#form_end (form) #}
-                </div>-->
-            </div>
+            </div>   
         </div>
     </div>
 </main>
@@ -62,14 +158,14 @@
             allow_up: false,
             allow_down: false,
             
-            add: '<a href="#" id="{{formj.vars.name}}_add_button" class="float-right text-success" title="Add element"><i class="fa fa-lg fa-plus-circle"></i></a>',
+            add: '<a href="#" id="{{formIngredients.vars.name}}_add_button" class="float-right text-success" title="Add element"><i class="fa fa-lg fa-plus-circle"></i></a>',
             init_with_n_elements:1,
             add_at_the_end: true,
             // here is the magic!
             elements_selector: 'tr.ingredient',
             elements_parent_selector: '%id% tbody'
         });
-        $("#{{formj.vars.name}}_add_button").appendTo($('#{{formj.ingredients.vars.name}}_action'));
+        $("#{{formIngredients.vars.name}}_add_button").appendTo($('#{{formIngredients.ingredients.vars.name}}_action'));
     </script>
 
 {% endblock %}

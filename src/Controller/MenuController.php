@@ -1,13 +1,14 @@
 <?php
 namespace App\Controller;
 
+use App\Form\IngredientPerProductType;
+use App\Form\ProductInformationType;
 use App\Helper\ConnectionController as Controller;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
-use App\Form\IngredientProductType;
 class MenuController extends Controller
 {
     public function category(Request $request,$cafeteria) {
@@ -104,6 +105,8 @@ class MenuController extends Controller
         $message = "";
         $menus = [];
         $ingredients = [];
+        $items = [];
+        
         //Get menus from cafeteria
         $cafeteria_name = strtolower(str_replace("_", " ", $cafeteria));
         $data = array();
@@ -121,7 +124,6 @@ class MenuController extends Controller
         
         //Get ingredients from cafeteria
         $data = array();
-        $data['cafeteria'] = $cafeteria_name;
         $cookie = $request->cookies->get('TOKEN');
         $body = $this->APICall($data, 'getIngredients', $cookie);
         
@@ -132,22 +134,35 @@ class MenuController extends Controller
             
         }
         //------------------
+        //Get items from cafeteria
+        $data = array();
+        $cookie = $request->cookies->get('TOKEN');
+        $body = $this->APICall($data, 'getItems', $cookie);
+        
+        if ($body->status == 'OK') {
+            $items  =  is_object($body->payload) ? get_object_vars($body->payload) : $body->payload;
+        } else {
+            $message .= $body->message;
+            
+        }
+        //------------------
+        
+        
         
         //FORM JQUERY 
        $data = array();
        $form = $this->get('form.factory');
-       $formIngredients = $form->createNamedBuilder("Producto", IngredientPerProductType::class,$data)->getForm();
+       $formIngredients = $form->createNamedBuilder("Ingredientes", IngredientPerProductType::class,$data)->getForm();
+       $formProductInformation = $form->createNamedBuilder("Producto", ProductInformationType::class,$menus)->getForm();
        
         //----------------------
         
        
-        //Form Request
+        //Form Ingredients
         $formIngredients->handleRequest($request);
         if ($formIngredients->isSubmitted() && $formIngredients->isValid()) {
             $data = $formIngredients->getData();
             $data['cafeteria'] = $cafeteria_name;
-            var_dump($body);
-            die;
             $body = $this->APICall($data, 'createItem', $cookie);
             if ($body->status == 'OK') {
                 $message = "Menu creado";
@@ -156,9 +171,28 @@ class MenuController extends Controller
             }
         }
         //-----------------
+         //Form Info
+        $formProductInformation->handleRequest($request);
+        if ($formProductInformation->isSubmitted() && $formProductInformation->isValid()) {
+            $data = $formProductInformation->getData();
+            $data['cafeteria'] = $cafeteria_name;
+            $body = $this->APICall($data, 'createItem', $cookie);
+            if ($body->status == 'OK') {
+                $message = "Menu creado";
+            } else {
+                $message = $body->message;
+            }
+        }
+        //-----------------
+        
+        
+        
+        
         $response = $this->render('Menu/product.html.twig',array(
                                                             'cafeteria'=>$cafeteria_name,
                                                             'formIngredients'=>$formIngredients->createView(),
+                                                            'formProduct' => $formProductInformation->createView(),
+                                                            'items' => $items,
                                                             'message' =>$message
                                                             ));
         return $response;

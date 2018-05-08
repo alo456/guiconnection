@@ -13,6 +13,7 @@ use Unirest\Request\Body;
 class AdminController extends Controller
 {
     public function login(Request $request){
+        $message = "";
         $data = array();
         $form = $this->createFormBuilder($data)
         ->add('username', TextType::class, array ('label' => false,
@@ -47,28 +48,30 @@ class AdminController extends Controller
         $responseAPI = RequestAPI::post('http://localhost/taiuniversityapi/public/admin/login',$headers,$body);
         $body  = $responseAPI->body;
         if($body->status == 'OK'){ 
+            $cafeteria_name = "";
             $token = $responseAPI->headers['Set-Cookie'];
             $cookie = Cookie::fromString($token);
-            //RequestAPI::cookie($cookie);
-            $response->headers->setCookie($cookie);
-            $response->send();
-            //var_dump($cookie);
+            $cookie = $cookie->getValue();
+            setcookie("TOKEN", $cookie);
+            $data = array();
+            $body = $this->APICall($data, 'getCafeterias', $cookie);
+            if ($body->status == 'OK') {
+                $cafeterias = is_object($body->payload) ? get_object_vars($body->payload) : $body->payload;
+                $cafeteria_name = strtolower(str_replace(" ", "_", $cafeterias[0]));
+            } else {
+                $message .= $body->message;
+            }
             return $this->redirectToRoute('dashboard', array(
-                                                'TOKEN' => $cookie
+                                                'cafeteria'=> $cafeteria_name
             )); 
         }else{
-            echo($body->message);
+            $message .= $body->message;
         }
-    }
-
-    if($request->cookies->has('TOKEN')){
-            var_dump($request->cookies->get('TOKEN'));
-            //return null;
-           return $this->redirectToRoute('dashboard');
     }
         return $response;
 //        
     }
+    
     public function dashboard(Request $request, $cafeteria){
         $cafeteria_name = strtolower(str_replace("_", " ", $cafeteria));
 //        var_dump($request->cookies->get('TOKEN'));
