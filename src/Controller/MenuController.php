@@ -136,9 +136,9 @@ class MenuController extends Controller
         //------------------
         //Get items from cafeteria
         $data = array();
+        $data['cafeteria'] = $cafeteria_name;
         $cookie = $request->cookies->get('TOKEN');
         $body = $this->APICall($data, 'getItems', $cookie);
-        
         if ($body->status == 'OK') {
             $items  =  is_object($body->payload) ? get_object_vars($body->payload) : $body->payload;
         } else {
