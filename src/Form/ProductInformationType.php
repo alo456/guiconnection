@@ -43,30 +43,21 @@ class ProductInformationType extends AbstractType
                                                             )
                                                 
                 ))
+                ->add('menu', ChoiceType::class, array(
+                        'label' => 'Menu',
+                        'attr' => array(
+                            'class' => 'form-control',   
+                        ),
+                        'placeholder' => 'Selecciona un menú',
+                        'choices' => $options['data']
+                ))
                 ->add('submit', SubmitType::class, array(
                                                     'label'=>'Guardar',
                                                     'attr'=>array(
                                                                 'class'=>'btn btn-primary'
-                                                            )
-                                                
-                ))
-                ;
-        
-        
-            $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
-            $menus = $event->getData();
-            $form = $event->getForm();
-            $form
-                ->add('password', ChoiceType::class, array(
-                        'label' => false,
-                        'attr' => array(
-                            'class' => 'form-control',
-                            'placeholder' => 'Contraseña'
-                        ),
-                        'choices' => $menus
+                                                            )          
                 ));
             
-        });
     }
 }
 

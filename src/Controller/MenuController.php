@@ -152,7 +152,7 @@ class MenuController extends Controller
         //FORM JQUERY 
        $data = array();
        $form = $this->get('form.factory');
-       $formIngredients = $form->createNamedBuilder("Ingredientes", IngredientPerProductType::class,$data)->getForm();
+       $formIngredients = $form->createNamedBuilder("Ingredientes", IngredientPerProductType::class,$ingredients)->getForm();
        $formProductInformation = $form->createNamedBuilder("Producto", ProductInformationType::class,$menus)->getForm();
        
         //----------------------
