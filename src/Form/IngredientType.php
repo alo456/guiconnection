@@ -15,12 +15,18 @@ class IngredientType extends AbstractType
         $builder->add('ingredient', ChoiceType::class , array(
                                                     'label'=>false,
                                                     'attr'=>array(
-                                                                'class'=>'form-control',
-                                                                'placeholder'=>'Ingrediente'
+                                                                'class'=>'form-control'
                                                         
                                                             ),
-                                                    'choices' => $options
-                                                ))
+                                                    'choices' => $options['data'],
+                                                    'choice_label' => function ($value, $key, $index) {
+                                                                    return ucwords($value->name);
+                                                    },
+                                                    'choice_value' => function ($value) {
+                                                                    return $value ? $value->id : "";
+                                                    },
+                                                    'placeholder'=>'Selecciona un Ingrediente'
+                ))
                 ->add('quantity', NumberType::class, array(
                                                     'label'=>false,
                                                     'attr'=>array(
