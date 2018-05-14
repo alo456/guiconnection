@@ -6,6 +6,7 @@ use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+use Symfony\Component\Form\Extension\Core\Type\TimeType;
 use Symfony\Component\HttpFoundation\Cookie;
 use Symfony\Component\HttpFoundation\Request;
 use Unirest\Request as RequestAPI;
@@ -134,7 +135,9 @@ class AdminController extends Controller
         return $response;
     }
     
-    public function settings(Request $request){
+    public function settings(Request $request, $cafeteria){
+        $cafeteria_name = strtolower(str_replace("_", " ", $cafeteria));
+        
         $data = array();
          $form = $this->createFormBuilder($data)
         ->add('oldpassword', PasswordType::class, array ('label' => 'Contraseña Actual',
@@ -166,16 +169,11 @@ class AdminController extends Controller
         $data = $form->getData();
         $cookie = $request->cookies->get('TOKEN');
         $body  = $this->APICall($data, "changePassword", $cookie);
-
         if(isset($body->status) && $body->status == 'OK'){
-//            $token = $responseAPI->headers['Set-Cookie'];
-//            $cookie = Cookie::fromString($token);
-//            //RequestAPI::cookie($cookie);
-//            $response->headers->setCookie($cookie);
-//            $response->send();
+            echo("Cambios realizados");
             
         }else{
-            echo("Credenciales Inválidas");
+            if (isset($data['oldpassword'])) echo("Credenciales Inválidas");
         }
     }
         
@@ -202,11 +200,57 @@ class AdminController extends Controller
                  
         ->getForm();
          $configuration->handleRequest($request);
+         
+         
+         
+          $scheduleData = array();
+         $times = $this->createFormBuilder($scheduleData)
+        ->add('fromHour', TimeType::class, array ('label' => 'Abre a las:',
+                                                                'attr' => array(
+                                                                    'class' =>'form-control'
+                                                                )
+            ))
+       ->add('toHour', TimeType::class, array ('label' => 'Cierra a las:',
+                                                                'attr' => array(
+                                                                    'class' =>'form-control'
+                                                                    )
+            ))        
+        ->add('submitSchedule', SubmitType::class, array('label' => 'Guardar',
+                                                                'attr' => array(
+                                                                    'class' =>'btn btn-outline-primary col-auto'
+                                                                )
+                ))
+                 
+        ->getForm();
+         $times->handleRequest($request);
+         
+         if ($times->isSubmitted() && $times->isValid()) {
+        $dataSchedule = $times->getData();
+        if(isset($dataSchedule['fromHour'])){
+            $dataSchedule['cafeteria'] = $cafeteria_name;
+            $dataSchedule['fromHour'] = $dataSchedule['fromHour']->format('H:i');
+            $dataSchedule['toHour'] = $dataSchedule['toHour']->format('H:i');
+            $cookie = $request->cookies->get('TOKEN');
+            $bodySchedule = $this->APICall($dataSchedule, "updateSchedule", $cookie);
+        }
+       
+        if(isset($bodySchedule->status) && $bodySchedule->status == 'OK'){
+            echo("Cambios realizados");
+            
+        }else{
+              if(isset($dataSchedule['fromHour'])) echo("Credenciales Inválidas");
+        }
+    }
+        
+         
+         
     
     $response = $this->render('Administrator/settings.html.twig', array(
             //'last_username' => $lastUsername,
             'form' => $form->createView(),
-            'configuration' => $configuration->createView()
+            'configuration' => $configuration->createView(),
+            'schedule' => $times->createView(),
+            'cafeteria' => $cafeteria_name
             ));
     
         return $response;

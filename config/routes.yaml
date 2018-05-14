@@ -27,7 +27,7 @@ personal:
     controller: App\Controller\AdminController::personal
     
 settings:
-    path: /admin/settings
+    path: /admin/{cafeteria}/settings
     controller: App\Controller\AdminController::settings
     
 income:
