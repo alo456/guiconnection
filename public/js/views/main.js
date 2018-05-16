@@ -1,7 +1,7 @@
 $(function(){
   'use strict';
 
-  toastr.info('Bienvenido administrador', 'Cuckeat Admin', {
+  toastr.info('Bienvenido administrador', 'Tueat Admin', {
     closeButton: true,
     progressBar: true,
   });
