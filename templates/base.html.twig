@@ -23,17 +23,20 @@
     </head>
     <body class="{% block classBody %} {% endblock %}">
      
-        
          {% block header %}
               {% include 'header.html.twig' %}
          {% endblock %}
+         
         <div class="app-body">
+            
+            {% block sidebar %}
+            {% include 'sidebar.html.twig' %}
+            {% endblock %}
+                       
             {% block body %}
             {% endblock %}
             
-            {% block sidebar %}
-                {% include 'sidebar.html.twig' %}
-            {% endblock %}
+            
         
         </div>
         
