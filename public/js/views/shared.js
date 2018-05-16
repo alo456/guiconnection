@@ -1,5 +1,5 @@
 $(function(){
-
+$.fn.select2.defaults.set("theme", "bootstrap");
   function random(min,max) {
     return Math.floor(Math.random()*(max-min+1)+min);
   }

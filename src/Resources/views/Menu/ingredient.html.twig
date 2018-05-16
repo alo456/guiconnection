@@ -71,16 +71,3 @@
     </div>
 </main>
 {% endblock %}
-{% block javascripts %}
-<script>
-  loadCSS("{{asset('vendors/css/daterangepicker.min.css')}}");
-  loadCSS("{{asset('vendors/css/select2.min.css')}}");
-        var requireJS = [
-            "{{asset('vendors/js/jquery.maskedinput.min.js')}}",
-            "{{asset('vendors/js/moment.min.js')}}",
-            "{{asset('vendors/js/select2.min.js')}}",
-            "{{asset('vendors/js/daterangepicker.min.js')}}"
-        ];
-        loadJS(requireJS, "{{asset('js/views/advanced-forms.js')}}");
-</script>
-{% endblock %}

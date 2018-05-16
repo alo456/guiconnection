@@ -1,171 +1,253 @@
 {% extends 'base.html.twig' %}
 {% set title = 'Product'%}
 {% block classBody 'app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden aside-menu-off-canvas' %}
-{% block body %}
-<main class="main">   
-    {% include 'header_cafeteria.html.twig' %}
-    <div class="container-fluid">
-        <div class="animated fadeIn">
-            <!-- Page Header-->
-            <div class="jumbotron jumbotron-fluid">
-                <div class="container">
-                    <h3 class="display-4">Vamos a crear los productos de tu menu</h3>
-                    <p class="lead">Crea tus productos</p>
-                    {% if message is not empty %}
-                        <p class="lead">{{message}}</p>
-                    {% endif %}
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12 col-md-6 mb-4">
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link active" data-toggle="tab" href="#create" role="tab" aria-controls="tablas"><i class="fa fa-file-text-o"></i>Crear</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#exist" role="tab" aria-controls="graficas"><i class="fa fa-bar-chart"></i>Existentes</a>
-                        </li>
-                    </ul>
-                    <div class="tab-content">
-                        <div class="tab-pane active" id="create" role="tabpanel">
-                            <div class="animated fadeIn">
-                                <div class="card">
-                                    <div class="card-header">
-                                         <h4 class="card-title">Información del producto</h4>
-                                    </div>
-                                    <div class="card-body">
-                                        {% form_theme formProduct 'bootstrap_4_horizontal_layout.html.twig' 'form-theme.html.twig' %}
-                                        {{ form_start(formProduct) }}
-                                        {{ form_end(formProduct) }}
-                                        <hr/>
-                                    </div>
-                                </div>
-                                <div class="col-lg-12 col-md-6 mb-4">
-                                    <ul class="nav nav-tabs" role="tablist">
-                                        <li class="nav-item">
-                                            <a class="nav-link active" data-toggle="tab" href="#ingredients" role="tab" aria-controls="tablas"><i class="fa fa-file-text-o"></i>Ingredientes</a>
-                                        </li>
-                                        <li class="nav-item">
-                                            <a class="nav-link" data-toggle="tab" href="#extras" role="tab" aria-controls="graficas"><i class="fa fa-bar-chart"></i>Extras</a>
-                                        </li>
-                                    </ul>
-                                    <div class="tab-content">
-                                        <div class="tab-pane active" id="ingredients" role="tabpanel">
-                                            <div class="animated fadeIn">
-                                                {% form_theme formIngredients 'bootstrap_4_horizontal_layout.html.twig' 'form-theme.html.twig' %}
-                                                {{ form_start(formIngredients) }}
-                                                <div>{{form_widget(formIngredients.ingredients)}}</div>
-                                                {{ form_end(formIngredients) }}
+    {% block body %}
+        <main class="main">   
+            {% include 'header_cafeteria.html.twig' %}
+            <div class="container-fluid">
+                <div class="animated fadeIn">
+                    <!-- Page Header-->
+                    <div class="jumbotron jumbotron-fluid">
+                        <div class="container">
+                            <h3 class="display-4">Vamos a crear los productos de tu menu</h3>
+                            <p class="lead">Crea tus productos</p>
+                            {% if message is not empty %}
+                                <p class="lead">{{message}}</p>
+                            {% endif %}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-6 mb-4">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#create" role="tab" aria-controls="tablas"><i class="fa fa-file-text-o"></i>Crear</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#exist" role="tab" aria-controls="graficas"><i class="fa fa-bar-chart"></i>Existentes</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="create" role="tabpanel">
+                                    <div class="animated fadeIn">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h4 class="card-title">Información del producto</h4>
+                                            </div>
+                                            <div class="card-body">
+                                                {% form_theme formProduct 'bootstrap_4_horizontal_layout.html.twig' %}
+                                                {{ form_start(formProduct) }}
+                                                {{ form_end(formProduct) }}
                                                 <hr/>
                                             </div>
                                         </div>
-                                        <div class="tab-pane" id="extras" role="tabpanel">
-                                            <div class="animated fadeIn">
-                                                <div class="card">
-                                                    <div class="card-body">
-                                                        extras
+                                        <div class="col-lg-12 col-md-6 mb-4">
+                                            <ul class="nav nav-tabs" role="tablist">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" data-toggle="tab" href="#ingredients" role="tab" aria-controls="tablas"><i class="fa fa-file-text-o"></i>Ingredientes</a>
+                                                </li>
+                                                <li class="nav-item">
+                                                    <a class="nav-link" data-toggle="tab" href="#extras" role="tab" aria-controls="graficas"><i class="fa fa-bar-chart"></i>Extras</a>
+                                                </li>
+                                            </ul>
+                                            <div class="tab-content">
+                                                <div class="tab-pane active" id="ingredients" role="tabpanel">
+                                                    <div class="animated fadeIn">
+                                                        {% form_theme formIngredients 'bootstrap_4_horizontal_layout.html.twig' 'ingredient_theme.html.twig' %}
+                                                        {{ form_start(formIngredients, {'attr': {'id': 'ingredientsform'}}) }}
+                                                        <div>{{form_widget(formIngredients.ingredients)}}</div>
+                                                        {{ form_end(formIngredients) }}
+                                                        <hr/>
+                                                    </div>
+                                                </div>
+                                                <div class="tab-pane" id="extras" role="tabpanel">
+                                                    <div class="animated fadeIn">
+                                                        {% form_theme formExtras 'bootstrap_4_horizontal_layout.html.twig' 'extra_theme.html.twig' %}
+                                                        {{ form_start(formExtras) }}
+                                                        <div>{{form_widget(formExtras.extras)}}</div>
+                                                        {{ form_end(formExtras) }}
                                                         <hr/>
                                                     </div>
                                                 </div>
                                             </div>
                                         </div>
+
                                     </div>
                                 </div>
-                                
-                            </div>
-                        </div>
-                        <div class="tab-pane" id="exist" role="tabpanel">
-                            <div class="animated fadeIn">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
+                                <div class="tab-pane" id="exist" role="tabpanel">
+                                    <div class="animated fadeIn">
+                                        <div class="card">
+                                            <div class="card-body">
                                                 <div class="row">
-                                                    <div class="col-sm-5">
-                                                        <h3 class="card-title clearfix mb-0"> </h3>
+                                                    <div class="col-md-12 mb-4">
+                                                        <div class="row">
+                                                            <div class="col-sm-5">
+                                                                <h3 class="card-title clearfix mb-0"> </h3>
+                                                            </div>
+                                                        </div>
+                                                        <!-- TABLAS -->
+                                                        <table class= "table table-responsive-sm table-hover table-outline mb-0 ">
+                                                            <!-- TITULOS DE TABLA -->
+                                                            <thead class="thead-light ">
+                                                                <tr>
+                                                                    <th>#</th>
+                                                                    <th>Nombre del Producto</th>
+                                                                    <th>Descripción</th>
+                                                                    <th>Costo</th>
+                                                                    <th>Editar</th>
+                                                                    <th>Eliminar</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <!-- tbody de tabla -->
+                                                            <tbody>
+                                                                <!-- FILA 1 -->
+                                                                {% for item in items %}
+                                                                    <tr>
+                                                                        <td> {{loop.index}} </td>
+                                                                        <td> {{item.name}} </td>
+                                                                        <td> {{item.description}}</td>
+                                                                        <td> {{item.cost}}</td>
+                                                                        <td>
+                                                                            <button  type="button" class="btn btn-outline-primary" >
+                                                                                Editar
+                                                                            </button>
+                                                                        </td>
+                                                                        <td>
+                                                                            <button  type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modaleliminarempleado">
+                                                                                Eliminar
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>    
+                                                                {% endfor %}
+
+                                                            </tbody>
+                                                        </table>
                                                     </div>
                                                 </div>
-                                                <!-- TABLAS -->
-                                                <table class= "table table-responsive-sm table-hover table-outline mb-0 ">
-                                                    <!-- TITULOS DE TABLA -->
-                                                    <thead class="thead-light ">
-                                                        <tr>
-                                                            <th>#</th>
-                                                            <th>Nombre del Producto</th>
-                                                            <th>Descripción</th>
-                                                            <th>Costo</th>
-                                                            <th>Editar</th>
-                                                            <th>Eliminar</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <!-- tbody de tabla -->
-                                                    <tbody>
-                                                        <!-- FILA 1 -->
-                                                        {% for item in items %}
-                                                            <tr>
-                                                                <td> {{loop.index}} </td>
-                                                                <td> {{item.name}} </td>
-                                                                <td> {{item.description}}</td>
-                                                                <td> {{item.cost}}</td>
-                                                                <td>
-                                                                    <button  type="button" class="btn btn-outline-primary" >
-                                                                        Editar
-                                                                    </button>
-                                                                </td>
-                                                                <td>
-                                                                    <button  type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modaleliminarempleado">
-                                                                        Eliminar
-                                                                    </button>
-                                                                </td>
-                                                            </tr>    
-                                                        {% endfor %}
-
-                                                    </tbody>
-                                                </table>
+                                                <hr/>
                                             </div>
                                         </div>
-                                        <hr/>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    </div>   
                 </div>
-            </div>   
-        </div>
-    </div>
-</main>
+            </div>
+        </main>
 {% endblock %}
 {% block javascripts %}
-<script src="{{ asset('js/jquery.collection.js') }}"></script>
-
-
-<script>
-  loadCSS("{{asset('vendors/css/daterangepicker.min.css')}}");
-  loadCSS("{{asset('vendors/css/select2.min.css')}}");
-        var requireJS = [
-            "{{asset('vendors/js/jquery.maskedinput.min.js')}}",
-            "{{asset('vendors/js/moment.min.js')}}",
-            "{{asset('vendors/js/select2.min.js')}}",
-            "{{asset('vendors/js/daterangepicker.min.js')}}"
-        ];
-        loadJS(requireJS, "{{asset('js/views/advanced-forms.js')}}");
-</script>
-
-         <script type="text/javascript">
+    <script type="text/javascript">
+        var file = $.getJSON("http://localhost/guiconnection/public/admin/{{cafeteria}}/resources/Alias?_={{time}}");
+        
+        $.fn.select2.defaults.set("theme", "bootstrap");
         $('.ingredient-collection').collection({
             allow_duplicate: false,
             allow_up: false,
             allow_down: false,
-            
+            after_add: function (collection, element) {
+                $(element).find('select').select2(select2cont())
+            },
             add: '<a href="#" id="{{formIngredients.vars.name}}_add_button" class="float-right text-success" title="Add element"><i class="fa fa-lg fa-plus-circle"></i></a>',
-            init_with_n_elements:1,
+            init_with_n_elements: 1,
             add_at_the_end: true,
             // here is the magic!
             elements_selector: 'tr.ingredient',
             elements_parent_selector: '%id% tbody'
         });
         $("#{{formIngredients.vars.name}}_add_button").appendTo($('#{{formIngredients.ingredients.vars.name}}_action'));
-    </script>
+        
+        $('.extra-collection').collection({
+            allow_duplicate: false,
+            allow_up: false,
+            allow_down: false,
+            after_add: function (collection, element) {
+                $(element).find('select').select2(select2cont())
+            },
+            add: '<a href="#" id="{{formExtras.vars.name}}_add_button" class="float-right text-success" title="Add element"><i class="fa fa-lg fa-plus-circle"></i></a>',
+            init_with_n_elements: 1,
+            add_at_the_end: true,
+            // here is the magic!
+            elements_selector: 'tr.extra',
+            elements_parent_selector: '%id% tbody'
+        });
+        $("#{{formExtras.vars.name}}_add_button").appendTo($('#{{formExtras.extras.vars.name}}_action'));
+ 
 
+        var url = "https://s3.us-east-2.amazonaws.com/taitech.tueat/";
+        $(".select2").select2(select2cont());
+        function formatIng(ing) {
+            if (ing.loading) {
+                return ing.text;
+            }
+
+            var markup = "<div class='media col-6 col-lg-3'>"+
+                    "<img class='d-flex mr-3 img-fluid' src='" + url + ing.photo + "'/>"+
+                    "<div class='media-body'>"+
+                        "<h5 class='mt-0'>" + ing.text + "</h5>"+
+                    "</div></div>";
+            return markup;
+        }
+
+        function formatIngSelection(repo) {
+            return repo.text;
+        }
+        
+        function select2cont(){
+            return obj = 
+                    {
+            ajax: {
+                url: "http://localhost/guiconnection/public/admin/search",
+                dataType: 'json',
+                type: "POST",
+                delay: 250,
+                language: "es",
+                data: function (params) {
+                    var query = {
+                        q: params.term,
+                        page: params.page
+                    }
+                    return query;
+                },
+                processResults: function (data, params) {
+                    // parse the results into the format expected by Select2
+                    // since we are using custom formatting functions we do not need to
+                    // alter the remote JSON data, except to indicate that infinite
+                    // scrolling can be used
+                    params.page = params.page || 1;
+                    var f = file.responseJSON;
+                    $.each( data.results, function( key, val ) {
+                        if(typeof f[val.id] != "undefined")
+                            val.text = f[val.id];
+                        console.log(val);
+                    });             
+                    return {
+                        results: data.results,
+                        pagination: {
+                            more: (params.page * 30) < data.total
+                        }
+                    };
+                },
+                cache: true
+            },
+            placeholder: 'Busca un ingrediente',
+            minimumInputLength: 2,
+            escapeMarkup: function (markup) {
+                return markup;
+            }, // let our custom formatter work
+            templateResult: formatIng,
+            templateSelection: formatIngSelection,
+            language: {
+                noResults: function() {
+                    return "No hay resultados";        
+                },
+                searching: function() {
+                    return "Buscando...";
+                },
+                inputTooShort: function () {
+                    return "Por favor escribe 2 o más carácteres";
+                }
+            }
+        }
+        }
+    </script>
 {% endblock %}

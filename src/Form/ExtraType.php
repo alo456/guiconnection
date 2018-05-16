@@ -8,38 +8,49 @@ use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
-class IngredientType extends AbstractType {
+class ExtraType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
-        $builder->add('ingredient', ChoiceType::class, array(
+        $builder->add('extra', ChoiceType::class, array(
                     'label' => false,
                     'attr' => array(
                         'class' => 'select2 form-control',
-                        'style' => 'width: 100%'
-                    ),
-                    'choices' => array()
+                        'style' => 'width: 100%',
+                        'form' => 'ingredientsform'
+                    )
                 ))
                 ->add('alias', TextType::class, array(
                     'label' => false,
                     'attr' => array(
                         'class' => 'form-control',
-                        'placeholder' => 'Alias'
+                        'placeholder' => 'Alias',
+                        'form' => 'ingredientsform'
                     )
                 ))
                 ->add('quantity', NumberType::class, array(
                     'label' => false,
                     'attr' => array(
                         'class' => 'form-control',
-                        'placeholder' => 'Cantidad'
+                        'placeholder' => 'Cantidad',
+                        'form' => 'ingredientsform'
                     )
                 ))
                 ->add('unit', TextType::class, array(
                     'label' => false,
                     'attr' => array(
                         'class' => 'form-control',
-                        'placeholder' => 'Unidad'
+                        'placeholder' => 'Unidad',
+                        'form' => 'ingredientsform'
                     )
-        ));
+                ))
+                ->add('cost', NumberType::class, array(
+                    'label' => false,
+                    'attr' => array(
+                        'class' => 'form-control',
+                        'placeholder' => 'Costo',
+                        'form' => 'ingredientsform'
+                    )
+                ));
     }
 
 }

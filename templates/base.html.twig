@@ -8,6 +8,8 @@
   <!-- Icons -->
         <link href="{{asset('vendors/css/font-awesome.min.css')}}" rel="stylesheet">
         <link href="{{asset('vendors/css/simple-line-icons.min.css')}}" rel="stylesheet">
+        <link href="{{asset('vendors/css/daterangepicker.min.css')}}" rel="stylesheet">
+        <link href="{{asset('vendors/css/select2.min.css')}}" rel="stylesheet">
   <!-- Main styles for this application -->
         <link href="{{asset('css/style.css')}}" rel="stylesheet">
         <title>
@@ -36,13 +38,17 @@
         </div>
         
         <script src="{{asset('vendors/js/jquery.min.js')}}"></script>
-        <script src="{{asset('vendors/js/js.cookie.js')}}"></script>
+        <script src="{{asset('js/jquery.collection.js')}}"></script>
         <script src="{{asset('vendors/js/popper.min.js')}}"></script>
         <script src="{{asset('vendors/js/bootstrap.min.js')}}"></script>
         <script src="{{asset('vendors/js/pace.min.js')}}"></script>
         <script src="{{asset('vendors/js/Chart.min.js')}}"></script>
         <script src="{{asset('js/views/shared.js')}}"></script>
-        <script src="{{ asset('vendors/js/jquery.min.js') }}"></script>
+        <script src="{{asset('vendors/js/moment.min.js')}}"></script>
+        <script src="{{asset('vendors/js/daterangepicker.min.js')}}"></script>
+        <script src="{{ asset('vendors/js/bootbox.min.js') }}"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
+        
         {% block javascripts %}
             
         {% endblock %}

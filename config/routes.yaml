@@ -77,3 +77,11 @@ tutorial:
 resources:
     path: /admin/resources/{context}/{id}
     controller: App\Controller\RDL::update
+
+search:
+    path: /admin/search
+    controller: App\Controller\SearchController::search
+    
+resource:
+    path: /admin/{cafeteria}/resources/{resource}
+    controller: App\Controller\RDL::getResource

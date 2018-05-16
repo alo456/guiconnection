@@ -2,6 +2,7 @@
 namespace App\Controller;
 
 use App\Form\IngredientPerProductType;
+use App\Form\ExtraPerProductType;
 use App\Form\ProductInformationType;
 use App\Helper\ConnectionController as Controller;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -106,9 +107,23 @@ class MenuController extends Controller
         $menus = [];
         $ingredients = [];
         $items = [];
-        
-        //Get menus from cafeteria
+        $alias = [];
+        $timestamp = "";
         $cafeteria_name = strtolower(str_replace("_", " ", $cafeteria));
+        
+        //Get Timestamp
+        $data = array();
+        $data['cafeteria'] = $cafeteria_name;
+        $cookie = $request->cookies->get('TOKEN');
+        $body = $this->APICall($data, 'getTime', $cookie);
+        if ($body->status == 'OK') {
+            $timestamp = is_object($body->payload) ? get_object_vars($body->payload) : $body->payload;
+        } else {
+            $message .= $body->message;
+        }
+
+        //Get menus from cafeteria
+        
         $data = array();
         $data['cafeteria'] = $cafeteria_name;
         $cookie = $request->cookies->get('TOKEN');
@@ -122,17 +137,7 @@ class MenuController extends Controller
         //------------------
         
         
-        //Get ingredients from cafeteria
-        $data = array();
-        $cookie = $request->cookies->get('TOKEN');
-        $body = $this->APICall($data, 'getIngredients', $cookie);
         
-        if ($body->status == 'OK') {
-            $ingredients  =  is_object($body->payload) ? get_object_vars($body->payload) : $body->payload;
-        } else {
-            $message .= $body->message;
-            
-        }
         //------------------
         //Get items from cafeteria
         $data = array();
@@ -152,35 +157,29 @@ class MenuController extends Controller
         //FORM JQUERY 
        $data = array();
        $form = $this->get('form.factory');
-       $formIngredients = $form->createNamedBuilder("Ingredientes", IngredientPerProductType::class,$ingredients)->getForm();
+       $formIngredients = $form->createNamedBuilder("Ingredientes", IngredientPerProductType::class,$data)->getForm();
        $formProductInformation = $form->createNamedBuilder("Producto", ProductInformationType::class,$menus)->getForm();
-       
+       $formExtras = $form->createNamedBuilder("Extras", ExtraPerProductType::class,$data)->getForm();
+       $formProductInformation->setData([]);
         //----------------------
         
        
         //Form Ingredients
         $formIngredients->handleRequest($request);
-        if ($formIngredients->isSubmitted() && $formIngredients->isValid()) {
-            $data = $formIngredients->getData();
-            $data['cafeteria'] = $cafeteria_name;
-            $body = $this->APICall($data, 'createItem', $cookie);
-            if ($body->status == 'OK') {
-                $message = "Menu creado";
-            } else {
-                $message = $body->message;
-            }
-        }
-        //-----------------
-         //Form Info
+        $formExtras->handleRequest($request);
         $formProductInformation->handleRequest($request);
-        if ($formProductInformation->isSubmitted() && $formProductInformation->isValid()) {
+        if ($formIngredients->isSubmitted() && $formIngredients->isValid()) {
+            $ingredients = $request->request->get('Ingredientes');
+            $extras = $request->request->get('Extras');
             $data = $formProductInformation->getData();
-            $data['cafeteria'] = $cafeteria_name;
+            $data['ingredients'] = json_encode($ingredients['ingredients']);
+            $data['extras'] = json_encode($extras['extras']);
+            $cookie = $request->cookies->get('TOKEN');
             $body = $this->APICall($data, 'createItem', $cookie);
             if ($body->status == 'OK') {
-                $message = "Menu creado";
+                $message .= $body->message;
             } else {
-                $message = $body->message;
+                $message .= $body->message;
             }
         }
         //-----------------
@@ -192,7 +191,9 @@ class MenuController extends Controller
                                                             'cafeteria'=>$cafeteria_name,
                                                             'formIngredients'=>$formIngredients->createView(),
                                                             'formProduct' => $formProductInformation->createView(),
+                                                            'formExtras' => $formExtras->createView(),
                                                             'items' => $items,
+                                                            'time' => $timestamp,
                                                             'message' =>$message
                                                             ));
         return $response;
