@@ -47,7 +47,7 @@ account:
     controller: App\Controller\AdminController::account
     
 activity:
-    path: /admin/activity
+    path: /admin/{cafeteria}/activity
     controller: App\Controller\AdminController::activity
     
 balance:

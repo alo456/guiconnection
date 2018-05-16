@@ -28,67 +28,26 @@
                             <table class="table table-responsive-sm table-bordered table-striped table-sm">
                                 <thead>
                                     <tr>
-                                        <th>Sesion</th>
-                                        <th>Fecha</th>
-                                        <th>POS/APP</th>
-                                        <th>Status</th>
+                                        <th>Card/POS</th>
+                                        <th>Fecha y hora</th>
+                                        <th>Monto</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    <tr>
-                                        <td>S01032018</td>
-                                        <td>2012/01/01</td>
-                                        <td>POS</td>
-                                        <td>
-                                            <span class="badge badge-success">Realizado</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>S01032018</td>
-                                        <td>2012/02/01</td>
-                                        <td>APP</td>
-                                        <td>
-                                            <span class="badge badge-warning">Pendiente</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>S01032018</td>
-                                        <td>2012/02/01</td>
-                                        <td>APP</td>
-                                        <td>
-                                            <span class="badge badge-success">Realizado</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>S01032018</td>
-                                        <td>2012/03/01</td>
-                                        <td>POS</td>
-                                        <td>
-                                            <span class="badge badge-warning">Pendiente</span>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>S01032018</td>
-                                        <td>2012/01/21</td>
-                                        <td>APP</td>
-                                        <td>
-                                            <span class="badge badge-success">Realizado</span>
-                                        </td>
-                                    </tr>
+                                    {#----------INICIO--------------#}
+                                    {% for data in actividad %}
+                                        <tr>
+                                            <td>{{data.paymentMethod}}</td>
+                                            <td>{{data.timestamp.timestamp | date('Y-m-d H:i:s')}}</td>
+                                            <td>{{data.amount}}</td>
+                                        </tr>
+                                    {% endfor %}
+                                  
+                                    
+                                    {#----------FIN--------------#} 
                                 </tbody>
                             </table>
-                            <nav>
-                                <ul class="pagination">
-                                    <li class="page-item"><a class="page-link" href="#">Atras</a></li>
-                                    <li class="page-item active">
-                                        <a class="page-link" href="#">1</a>
-                                    </li>
-                                    <li class="page-item"><a class="page-link" href="#">2</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">3</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">4</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">Siguiente</a></li>
-                                </ul>
-                            </nav>
+
                         </div>
                     </div>
                 </div>

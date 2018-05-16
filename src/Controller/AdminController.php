@@ -256,10 +256,17 @@ class AdminController extends Controller
         return $response;
     }
     
-    public function activity(Request $request){
+    public function activity(Request $request, $cafeteria){
+        $cafeteria_name = strtolower(str_replace("_", " ", $cafeteria));
+        $cookie = $request->cookies->get('TOKEN');
+        $data['cafeteria'] = $cafeteria_name;
+        $body  = $this->APICall($data, "getLastTransactions", $cookie);
+//        var_dump($body->payload);
+//        die;
+
         return $this->render('Administrator/activity.html.twig', array(
-                                                    'cafeteria' => 'cuckoo'
-                    
+                                                    'cafeteria' => $cafeteria_name,
+                                                    'actividad' =>$body->payload                                               
                                                             ));
     }
     
