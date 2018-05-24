@@ -1,8 +1,8 @@
-var url = "http://localhost/guiconnection/public/admin/employee";
+var url = "http://localhost/guiconnection/public/admin/item";
 
-function deleteEmployee(button){
+function deleteItem(button){
     var data = $(button).data('data');
-    data['action'] = 'deleteEmployee';
+    data['action'] = 'deleteItem';
     bootbox.dialog({
         className: 'modal',
         closeButton: false,
@@ -81,16 +81,19 @@ function deleteEmployee(button){
     });
 }
 
-function updateEmployee(url, button){
+function updateItem(url, button){
     var data = $(button).data('data');
     $.get(url, function (data) {
         bootbox.dialog({
             className: 'modal',
             closeButton: false,
-            title: 'Editar Empleado',
-            message: data
+            title: 'Editar Producto',
+            message: data,
+            size: 'large'
         });
         
     });         
 }
+
+
 

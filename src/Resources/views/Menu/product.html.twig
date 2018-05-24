@@ -34,9 +34,13 @@
                                                 <h4 class="card-title">Información del producto</h4>
                                             </div>
                                             <div class="card-body">
-                                                {% form_theme formProduct 'bootstrap_4_horizontal_layout.html.twig' %}
-                                                {{ form_start(formProduct) }}
-                                                {{ form_end(formProduct) }}
+                                                {% form_theme formItem 'bootstrap_4_horizontal_layout.html.twig' %}
+                                                {{ form_start(formItem, {'attr': {'id': 'itemform'}}) }}
+                                                {{ form_row(formItem.information.name) }}
+                                                {{ form_row(formItem.information.description) }}
+                                                {{ form_row(formItem.information.cost) }}
+                                                {{ form_row(formItem.information.cookingtime) }}
+                                                {{ form_row(formItem.information.menu) }}
                                                 <hr/>
                                             </div>
                                         </div>
@@ -52,19 +56,16 @@
                                             <div class="tab-content">
                                                 <div class="tab-pane active" id="ingredients" role="tabpanel">
                                                     <div class="animated fadeIn">
-                                                        {% form_theme formIngredients 'bootstrap_4_horizontal_layout.html.twig' 'ingredient_theme.html.twig' %}
-                                                        {{ form_start(formIngredients, {'attr': {'id': 'ingredientsform'}}) }}
-                                                        <div>{{form_widget(formIngredients.ingredients)}}</div>
-                                                        {{ form_end(formIngredients) }}
+                                                        {% form_theme formItem.ingredients 'bootstrap_4_horizontal_layout.html.twig' 'ingredient_theme.html.twig' %}
+                                                        <div>{{form_widget(formItem.ingredients)}}</div>
                                                         <hr/>
                                                     </div>
                                                 </div>
                                                 <div class="tab-pane" id="extras" role="tabpanel">
                                                     <div class="animated fadeIn">
-                                                        {% form_theme formExtras 'bootstrap_4_horizontal_layout.html.twig' 'extra_theme.html.twig' %}
-                                                        {{ form_start(formExtras) }}
-                                                        <div>{{form_widget(formExtras.extras)}}</div>
-                                                        {{ form_end(formExtras) }}
+                                                        {% form_theme formItem.extras 'bootstrap_4_horizontal_layout.html.twig' 'extra_theme.html.twig' %}
+
+                                                        <div>{{form_widget(formItem.extras)}}</div>
                                                         <hr/>
                                                     </div>
                                                 </div>
@@ -107,12 +108,12 @@
                                                                         <td> {{item.description}}</td>
                                                                         <td> {{item.cost}}</td>
                                                                         <td>
-                                                                            <button  type="button" class="btn btn-outline-primary" >
+                                                                            <button data-item='{"id_item": "{{item.id}}"}' onclick="updateItem('/guiconnection/public/admin/resources/item/{{item.id}}',this)" type="button" class="btn btn-outline-primary" >
                                                                                 Editar
                                                                             </button>
                                                                         </td>
                                                                         <td>
-                                                                            <button  type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modaleliminarempleado">
+                                                                            <button  data-item='{"id_item": "{{item.id}}"}'  onclick="deleteItem(this)" type="button" class="btn btn-outline-danger" >
                                                                                 Eliminar
                                                                             </button>
                                                                         </td>
@@ -128,17 +129,24 @@
                                         </div>
                                     </div>
                                 </div>
-                            </div>
+                                <ul class="pagination justify-content-end">
+                                    <li class="page-item">
+                                       {{form_row(formItem.save)}}
+                                    </li>
+                                </ul>
+                                {{form_end(formItem)}} 
+                            </div>                              
                         </div>
-                    </div>   
+                    </div>
                 </div>
             </div>
         </main>
-{% endblock %}
-{% block javascripts %}
-    <script type="text/javascript">
+    {% endblock %}
+    
+    {% block javascripts %}
+        <script type="text/javascript">
         var file = $.getJSON("http://localhost/guiconnection/public/admin/{{cafeteria}}/resources/Alias?_={{time}}");
-        
+
         $.fn.select2.defaults.set("theme", "bootstrap");
         $('.ingredient-collection').collection({
             allow_duplicate: false,
@@ -147,15 +155,15 @@
             after_add: function (collection, element) {
                 $(element).find('select').select2(select2cont())
             },
-            add: '<a href="#" id="{{formIngredients.vars.name}}_add_button" class="float-right text-success" title="Add element"><i class="fa fa-lg fa-plus-circle"></i></a>',
+            add: '<a href="#" id="{{formItem.ingredients.vars.name}}_add_button" class="float-right text-success" title="Add element"><i class="fa fa-lg fa-plus-circle"></i></a>',
             init_with_n_elements: 1,
             add_at_the_end: true,
             // here is the magic!
             elements_selector: 'tr.ingredient',
             elements_parent_selector: '%id% tbody'
         });
-        $("#{{formIngredients.vars.name}}_add_button").appendTo($('#{{formIngredients.ingredients.vars.name}}_action'));
-        
+        $("#{{formItem.ingredients.vars.name}}_add_button").appendTo($('#{{formItem.ingredients.vars.id}}_action'));
+
         $('.extra-collection').collection({
             allow_duplicate: false,
             allow_up: false,
@@ -163,27 +171,27 @@
             after_add: function (collection, element) {
                 $(element).find('select').select2(select2cont())
             },
-            add: '<a href="#" id="{{formExtras.vars.name}}_add_button" class="float-right text-success" title="Add element"><i class="fa fa-lg fa-plus-circle"></i></a>',
+            add: '<a href="#" id="{{formItem.extras.vars.name}}_add_button" class="float-right text-success" title="Add element"><i class="fa fa-lg fa-plus-circle"></i></a>',
             init_with_n_elements: 1,
             add_at_the_end: true,
             // here is the magic!
             elements_selector: 'tr.extra',
             elements_parent_selector: '%id% tbody'
         });
-        $("#{{formExtras.vars.name}}_add_button").appendTo($('#{{formExtras.extras.vars.name}}_action'));
- 
+        $("#{{formItem.extras.vars.name}}_add_button").appendTo($('#{{formItem.extras.vars.id}}_action'));
 
-        var url = "https://s3.us-east-2.amazonaws.com/taitech.tueat/";
+
+        var urling = "https://s3.us-east-2.amazonaws.com/taitech.tueat/ingredients/";
         $(".select2").select2(select2cont());
         function formatIng(ing) {
             if (ing.loading) {
                 return ing.text;
             }
-
-            var markup = "<div class='media col-6 col-lg-3'>"+
-                    "<img class='d-flex mr-3 img-fluid' src='" + url + ing.photo + "'/>"+
-                    "<div class='media-body'>"+
-                        "<h5 class='mt-0'>" + ing.text + "</h5>"+
+            
+            var markup = "<div class='media col-6 col-lg-3'>" +
+                    "<img class='d-flex mr-3 img-fluid' src='" + urling + ing.id + ".png" + "'/>" +
+                    "<div class='media-body'>" +
+                    "<h5 class='mt-0'>" + ing.text + "</h5>" +
                     "</div></div>";
             return markup;
         }
@@ -191,63 +199,94 @@
         function formatIngSelection(repo) {
             return repo.text;
         }
-        
-        function select2cont(){
-            return obj = 
+
+        function select2cont() {
+            return obj =
                     {
-            ajax: {
-                url: "http://localhost/guiconnection/public/admin/search",
-                dataType: 'json',
-                type: "POST",
-                delay: 250,
-                language: "es",
-                data: function (params) {
-                    var query = {
-                        q: params.term,
-                        page: params.page
-                    }
-                    return query;
-                },
-                processResults: function (data, params) {
-                    // parse the results into the format expected by Select2
-                    // since we are using custom formatting functions we do not need to
-                    // alter the remote JSON data, except to indicate that infinite
-                    // scrolling can be used
-                    params.page = params.page || 1;
-                    var f = file.responseJSON;
-                    $.each( data.results, function( key, val ) {
-                        if(typeof f[val.id] != "undefined")
-                            val.text = f[val.id];
-                        console.log(val);
-                    });             
-                    return {
-                        results: data.results,
-                        pagination: {
-                            more: (params.page * 30) < data.total
+                        ajax: {
+                            url: "http://localhost/guiconnection/public/admin/search",
+                            dataType: 'json',
+                            type: "POST",
+                            delay: 250,
+                            data: function (params) {
+                                var query = {
+                                    q: params.term,
+                                    page: params.page
+                                }
+                                return query;
+                            },
+                            processResults: function (data, params) {
+                                // parse the results into the format expected by Select2
+                                // since we are using custom formatting functions we do not need to
+                                // alter the remote JSON data, except to indicate that infinite
+                                // scrolling can be used
+                                params.page = params.page || 1;
+                                var f = file.responseJSON;
+                               
+                                $.each(f, function (fKey, fVal) {
+                                    //console.log(val.text); 
+                                    var flag = false;
+                                    if(fVal.text.toLowerCase().includes(params.term.toLowerCase())){
+                                        console.log("entra al primer if");
+                                        $.each(data.results, function (key, val) {
+                                            
+                                                if(fVal.id == val.id){
+                                                    val.text = fVal.text;
+                                                    console.log("entra al if");
+                                                    flag = true;
+                                                }   
+                                        });
+                                        if(!flag){
+                                            console.log("entra bandera");
+                                            data.results.push(fVal);
+                                        }
+                                    }
+                                    else{
+                                        $.each(data.results, function (key, val) {
+                                            
+                                                if(fVal.id == val.id){
+                                                    val.text = fVal.text;
+                                                    console.log("entra al if 2");
+                                                    flag = true;
+                                                }   
+                                        });                                   
+                                    }
+                                });
+                                
+                                console.log(data.results);
+                               // data.results[3]=f[0];
+                                return {
+                                    results: data.results,
+                                    pagination: {
+                                        more: (params.page * 30) < data.total
+                                    }
+                                };
+                            },
+                            cache: true
+                        },
+                        placeholder: 'Busca un ingrediente',
+                        minimumInputLength: 2,
+                        escapeMarkup: function (markup) {
+                            return markup;
+                        }, // let our custom formatter work
+                        templateResult: formatIng,
+                        templateSelection: formatIngSelection,
+                        language: {
+                            noResults: function () {
+                                return "No hay resultados";
+                            },
+                            searching: function () {
+                                return "Buscando...";
+                            },
+                            inputTooShort: function () {
+                                return "Por favor escribe 2 o más carácteres";
+                            }
                         }
-                    };
-                },
-                cache: true
-            },
-            placeholder: 'Busca un ingrediente',
-            minimumInputLength: 2,
-            escapeMarkup: function (markup) {
-                return markup;
-            }, // let our custom formatter work
-            templateResult: formatIng,
-            templateSelection: formatIngSelection,
-            language: {
-                noResults: function() {
-                    return "No hay resultados";        
-                },
-                searching: function() {
-                    return "Buscando...";
-                },
-                inputTooShort: function () {
-                    return "Por favor escribe 2 o más carácteres";
-                }
-            }
+                    }
         }
-        }
-    </script>
-{% endblock %}
+        </script>
+        <script src="{{ asset('js/helper.js') }}"></script>
+        <script src="{{ asset('js/views/item.js') }}"></script>
+    {% endblock %}
+    
+    
