@@ -28,14 +28,12 @@
                     <table {{ block('widget_attributes') }}>
                         <thead>
                         <th>Ingrediente</th>
-                        <th>Alias</th>
                         <th>Cantidad</th>
-                        <th>Unidad</th>
                         <th>&nbsp;</th>
                         </thead>
                         <tbody>
-                            {% for ingredient in form  %}
-                                {{ form_widget(ingredient) }}
+                            {% for product in form  %}
+                                {{ form_widget(product) }}
                             {% endfor %}
 
                         </tbody>
@@ -48,19 +46,15 @@
     {% endspaceless %}
 {% endblock %}
 
-{% block ingredient_widget %}
+{% block product_widget %}
 
     {# widget_attributes will generate class="item" from the DiscountCollectionType.entry_options configuration #}
     <tr {{ block('widget_attributes') }}>
-        <td>{{ form_widget(form.ingredient) }}</td>
-        <td>{{ form_widget(form.alias) }}</td>
-        <td>{{ form_widget(form.quantity) }}</td>
-        <td>{{ form_widget(form.unit) }}</td>
+        <td>{{ form_widget(form.product) }}</td>
+        <td>{{ form_widget(form.quantity) }}</td> 
         <td class="text-center">
             <a href="#" class="collection-remove btn btn-danger" title="Delete element"><i class="fa fa-l fa-minus-circle"></i></a>
-        </td>
-        
-        
+        </td>        
     </tr>
 
 {% endblock %}

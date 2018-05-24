@@ -1,8 +1,10 @@
 <?php
 namespace App\Controller;
 
-use App\Form\IngredientPerProductType;
+use App\Form\BundleType;
 use App\Form\ExtraPerProductType;
+use App\Form\IngredientPerProductType;
+use App\Form\ProductBriefType;
 use App\Form\ProductInformationType;
 use App\Helper\ConnectionController as Controller;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
@@ -90,16 +92,23 @@ class MenuController extends Controller
         return $response;
     }
     
-    public function ingredient(Request $request, $cafeteria){
-        $message = "";
-        $menus = [];
-        $ingredients = [];
-        //Get menus from cafeteria
+    public function bundle(Request $request, $cafeteria){
         $cafeteria_name = strtolower(str_replace("_", " ", $cafeteria));
-        return $this->render('Menu/ingredient.html.twig' , array(
-                                                'cafeteria' => $cafeteria_name,
-                                                'message' => $message
-        ));
+        $cookie = $request->cookies->get('TOKEN');
+        $data['cafeteria'] = $cafeteria_name;
+        
+                //FORM JQUERY 
+       $data = array();
+       $form = $this->get('form.factory');
+       $formBundles = $form->createNamedBuilder("Paquetes", BundleType::class,$data)->getForm();
+       $formBundles->setData([]);
+        //----------------------
+      
+        
+        return $this->render('Menu/bundle.html.twig', array(
+                                                    'cafeteria' => $cafeteria_name, 
+                                                    'formBundle' => $formBundles->createView()
+                                                       ));
     }
 
     public function product(Request $request, $cafeteria){

@@ -270,6 +270,7 @@ class AdminController extends Controller
                                                             ));
     }
     
+    
     public function balance(Request $request){
         return $this->render('Administrator/balance.html.twig');
     }

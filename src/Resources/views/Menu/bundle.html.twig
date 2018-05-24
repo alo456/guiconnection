@@ -1,0 +1,234 @@
+{% extends 'base.html.twig' %}
+{% set title = 'Product'%}
+{% block classBody 'app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden aside-menu-off-canvas' %}
+    {% block body %}
+        <main class="main">   
+            {% include 'header_cafeteria.html.twig' %}
+            <div class="container-fluid">
+                <div class="animated fadeIn">
+                    <!-- Page Header-->
+                    <div class="jumbotron jumbotron-fluid">
+                        <div class="container">
+                            <h3 class="display-4">Vamos a crear los paquetes de tu {{cafeteria}}</h3>
+                            <p class="lead">Crea tus paquetes</p>
+                              {#
+                            {% if message is not empty %}
+                                <p class="lead">{{message}}</p>
+                            {% endif %}
+                                #}
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-6 mb-4">
+                            <ul class="nav nav-tabs" role="tablist">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="tab" href="#create" role="tab" aria-controls="tablas"><i class="fa fa-file-text-o"></i>Crear</a>
+                                </li>
+                                <li class="nav-item">
+                                    <a class="nav-link" data-toggle="tab" href="#exist" role="tab" aria-controls="graficas"><i class="fa fa-bar-chart"></i>Existentes</a>
+                                </li>
+                            </ul>
+                            <div class="tab-content">
+                                <div class="tab-pane active" id="create" role="tabpanel">
+                                    <div class="animated fadeIn">
+                                        <div class="card">
+                                            <div class="card-header">
+                                                <h4 class="card-title">Información de los paquetes</h4>
+                                            </div>
+                                            
+                                            <div class="card-body">
+                                                {% form_theme formBundle 'bootstrap_4_horizontal_layout.html.twig' %}
+                                                {{ form_row(formBundle.name) }}
+                                                {{ form_row(formBundle.description) }}
+                                                {{ form_row(formBundle.cost) }}
+                                                {{ form_row(formBundle.cookingtime) }}
+                                                <hr/>
+                                            </div>
+                                              
+                                        </div>
+                                        <div class="col-lg-12 col-md-6 mb-4">
+                                            <ul class="nav nav-tabs" role="tablist">
+                                                <li class="nav-item">
+                                                    <a class="nav-link active" data-toggle="tab" href="#products" role="tab" aria-controls="tablas"><i class="fa fa-file-text-o"></i>Productos</a>
+                                                </li>
+                                            </ul>
+                                        </div>
+                                        <div class="tab-content">
+                                                <div class="tab-pane active" id="ingredients" role="tabpanel">
+                                                    <div class="animated fadeIn">
+                                                        {% form_theme formBundle 'bootstrap_4_horizontal_layout.html.twig' 'product_theme.html.twig'%}
+                                                        {{ form_row(formBundle.product)}}
+                                                        {{ form_row(formBundle.quantity)}}
+                                                    </div>
+                                                </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="tab-pane" id="exist" role="tabpanel">
+                                    <div class="animated fadeIn">
+                                        <div class="card">
+                                            <div class="card-body">
+                                                <div class="row">
+                                                    <div class="col-md-12 mb-4">
+                                                        <div class="row">
+                                                            <div class="col-sm-5">
+                                                                <h3 class="card-title clearfix mb-0"> </h3>
+                                                            </div>
+                                                        </div>
+                                                        <!-- TABLAS -->
+                                                        <table class= "table table-responsive-sm table-hover table-outline mb-0 ">
+                                                            <!-- TITULOS DE TABLA -->
+                                                            <thead class="thead-light ">
+                                                                <tr>
+                                                                    <th>#</th>
+                                                                    <th>Nombre del Producto</th>
+                                                                    <th>Descripción</th>
+                                                                    <th>Costo</th>
+                                                                    <th>Editar</th>
+                                                                    <th>Eliminar</th>
+                                                                </tr>
+                                                            </thead>
+                                                            <!-- tbody de tabla -->
+                                                            <tbody>
+                                                                <!-- FILA 1 -->
+                                                                  {#
+                                                                
+                                                                {% for item in items %}
+                                                                    <tr>
+                                                                        <td> {{loop.index}} </td>
+                                                                        <td> {{item.name}} </td>
+                                                                        <td> {{item.description}}</td>
+                                                                        <td> {{item.cost}}</td>
+                                                                        <td>
+                                                                            <button  type="button" class="btn btn-outline-primary" >
+                                                                                Editar
+                                                                            </button>
+                                                                        </td>
+                                                                        <td>
+                                                                            <button  type="button" class="btn btn-outline-danger" data-toggle="modal" data-target="#modaleliminarempleado">
+                                                                                Eliminar
+                                                                            </button>
+                                                                        </td>
+                                                                    </tr>    
+                                                                {% endfor %}
+                                                                  #}
+                                                                
+
+                                                            </tbody>
+                                                        </table>
+                                                    </div>
+                                                </div>
+                                                <hr/>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>   
+                </div>
+            </div>
+        </main>
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript">
+            {#
+        var file = $.getJSON("http://localhost/guiconnection/public/admin/{{cafeteria}}/resources/Alias?_={{time}}");
+            #}
+        $.fn.select2.defaults.set("theme", "bootstrap");
+        $('.product-collection').collection({
+            allow_duplicate: false,
+            allow_up: false,
+            allow_down: false,
+            after_add: function (collection, element) {
+                $(element).find('select').select2(select2cont())
+            },
+                add: '<a href="#" id="{{formBundle.vars.name}}_add_button" class="float-right text-success" title="Add element"><i class="fa fa-lg fa-plus-circle"></i></a>',
+                          
+            init_with_n_elements: 1,
+            add_at_the_end: true,
+            // here is the magic!
+            elements_selector: 'tr.product',
+            elements_parent_selector: '%id% tbody'
+        });
+            $("#{{formBundle.vars.name}}_add_button").appendTo($('#{{formBundle.product.vars.name}}_action'));      
+
+        
+    var url = "https://s3.us-east-2.amazonaws.com/taitech.tueat/";
+        $(".select2").select2(select2cont());
+        function formatProduct(product) {
+            if (product.loading) {
+                return product.text;
+            }
+
+            var markup = "<div class='media col-6 col-lg-3'>"+
+                    "<img class='d-flex mr-3 img-fluid' src='" + url + product.photo + "'/>"+
+                    "<div class='media-body'>"+
+                        "<h5 class='mt-0'>" + product.text + "</h5>"+
+                    "</div></div>";
+            return markup;
+        }
+
+        function formatProductSelection(repo) {
+            return repo.text;
+        }
+        
+        function select2cont(){
+            return obj = 
+                    {
+            ajax: {
+                url: "http://localhost/guiconnection/public/admin/search",
+                dataType: 'json',
+                type: "POST",
+                delay: 250,
+                language: "es",
+                data: function (params) {
+                    var query = {
+                        q: params.term,
+                        page: params.page
+                    }
+                    return query;
+                },
+                processResults: function (data, params) {
+                    // parse the results into the format expected by Select2
+                    // since we are using custom formatting functions we do not need to
+                    // alter the remote JSON data, except to indicate that infinite
+                    // scrolling can be used
+                    params.page = params.page || 1;
+                    var f = file.responseJSON;
+                    $.each( data.results, function( key, val ) {
+                        if(typeof f[val.id] != "undefined")
+                            val.text = f[val.id];
+                        console.log(val);
+                    });             
+                    return {
+                        results: data.results,
+                        pagination: {
+                            more: (params.page * 30) < data.total
+                        }
+                    };
+                },
+                cache: true
+            },
+            placeholder: 'Busca un producto',
+            minimumInputLength: 2,
+            escapeMarkup: function (markup) {
+                return markup;
+            }, // let our custom formatter work
+            templateResult: formatProduct,
+            templateSelection: formatProductSelection,
+            language: {
+                noResults: function() {
+                    return "No hay resultados";        
+                },
+                searching: function() {
+                    return "Buscando...";
+                },
+                inputTooShort: function () {
+                    return "Por favor escribe 2 o más carácteres";
+                }
+            }
+        }
+        }
+    </script>
+{% endblock %}
