@@ -1,0 +1,204 @@
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-lg-12 col-md-6 mb-4">
+            <div class="tab-pane active" id="create" role="tabpanel">
+                <div class="animated fadeIn">
+                    <div class="card">
+                        <div class="card-header">
+                            <h4 class="card-title">Información del producto</h4>
+                        </div>
+                        <div class="card-body">
+                            {% form_theme form 'bootstrap_4_horizontal_layout.html.twig' %}
+                            {{ form_start(form, {'attr': {'id': 'itemform'}}) }}
+                            {{ form_row(form.information.name,{ value : item.name, 'attr': {'placeholder' : item.name}}) }}
+                            {{ form_row(form.information.description,{ value : item.description, 'attr': {'placeholder' : item.description}}) }}
+                            {{ form_row(form.information.cost,{ value : item.cost, 'attr': {'placeholder' : item.cost}}) }}
+                            {{ form_row(form.information.cookingtime,{ value : item.cookingtime, 'attr': {'placeholder' : item.cookingtime}}) }}
+                            {{ form_row(form.information.menu, { value : item.menu~"" }) }}
+                            <hr/>
+                        </div>
+                    </div>
+                    <div class="col-lg-12 col-md-6 mb-4">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" data-toggle="tab" href="#_ingredients" role="tab" aria-controls="tablas"><i class="fa fa-file-text-o"></i>Ingredientes</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" data-toggle="tab" href="#_extras" role="tab" aria-controls="graficas"><i class="fa fa-bar-chart"></i>Extras</a>
+                            </li>
+                        </ul>
+                        <div class="tab-content">
+                            <div class="tab-pane active" id="_ingredients" role="tabpanel">
+                                <div class="animated fadeIn">
+                                    {% form_theme form.ingredients 'bootstrap_4_horizontal_layout.html.twig' 'ingredient_theme.html.twig' %}
+                                    <div>{{form_widget(form.ingredients)}}</div>
+                                    <hr/>
+                                </div>
+                            </div>
+                            <div class="tab-pane" id="_extras" role="tabpanel">
+                                <div class="animated fadeIn">
+                                    {% form_theme form.extras 'bootstrap_4_horizontal_layout.html.twig' 'extra_theme.html.twig' %}
+
+                                    <div>{{form_widget(form.extras)}}</div>
+                                    <hr/>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <ul class="pagination justify-content-end">
+                <li class="page-item">
+                    {{form_row(form.cancel)}}
+                </li>
+                <li class="page-item">
+                    {{form_row(form.save)}}
+                </li>
+            </ul>
+            {{form_end(form)}} 
+        </div>                              
+    </div>
+</div>
+        
+<script type="text/javascript">
+        var file = $.getJSON("http://localhost/guiconnection/public/admin/{{item.cafeteria}}/resources/Alias?_=111  ");
+
+       // $.fn.select2.defaults.set("theme", "bootstrap");
+        $('.ingredient-collection').collection({
+            allow_duplicate: false,
+            allow_up: false,
+            allow_down: false,
+            after_add: function (collection, element) {
+                $(element).find('select').select2(select2cont())
+            },
+            add: '<a href="#" id="{{form.ingredients.vars.id}}_add_button" class="float-right text-success" title="Add element"><i class="fa fa-lg fa-plus-circle"></i></a>',
+            init_with_n_elements: 1,
+            add_at_the_end: true,
+            // here is the magic!
+            elements_selector: 'tr.ingredient',
+            elements_parent_selector: '%id% tbody'
+        });
+        $("#{{form.ingredients.vars.id}}_add_button").appendTo($('#{{form.ingredients.vars.id}}_action'));
+
+        $('.extra-collection').collection({
+            allow_duplicate: false,
+            allow_up: false,
+            allow_down: false,
+            after_add: function (collection, element) {
+                $(element).find('select').select2(select2cont())
+            },
+            add: '<a href="#" id="{{form.extras.vars.id}}_add_button" class="float-right text-success" title="Add element"><i class="fa fa-lg fa-plus-circle"></i></a>',
+            init_with_n_elements: 1,
+            add_at_the_end: true,
+            // here is the magic!
+            elements_selector: 'tr.extra',
+            elements_parent_selector: '%id% tbody'
+        });
+        $("#{{form.extras.vars.id}}_add_button").appendTo($('#{{form.extras.vars.id}}_action'));
+
+
+        var urling = "https://s3.us-east-2.amazonaws.com/taitech.tueat/ingredients/";
+        $(".select2").select2(select2cont());
+        function formatIng(ing) {
+            if (ing.loading) {
+                return ing.text;
+            }
+            
+            var markup = "<div class='media col-6 col-lg-3'>" +
+                    "<img class='d-flex mr-3 img-fluid' src='" + urling + ing.id + ".png" + "'/>" +
+                    "<div class='media-body'>" +
+                    "<h5 class='mt-0'>" + ing.text + "</h5>" +
+                    "</div></div>";
+            return markup;
+        }
+
+        function formatIngSelection(repo) {
+            return repo.text;
+        }
+
+        function select2cont() {
+            return obj =
+                    {
+                        ajax: {
+                            url: "http://localhost/guiconnection/public/admin/search",
+                            dataType: 'json',
+                            type: "POST",
+                            delay: 250,
+                            data: function (params) {
+                                var query = {
+                                    q: params.term,
+                                    page: params.page
+                                }
+                                return query;
+                            },
+                            processResults: function (data, params) {
+                                // parse the results into the format expected by Select2
+                                // since we are using custom formatting functions we do not need to
+                                // alter the remote JSON data, except to indicate that infinite
+                                // scrolling can be used
+                                params.page = params.page || 1;
+                                var f = file.responseJSON;
+                               
+                                $.each(f, function (fKey, fVal) {
+                                    //console.log(val.text); 
+                                    var flag = false;
+                                    if(fVal.text.toLowerCase().includes(params.term.toLowerCase())){
+                                        console.log("entra al primer if");
+                                        $.each(data.results, function (key, val) {
+                                            
+                                                if(fVal.id == val.id){
+                                                    val.text = fVal.text;
+                                                    console.log("entra al if");
+                                                    flag = true;
+                                                }   
+                                        });
+                                        if(!flag){
+                                            console.log("entra bandera");
+                                            data.results.push(fVal);
+                                        }
+                                    }
+                                    else{
+                                        $.each(data.results, function (key, val) {
+                                            
+                                                if(fVal.id == val.id){
+                                                    val.text = fVal.text;
+                                                    console.log("entra al if 2");
+                                                    flag = true;
+                                                }   
+                                        });                                   
+                                    }
+                                });
+                                
+                                console.log(data.results);
+                               // data.results[3]=f[0];
+                                return {
+                                    results: data.results,
+                                    pagination: {
+                                        more: (params.page * 30) < data.total
+                                    }
+                                };
+                            },
+                            cache: true
+                        },
+                        placeholder: 'Busca un ingrediente',
+                        minimumInputLength: 2,
+                        escapeMarkup: function (markup) {
+                            return markup;
+                        }, // let our custom formatter work
+                        templateResult: formatIng,
+                        templateSelection: formatIngSelection,
+                        language: {
+                            noResults: function () {
+                                return "No hay resultados";
+                            },
+                            searching: function () {
+                                return "Buscando...";
+                            },
+                            inputTooShort: function () {
+                                return "Por favor escribe 2 o más carácteres";
+                            }
+                        }
+                    }
+        }
+        </script>

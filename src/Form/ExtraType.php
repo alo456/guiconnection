@@ -16,7 +16,7 @@ class ExtraType extends AbstractType {
                     'attr' => array(
                         'class' => 'select2 form-control',
                         'style' => 'width: 100%',
-                        'form' => 'ingredientsform'
+                        'form' => 'itemform'
                     )
                 ))
                 ->add('alias', TextType::class, array(
@@ -24,7 +24,7 @@ class ExtraType extends AbstractType {
                     'attr' => array(
                         'class' => 'form-control',
                         'placeholder' => 'Alias',
-                        'form' => 'ingredientsform'
+                        'form' => 'itemform'
                     )
                 ))
                 ->add('quantity', NumberType::class, array(
@@ -32,7 +32,7 @@ class ExtraType extends AbstractType {
                     'attr' => array(
                         'class' => 'form-control',
                         'placeholder' => 'Cantidad',
-                        'form' => 'ingredientsform'
+                        'form' => 'itemform'
                     )
                 ))
                 ->add('unit', TextType::class, array(
@@ -40,7 +40,7 @@ class ExtraType extends AbstractType {
                     'attr' => array(
                         'class' => 'form-control',
                         'placeholder' => 'Unidad',
-                        'form' => 'ingredientsform'
+                        'form' => 'itemform'
                     )
                 ))
                 ->add('cost', NumberType::class, array(
@@ -48,7 +48,7 @@ class ExtraType extends AbstractType {
                     'attr' => array(
                         'class' => 'form-control',
                         'placeholder' => 'Costo',
-                        'form' => 'ingredientsform'
+                        'form' => 'itemform'
                     )
                 ));
     }

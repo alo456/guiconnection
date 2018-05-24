@@ -130,9 +130,8 @@ class MenuController extends Controller
         } else {
             $message .= $body->message;
         }
-
+        //--------------------------------
         //Get menus from cafeteria
-        
         $data = array();
         $data['cafeteria'] = $cafeteria_name;
         $cookie = $request->cookies->get('TOKEN');
@@ -143,10 +142,6 @@ class MenuController extends Controller
             $message .= $body->message;
             
         }
-        //------------------
-        
-        
-        
         //------------------
         //Get items from cafeteria
         $data = array();
@@ -160,47 +155,34 @@ class MenuController extends Controller
             
         }
         //------------------
-        
-        
-        
         //FORM JQUERY 
-       $data = array();
-       $form = $this->get('form.factory');
-       $formIngredients = $form->createNamedBuilder("Ingredientes", IngredientPerProductType::class,$data)->getForm();
-       $formProductInformation = $form->createNamedBuilder("Producto", ProductInformationType::class,$menus)->getForm();
-       $formExtras = $form->createNamedBuilder("Extras", ExtraPerProductType::class,$data)->getForm();
-       $formProductInformation->setData([]);
+        $data = array();
+        $data['menus'] = $menus;
+        $form = $this->get('form.factory');
+        $formItem = $form->createNamedBuilder("Item", ItemType::class,$data)->getForm();
         //----------------------
         
        
-        //Form Ingredients
-        $formIngredients->handleRequest($request);
-        $formExtras->handleRequest($request);
-        $formProductInformation->handleRequest($request);
-        if ($formIngredients->isSubmitted() && $formIngredients->isValid()) {
-            $ingredients = $request->request->get('Ingredientes');
-            $extras = $request->request->get('Extras');
-            $data = $formProductInformation->getData();
-            $data['ingredients'] = json_encode($ingredients['ingredients']);
-            $data['extras'] = json_encode($extras['extras']);
+        //Form Item
+        $formItem->handleRequest($request);
+        if ($formItem->isSubmitted() && $formItem->isValid()) {
+            $item = $request->request->get('Item');
+            $data = $item['information'];
+            $data['ingredients'] = isset($item['ingredients']) ? json_encode($item['ingredients']) : json_encode([]);
+            $data['extras'] = isset($item['extras']) ? json_encode($item['extras']) : json_encode([]);
             $cookie = $request->cookies->get('TOKEN');
+          
             $body = $this->APICall($data, 'createItem', $cookie);
             if ($body->status == 'OK') {
-                $message .= $body->message;
+                $message .= $body->payload;
             } else {
                 $message .= $body->message;
-            }
+            }  
         }
         //-----------------
-        
-        
-        
-        
         $response = $this->render('Menu/product.html.twig',array(
                                                             'cafeteria'=>$cafeteria_name,
-                                                            'formIngredients'=>$formIngredients->createView(),
-                                                            'formProduct' => $formProductInformation->createView(),
-                                                            'formExtras' => $formExtras->createView(),
+                                                            'formItem' => $formItem->createView(),
                                                             'items' => $items,
                                                             'time' => $timestamp,
                                                             'message' =>$message

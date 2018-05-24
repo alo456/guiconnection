@@ -85,3 +85,7 @@ search:
 resource:
     path: /admin/{cafeteria}/resources/{resource}
     controller: App\Controller\RDL::getResource
+    
+helper:
+    path: /admin/{context}  
+    controller: App\Controller\Helper::delete

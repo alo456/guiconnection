@@ -6,6 +6,13 @@ $(document).ready(function(){
 	$(this).data('data',data);
         console.log($(this));
     });
+    $("[data-item]").each(function(){
+	var data=$(this).attr('data-item');
+	data=JSON.parse(data);
+	$(this).attr('data-item',null);
+	$(this).data('data',data);
+        console.log($(this));
+    });
 });
 
 

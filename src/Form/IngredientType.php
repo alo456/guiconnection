@@ -11,33 +11,40 @@ use Symfony\Component\Form\FormBuilderInterface;
 class IngredientType extends AbstractType {
 
     public function buildForm(FormBuilderInterface $builder, array $options) {
+        if(isset($options['data'])){
+            var_dump($options['data']);
+        }
         $builder->add('ingredient', ChoiceType::class, array(
                     'label' => false,
                     'attr' => array(
                         'class' => 'select2 form-control',
-                        'style' => 'width: 100%'
+                        'style' => 'width: 100%',
+                        'form' => 'itemform'
                     ),
-                    'choices' => array()
+                    'required' =>true
                 ))
                 ->add('alias', TextType::class, array(
                     'label' => false,
                     'attr' => array(
                         'class' => 'form-control',
-                        'placeholder' => 'Alias'
+                        'placeholder' => 'Alias',
+                        'form' => 'itemform'
                     )
                 ))
                 ->add('quantity', NumberType::class, array(
                     'label' => false,
                     'attr' => array(
                         'class' => 'form-control',
-                        'placeholder' => 'Cantidad'
+                        'placeholder' => 'Cantidad',
+                        'form' => 'itemform'
                     )
                 ))
                 ->add('unit', TextType::class, array(
                     'label' => false,
                     'attr' => array(
                         'class' => 'form-control',
-                        'placeholder' => 'Unidad'
+                        'placeholder' => 'Unidad',
+                        'form' => 'itemform'
                     )
         ));
     }
