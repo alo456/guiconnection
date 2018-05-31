@@ -20,23 +20,20 @@
             <div class="card">
                 <div class="card-header">
                     {{form_label(form)}}
-                    <div class="card-actions" id="{{form.vars.id}}_action">
+                    <div class="card-actions" id="{{form.vars.name}}_action">
                         
                     </div>
                 </div>
                 <div class="card-block">
                     <table {{ block('widget_attributes') }}>
                         <thead>
-                        <th>Extra</th>
-                        <th>Alias</th>
+                        <th>Ingrediente</th>
                         <th>Cantidad</th>
-                        <th>Unidad</th>
-                        <th>Costo</th>
                         <th>&nbsp;</th>
                         </thead>
                         <tbody>
-                            {% for extra in form  %}
-                                {{ form_widget(extra) }}
+                            {% for product in form  %}
+                                {{ form_widget(product) }}
                             {% endfor %}
 
                         </tbody>
@@ -49,21 +46,15 @@
     {% endspaceless %}
 {% endblock %}
 
-{% block extra_widget %}
+{% block product_widget %}
 
     {# widget_attributes will generate class="item" from the DiscountCollectionType.entry_options configuration #}
     <tr {{ block('widget_attributes') }}>
-        
-        <td>{{ form_widget(form.extra) }}</td>
-        <td>{{ form_widget(form.alias) }}</td>
-        <td>{{ form_widget(form.quantity) }}</td>
-        <td>{{ form_widget(form.unit) }}</td>
-        <td>{{ form_widget(form.cost) }}</td>
+        <td>{{ form_widget(form.product) }}</td>
+        <td>{{ form_widget(form.quantity) }}</td> 
         <td class="text-center">
             <a href="#" class="collection-remove btn btn-danger" title="Delete element"><i class="fa fa-l fa-minus-circle"></i></a>
-        </td>
-        
-        
+        </td>        
     </tr>
 
 {% endblock %}

@@ -10,9 +10,9 @@ menuCategory:
     path: /admin/{cafeteria}/menu/category
     controller: App\Controller\MenuController::category
     
-menuIngredient:
-    path: /admin/{cafeteria}/menu/ingredient
-    controller: App\Controller\MenuController::ingredient
+menuBundle:
+    path: /admin/{cafeteria}/menu/bundle
+    controller: App\Controller\MenuController::bundle
     
 menuProduct:
     path: /admin/{cafeteria}/menu/product
@@ -79,3 +79,7 @@ search:
 resource:
     path: /admin/{cafeteria}/resources/{resource}
     controller: App\Controller\RDL::getResource
+    
+helper:
+    path: /admin/{context}  
+    controller: App\Controller\Helper::delete

@@ -67,10 +67,13 @@
                 <a class="nav-link" href="{{path('menuCategory', {'cafeteria': cafeteria })}}"><i class="icon-grid"></i>Categorias</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="{{path('menuProduct', {'cafeteria': cafeteria })}}"><i class="icon-note"></i>Productos</a>
+                <a class="nav-link" href="{{path('menuCategory', {'cafeteria': cafeteria }) }}"><i class="icon-grid"></i>Categorias</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="menu/product.html"><i class="icon-cup"></i>Paquetes</a>
+                <a class="nav-link" href="{{path('menuProduct', {'cafeteria': cafeteria }) }}"><i class="icon-note"></i>Productos</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{{path('menuBundle', {'cafeteria': cafeteria }) }}"><i class="icon-cup"></i>Paquetes</a>
               </li>
             </ul>
           </li>

@@ -3,6 +3,7 @@
 namespace App\Controller;
 
 use App\Form\EmployeeType;
+use App\Form\ItemType;
 use App\Helper\ConnectionController as Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -12,9 +13,9 @@ class RDL extends Controller{
     public function update(Request $request,$context, $id){
         $form = $this->get('form.factory');
         $data = array();
+        $cookie = $request->cookies->get('TOKEN');
         switch($context){
             case 'employee':
-                $cookie = $request->cookies->get('TOKEN');
                 $data['employee']=$id;
                 $body = $this->APICall($data, 'getEmployee', $cookie);
                 if ($body->status == 'OK') {
@@ -46,6 +47,33 @@ class RDL extends Controller{
                 }
                 break;
             case 'item':
+                $data['item'] = $id;
+                $body = $this->APICall($data, 'getItem', $cookie);
+                if ($body->status == 'OK') { 
+                    $item = is_object($body->payload) ? get_object_vars($body->payload) : $body->payload;
+                    $data['cafeteria'] = $item['cafeteria'];
+                    $body = $this->APICall($data, 'getMenus', $cookie);
+                    $data = $item;
+                    foreach ($data['ingredients'] as $key => $value){
+                        $data['ingredients'][$key] = get_object_vars($value);
+                    }
+                    foreach ($data['extras'] as $key => $value){
+                        $data['extras'][$key] = get_object_vars($value);
+                    }
+                    $menus  =  is_object($body->payload) ? get_object_vars($body->payload) : $body->payload;
+                    $data['menus'] = $menus;
+                    $formUpdateItem = $form->createNamedBuilder("UpdateItem", ItemType::class, $data)->getForm();
+                    $formUpdateItem->handleRequest($request);
+                    if ($formUpdateItem->isSubmitted() && $formUpdateItem->isValid()) {
+                        
+                    }
+                    return $this->render('edit_item.html.twig', [
+                                'form' => $formUpdateItem->createView(),
+                                'item' => $item
+                    ]);
+                } else {
+                    $message = $body->message;
+                }
                 break;
             case 'bundle':
                 break;

@@ -21,7 +21,6 @@ class POSController extends Controller
         } else {
             $message = $body->message;
         }
-        
         //------------------
         
         //Form Builder  ADD EMPLOYEE

@@ -20,7 +20,7 @@
             <div class="card">
                 <div class="card-header">
                     {{form_label(form)}}
-                    <div class="card-actions" id="{{form.vars.name}}_action">
+                    <div class="card-actions" id="{{form.vars.id}}_action">
                         
                     </div>
                 </div>
@@ -52,7 +52,6 @@
 
     {# widget_attributes will generate class="item" from the DiscountCollectionType.entry_options configuration #}
     <tr {{ block('widget_attributes') }}>
-        
         <td>{{ form_widget(form.ingredient) }}</td>
         <td>{{ form_widget(form.alias) }}</td>
         <td>{{ form_widget(form.quantity) }}</td>
