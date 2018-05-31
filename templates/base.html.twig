@@ -16,11 +16,13 @@
         <link href="{{asset('css/style.css')}}" rel="stylesheet">
         <title>
             {% block title %}     
-                Admin - Cuckeat
+                Admin - Tueat
             {% endblock %}
         </title>
+                
         {% block stylesheets %}
         {% endblock %}
+      
         
     </head>
     <body class="{% block classBody %} {% endblock %}">
@@ -34,14 +36,16 @@
             {% block sidebar %}
             {% include 'sidebar.html.twig' %}
             {% endblock %}
-                       
+            
             {% block body %}
             {% endblock %}
             
-            
-        
         </div>
-        
+            {% block footer %}
+            {% include 'footer.html.twig' %}
+            {% endblock %}
+            
+            
         <script src="{{asset('vendors/js/jquery.min.js')}}"></script>
         <script src="{{asset('js/jquery.collection.js')}}"></script>
         <script src="{{asset('vendors/js/popper.min.js')}}"></script>
@@ -63,13 +67,11 @@
         
         <script src="{{asset('js/views/main.js')}}"></script>
         
-        {% block javascripts %}
-            
+        
+
+        {% block javascripts %}    
         {% endblock %}
         
-        {% block footer %}
-            {% include 'footer.html.twig' %}
-        {% endblock %}
        
     </body>
     

@@ -12,6 +12,11 @@ use Unirest\Request\Body;
 class AppCreatorController extends Controller
 {
     public function dragdrop(Request $request){
-        return $this->render('AppCreator/dragdrop.html.twig');
+        return $this->render('AppCreator/app.html.twig', array(
+            'cafeteria' => 'cuckoo'
+
+        ));
     }
 }
+
+

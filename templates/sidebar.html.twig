@@ -1,10 +1,9 @@
 
     <div class="sidebar">
+        
  <!-- sidebar header-->
       <div class="sidebar-header">
-
         <button type="button" class="btn btn-link" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          <!--<img src="img/avatars/cafeteria.png" class="img-avatar" alt="Avatar"> -->
           <i class="fa fa-coffee fa-3x"></i>
         </button>
         <div class="divider" ></div>
@@ -12,19 +11,17 @@
           <strong>Administrador</strong>
         </div>
         <div class="text-muted">
-          <small>Cuckoo Box</small>
+          <small>{{cafeteria|title}}</small>
         </div>
-
             <div class="dropdown-menu">
               <div class="dropdown-header text-center">
                 <strong>Mis cafeterias</strong>
               </div>
-              <a class="dropdown-item" href="#"><i class="fa fa-user-o"></i> Cuckoo Coffee</a>
-              <a class="dropdown-item" href="#"><i class="fa fa-user-o"></i> Cuckoo Box</a>
-              <a class="dropdown-item" href="#"><i class="fa fa-lock"></i> Cerrar sesión</a>
+              <a class="dropdown-item" href="#"><i class="fa fa-user-o"></i> {{cafeteria|title}}</a>
+              <a class="dropdown-item" href="#"><i class="fa fa-user-o"></i> {{cafeteria|title}}</a>
             </div>
-
-      </div> <!-- sidebar header-->
+      </div>
+<!-- sidebar header-->
 
       <nav class="sidebar-nav">
         <ul class="nav">
@@ -33,118 +30,118 @@
           </li>
           <li class="divider"></li>
 
-<!-- CUCKEAT ADMIN -->
+<!-- TUEAT ADMIN -->
 <li class="nav-title">
-  CUCKEAT PERFIL
+  Tueat perfil
 </li>
 
 <li class="nav-item nav-dropdown">
-  <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-user"></i>Administrador</a>
+  <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-home"></i>Administrador</a>
   <ul class="nav-dropdown-items">
 
     <li class="nav-item">
-      <a class="nav-link" href="{{ path('personal') }}"><i class="icon-settings"></i>Información personal</a>
+      <a class="nav-link"href="{{ path('personal') }}"> <i class="icon-user"></i>Información personal</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="profile/payment.html"><i class="icon-credit-card"></i>Configuración</a>
+      <a class="nav-link"href="{{path('settings', {'cafeteria': cafeteria }) }}"> <i class="icon-settings"></i>Configuración</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="profile/payment.html"><i class="icon-credit-card"></i>Actividad</a>
+      <a class="nav-link"href="{{path('activity', {'cafeteria': cafeteria }) }}"> <i class="icon-flag"></i>Actividad</a>
     </li>
     <li class="nav-item">
-      <a class="nav-link" href="profile/payment.html"><i class="icon-credit-card"></i>Balance</a>
+      <a class="nav-link"href="{{ path('balance') }}"> <i class="icon-credit-card"></i>Balance</a>
     </li>
   </ul>
 </li>
-<!-- FIN CUCKEAT ADMIN -->
+<!-- FIN TUEAT ADMIN -->
 
-<!-- CUCKEAT MENU -->
+<!-- TUEAT MENU -->
           <li class="nav-title">
-            Cuckeat menú
+            Tueat menú
           </li>
 
           <li class="nav-item nav-dropdown">
             <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-book-open"></i>Menú</a>
             <ul class="nav-dropdown-items">
               <li class="nav-item">
-                <a class="nav-link" href="menu/category.html"><i class="icon-grid"></i>Categorias</a>
+                <a class="nav-link" href="{{path('menuCategory', {'cafeteria': cafeteria })}}"><i class="icon-grid"></i>Categorias</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="menu/ingredient.html"><i class="icon-note"></i>Productos</a>
+                <a class="nav-link" href="{{path('menuProduct', {'cafeteria': cafeteria })}}"><i class="icon-note"></i>Productos</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="menu/product.html"><i class="icon-cup"></i>Paquetes</a>
               </li>
             </ul>
           </li>
-<!--FIN CUCKEAT MENU -->
+<!--FIN TUEAT MENU -->
 
-<!-- CUCKEAT APP -->
+<!-- TUEAT APP -->
           <li class="nav-title">
-            Cuckeat app
+            Tueat app
           </li>
           <!-- FORMS OPTION -->
           <li class="nav-item nav-dropdown">
-            <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-screen-smartphone"></i>Personaliza tu App</a>
+            <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-screen-smartphone"></i>Personaliza tu menú</a>
             <ul class="nav-dropdown-items">
               <li class="nav-item">
-                <a class="nav-link" href="creator/dragdrop.html"><i class="icon-puzzle"></i> Arrastra y suelta</a>
+                <a class="nav-link" href="{{ path('creator') }}"><i class="icon-puzzle"></i> Arrastra y suelta</a>
               </li>
 
             </ul>
           </li>
-<!-- FIN CUKEAT APP -->
+<!-- FIN TUEAT APP -->
 
-<!-- CUCKEAT POS -->
+<!-- TUEAT POS -->
 <li class="nav-title">
-  Cuckeat POS
+  Tueat POS
 </li>
           <li class="nav-item nav-dropdown">
             <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-screen-desktop"></i> Punto de venta</a>
             <ul class="nav-dropdown-items">
               <li class="nav-item">
-                <a class="nav-link" href="pointofsale/access.html"><i class="icon-check"></i>Accesos</a>
+                <a class="nav-link" href="{{path('POSAccess', {'cafeteria': cafeteria })}}"><i class="icon-check"></i>Accesos</a>
               </li>
             </ul>
           </li>
-<!-- FIN CUKEAT POS -->
+<!-- FIN TUEAT POS -->
 
 
-<!-- CUKEAT REPORTES -->
+<!-- TUEAT REPORTES -->
 <li class="nav-title">
-  CUCKEAT DATOS
+  Tueat datos
 </li>
 <li class="nav-item nav-dropdown">
   <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-folder"></i>Reportes</a>
   <ul class="nav-dropdown-items">
     <li class="nav-item">
-      <a class="nav-link" href="data/session.html"><i class="icon-book-open"></i>Datos</a>
+      <a class="nav-link" href="{{ path('income') }}"><i class="icon-book-open"></i>Datos</a>
     </li>
   </ul>
 </li>
-<!-- FIN CUKEAT REPORTES -->
+<!-- FIN TUEAT REPORTES -->
 
 
           <li class="divider m-2"></li>
           <li class="divider m-2"></li>
 
           <li class="nav-title">
-            SESION
+            TUEAT
           </li>
           <li class="nav-item nav-dropdown">
             <a class="nav-link nav-dropdown-toggle" href="#"><i class="icon-info"></i>Acerca de</a>
             <ul class="nav-dropdown-items">
               <li class="nav-item">
-                <a class="nav-link" href="about/aboutus.html"><i class="icon-emotsmile"></i>Quienes somos</a>
+                <a class="nav-link" href="{{ path('aboutUs') }}"><i class="icon-emotsmile"></i>Quienes somos</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="about/privacynterms.html"><i class="icon-envelope-letter"></i>Privacidad y terminos</a>
+                <a class="nav-link" href="{{ path('privacy') }}"><i class="icon-envelope-letter"></i>Privacidad y terminos</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="about/help.html"><i class="icon-question"></i>Ayuda</a>
+                <a class="nav-link" href="{{ path('help') }}"><i class="icon-question"></i>Ayuda</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="about/tutorial.html"><i class="icon-question"></i>Tutorial</a>
+                <a class="nav-link" href="{{ path('tutorial') }}"><i class="icon-cursor"></i>Tutorial</a>
               </li>
             </ul>
           </li>

@@ -3425,6 +3425,21 @@ tbody.collapse.show {
     border-top-color: #b6b7bb; }
   .alert-dark .alert-link {
     color: black; }
+  
+/*
+* New
+*/
+  .alert-tueatorange {
+  color: #16171c;
+  background-color: #d4d5d7;
+  border-color: #c3c4c7; }
+  .alert-tueatorange hr {
+    border-top-color: #b6b7bb; }
+  .alert-tueatorange .alert-link {
+    color: black; }
+  
+  
+  
 
 @-webkit-keyframes progress-bar-stripes {
   from {
@@ -7518,6 +7533,14 @@ button {
   border-top-width: 2px;
   border-top-color: #2a2c36; }
 
+/*
+* NEW
+*/
+
+.card-accent-orange{
+  border-top-width: 2px;
+  border-top-color: #fc7e17; }
+
 .card-header > i {
   margin-right: 0.5rem; }
 
@@ -7806,6 +7829,20 @@ base-chart.chart {
 .modal-dark .modal-header {
   color: #fff;
   background-color: #2a2c36; }
+
+/*
+* New
+*/
+.modal-tueat .modal-content {
+  border-color: #fc7e17; }
+/*
+* New
+*/
+.modal-tueat .modal-header {
+  color: #fff;
+  background-color: #fc7e17; }
+
+
 
 .nav-tabs .nav-link, .nav-tabs .navbar .dropdown-toggle, .navbar .nav-tabs .dropdown-toggle {
   color: #9fa1a3; }
