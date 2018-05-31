@@ -2,6 +2,7 @@
 
 var $grid = $('.grid').packery({
   itemSelector: '.grid-item',
+  //gutter: 1,
   columnWidth: 200
 });
 

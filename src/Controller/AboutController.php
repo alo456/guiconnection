@@ -12,18 +12,31 @@ use Unirest\Request\Body;
 class AboutController extends Controller
 {
     public function aboutUs(Request $request){
-        return $this->render('About/aboutus.html.twig');
+       
+         return $this->render('About/aboutus.html.twig', array(
+                                                    'cafeteria' => 'cuckoo',
+                                             
+                                                            ));
     }
     
     public function privacyNTerms(Request $request){
-        return $this->render('About/privacynterms.html.twig');
+        return $this->render('About/privacy.html.twig', array(
+                                                    'cafeteria' => 'cuckoo',
+                                             
+                                                            ));
     }
     
     public function help(Request $request){
-        return $this->render('About/help.html.twig');
+       return $this->render('About/help.html.twig', array(
+                                                    'cafeteria' => 'cuckoo',
+                                             
+                                                            ));
     }
     
     public function tutorial(Request $request){
-        return $this->render('About/tutorial.html.twig');
+        return $this->render('About/tutorial.html.twig', array(
+                                                    'cafeteria' => 'cuckoo',
+                                             
+                                                            ));
     }
 }

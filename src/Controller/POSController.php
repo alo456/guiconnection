@@ -41,7 +41,7 @@ class POSController extends Controller
             }
         }
         //-----------------
-        $response = $this->render('POS/access.html.twig',array(
+        $response = $this->render('pos/access.html.twig',array(
                                                             'cafeteria'=>$cafeteria_name,
                                                             'formCreateEmp'=>$formCreateEmp ->createView(),
                                                             'message' =>$message,

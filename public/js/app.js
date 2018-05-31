@@ -13,6 +13,9 @@
 	$.brandInfo =     '#63c2de';
 	$.brandWarning =  '#f8cb00';
 	$.brandDanger =   '#f86c6b';
+        //New
+        $.brandTueatOrange = '#fc7e17';
+        
 
 	$.grayDark =      '#2a2c36';
 	$.gray =          '#55595c';

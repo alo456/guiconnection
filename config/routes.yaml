@@ -31,16 +31,10 @@ settings:
     controller: App\Controller\AdminController::settings
     
 income:
-    path: /admin/data/income
-    controller: App\Controller\ReportsController\::income
+    path: /admin/reports/data
+    controller: App\Controller\ReportsController::data
     
-session:
-    path: /admin/data/session
-    controller: App\Controller\ReportsController\::session
-    
-dataProduct:
-    path: /admin/data/product
-    controller: App\Controller\ReportsController\::product
+
     
 account:
     path: /admin/account
@@ -59,12 +53,12 @@ creator:
     controller: App\Controller\AppCreatorController::dragdrop
 
 aboutUs:
-    path: /admin/about/us
+    path: /admin/aboutus
     controller: App\Controller\AboutController::aboutUs
     
 privacy:
     path: /admin/about/privacynterms
-    controller: App\Controller\AboutController::privavyNTerms
+    controller: App\Controller\AboutController::privacyNTerms
     
 help:
     path: /admin/about/help
