@@ -42,33 +42,44 @@ class AdminController extends Controller
             'form' => $form->createView()
             ));
     if ($form->isSubmitted() && $form->isValid()) {
-        $data = $form->getData();
-        $headers = array('Accept' => 'application/json');
-        $body = Body::form($data);
-     
-        $responseAPI = RequestAPI::post('http://localhost/taiuniversityapi/public/admin/login',$headers,$body);
-        $body  = $responseAPI->body;
-        if($body->status == 'OK'){ 
-            $cafeteria_name = "";
-            $token = $responseAPI->headers['Set-Cookie'];
-            $cookie = Cookie::fromString($token);
-            $cookie = $cookie->getValue();
-            setcookie("TOKEN", $cookie);
-            $data = array();
-            $body = $this->APICall($data, 'getCafeterias', $cookie);
-            if ($body->status == 'OK') {
-                $cafeterias = is_object($body->payload) ? get_object_vars($body->payload) : $body->payload;
-                $cafeteria_name = strtolower(str_replace(" ", "_", $cafeterias[0]));
-            } else {
-                $message .= $body->message;
-            }
-            return $this->redirectToRoute('dashboard', array(
-                                                'cafeteria'=> $cafeteria_name
-            )); 
-        }else{
-            $message .= $body->message;
+            $data = $form->getData();
+            $headers = array('Accept' => 'application/json');
+            $body = Body::form($data);
+
+            $responseAPI = RequestAPI::post('http://localhost/taiuniversityapi/public/admin/login',$headers,$body);
+            $body  = $responseAPI->body;
+            if($body->status == 'OK'){ 
+                $token = $responseAPI->headers['Set-Cookie'];
+                $cookie = Cookie::fromString($token);
+                $cookie = $cookie->getValue();
+                setcookie("TOKEN", $cookie);
+                $data = array();
+                $cafeteria = $this->cookieCafeterias($request->cookies->get('CAFETERIAS'),$cookie); 
+                if(!$cafeteria){    
+                    $message .= "Error de autenticación";
+                }else{
+                        $body = Body::form(array(
+                            'action' => 'getCafeterias'                        
+                        ));
+                        $responseAPI = RequestAPI::post('http://localhost/taiuniversityapi/public/admin',$headers,$body);
+
+                         $body  = $responseAPI->body;
+                         
+                        if($body->status =='OK'){
+//                            var_dump($body);
+//                         die;
+                            $cafeteria = is_object($body->payload) ? get_object_vars($body->payload) : $body->payload;
+                            return $this->redirectToRoute('dashboard', array(
+                                                                'cafeteria'=> $cafeteria[0]
+                        ));
+
+                        }  
+                    }
+
+            }else{
+                    $message.=$body->payload;
+                }
         }
-    }
         return $response;
 //        
     }
@@ -79,6 +90,9 @@ class AdminController extends Controller
 //         $cookie = Cookie::fromString($request->cookies->get('TOKEN'));
 //         $response = $this->render("dashboard.html.twig");
 //         $response->headers->setCookie($cookie);
+        $availableCafeterias = $request->cookies->get('CAFETERIAS');
+        $availableCafeterias = json_decode($availableCafeterias);
+        
         return $this->render('dashboard.html.twig', array('cafeteria'=>$cafeteria_name));
     }
     

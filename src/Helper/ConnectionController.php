@@ -2,14 +2,12 @@
 
 namespace App\Helper;
 
-use Doctrine\ORM\EntityManager;
-use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\RequestStack;
-use Unirest\Request as RequestAPI;
+use Symfony\Component\HttpFoundation\Cookie;
 use Unirest\Request\Body;
+use Unirest\Request as RequestAPI;
 
 class ConnectionController extends Controller {
 
@@ -26,6 +24,20 @@ class ConnectionController extends Controller {
         RequestAPI::cookie("TOKEN=" . $cookie);
         $responseAPI = RequestAPI::post("$url", $headers, $body);
         return $responseAPI->body;
+    }
+    
+    public function cookieCafeterias($cafeterias,$cookie){
+        if(!$cafeterias){
+            $body = $this->APICall([], 'getCafeterias', $cookie);
+            if ($body->status == 'OK') {
+                $cafeterias = is_object($body->payload) ? get_object_vars($body->payload) : $body->payload;
+                setcookie("CAFETERIAS", json_encode($cafeterias,JSON_UNESCAPED_UNICODE));         
+                return true;
+            } 
+            else{
+                return false;
+            }
+        }
     }
     
     
