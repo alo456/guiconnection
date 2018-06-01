@@ -46,9 +46,42 @@
                 </div>
 
                 <div class="card-body">
-                  {{form_start (schedule) }}
-                   {{form_end (schedule) }}
+                    {{form_start (schedule) }}
+                    <table>
+                        <tr>
+                            <td></td>
+                            <th scope="col">Lunes</th>
+                            <th scope="col">Martes</th>
+                            <th scope="col">Miercoles</th>
+                            <th scope="col">Jueves</th>
+                            <th scope="col">Viernes</th>
+                            <th scope="col">Sábado</th>
+                            <th scope="col">Domingo</th>
+                        </tr>
+                        <tr>
+                            <th scope="row">Apertura</th>
+                            <td>{{form_widget(schedule.monday.fromHour)}}</td>
+                            <td>{{form_row(schedule.tuesday.fromHour)}}</td>
+                            <td>{{form_row(schedule.wednesday.fromHour)}}</td>
+                            <td>{{form_row(schedule.thursday.fromHour)}}</td>
+                            <td>{{form_row(schedule.friday.fromHour)}}</td>
+                            <td>{{form_row(schedule.saturday.fromHour)}}</td>
+                            <td>{{form_row(schedule.sunday.fromHour)}}</td>
+                        </tr>
+                         <tr>
+                            <th scope="row">Cierre</th>
+                            <td>{{form_row(schedule.monday.toHour)}}</td>
+                            <td>{{form_row(schedule.tuesday.toHour)}}</td>
+                            <td>{{form_row(schedule.wednesday.toHour)}}</td>
+                            <td>{{form_row(schedule.thursday.toHour)}}</td>
+                            <td>{{form_row(schedule.friday.toHour)}}</td>
+                            <td>{{form_row(schedule.saturday.toHour)}}</td>
+                            <td>{{form_row(schedule.sunday.toHour)}}</td>
+                        </tr>
+                    </table>
+                        {{form_end(schedule)}}
                 </div>
+                
                 </div>
 
               <!-- CONFIGURACION DE CAFETERIAS   -->

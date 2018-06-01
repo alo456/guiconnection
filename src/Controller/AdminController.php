@@ -1,6 +1,7 @@
 <?php
 namespace App\Controller;
 
+use App\Form\ScheduleType;
 use App\Helper\ConnectionController as Controller;
 use Symfony\Component\Form\Extension\Core\Type\PasswordType;
 use Symfony\Component\Form\Extension\Core\Type\RepeatedType;
@@ -85,15 +86,28 @@ class AdminController extends Controller
     }
     
     public function dashboard(Request $request, $cafeteria){
+        $name='';
+        $message='';
         $cafeteria_name = strtolower(str_replace("_", " ", $cafeteria));
-//        var_dump($request->cookies->get('TOKEN'));
-//         $cookie = Cookie::fromString($request->cookies->get('TOKEN'));
-//         $response = $this->render("dashboard.html.twig");
-//         $response->headers->setCookie($cookie);
         $availableCafeterias = $request->cookies->get('CAFETERIAS');
         $availableCafeterias = json_decode($availableCafeterias);
         
-        return $this->render('dashboard.html.twig', array('cafeteria'=>$cafeteria_name));
+        $cookie = $request->cookies->get('TOKEN');
+        $body  = $this->APICall([],"getAdministratorName",$cookie);
+        
+        if($body->status =='OK'){
+            $name = $body->payload;
+        }
+        else{
+            $message.=$body->message;
+        }
+        
+        return $this->render('dashboard.html.twig', array(
+            
+                                            'cafeteria'=>$cafeteria_name,
+                                            'name' => $name
+                                                
+                ));
     }
     
     public function personal(Request $request){
@@ -103,25 +117,34 @@ class AdminController extends Controller
                                                                 'attr' => array(
                                                                     'class' =>'form-control',
                                                                     'placeholder' => 'Nombre'
-                                                                )
+                                                                ),
+                                                                'required' => false
             ))
        ->add('lastname', TextType::class, array ('label' => 'Apellido',
                                                                 'attr' => array(
                                                                     'class' =>'form-control',
                                                                     'placeholder' => 'Apellido'
-                                                                )
+                                                                ),
+                                                                'required' => false
             ))        
         ->add('email', TextType::class, array ('label' => 'Email',
                                                                 'attr' => array(
                                                                     'class' =>'form-control',
                                                                     'placeholder' => 'Email'
-                                                                )
+                                                                ),
+                                                                'required' => false
             ))
+          ->add('password', PasswordType::class, array('label' => 'Contraseña',
+                                                                'attr' => array(
+                                                                    'class' =>'form-control'
+                                                                )
+                ))
         ->add('submit', SubmitType::class, array('label' => 'Guardar',
                                                                 'attr' => array(
                                                                     'class' =>'btn btn-primary px-4'
                                                                 )
                 ))
+          
         ->getForm();
          
     $form->handleRequest($request);
@@ -153,22 +176,22 @@ class AdminController extends Controller
         $cafeteria_name = strtolower(str_replace("_", " ", $cafeteria));
         
         $data = array();
-         $form = $this->createFormBuilder($data)
+         $formPassword = $this->createFormBuilder($data)
         ->add('oldpassword', PasswordType::class, array ('label' => 'Contraseña Actual',
                                                                 'attr' => array(
                                                                     'class' =>'form-control',
-                                                                    'placeholder' => 'Password'
+                                                                    'placeholder' => 'Contraseña Actual'
                                                                 )
             ))
        ->add('newpassword', RepeatedType::class, array (
                                                                 'type' => PasswordType::class,
-                                                                'first_options'  => array('label' => 'New Password',  'attr' => array(
+                                                                'first_options'  => array('label' => 'Nueva Contraseña',  'attr' => array(
                                                                     'class' =>'form-control',
-                                                                    'placeholder' => 'New Password'
+                                                                    'placeholder' => 'Nueva Contraseña'
                                                                 )),
-                                                                'second_options' => array('label' => 'Repeat Password', 'attr' => array(
+                                                                'second_options' => array('label' => 'Confirmación de Contraseña', 'attr' => array(
                                                                     'class' =>'form-control',
-                                                                    'placeholder' => ' Confirm Password'
+                                                                    'placeholder' => 'Confirmación de Contraseña'
                                                                 ))        
             ))        
         ->add('submit', SubmitType::class, array('label' => 'Guardar',
@@ -177,10 +200,10 @@ class AdminController extends Controller
                                                                 )
                 ))
         ->getForm();
-         $form->handleRequest($request);
+         $formPassword->handleRequest($request);
      
-    if ($form->isSubmitted() && $form->isValid()) {
-        $data = $form->getData();
+    if ($formPassword->isSubmitted() && $form->isValid()) {
+        $data = $formPassword->getData();
         $cookie = $request->cookies->get('TOKEN');
         $body  = $this->APICall($data, "changePassword", $cookie);
         if(isset($body->status) && $body->status == 'OK'){
@@ -216,38 +239,23 @@ class AdminController extends Controller
          $configuration->handleRequest($request);
          
          
+         $form = $this->get('form.factory');
+         $formSchedule= $form->createNamedBuilder("Schedule", ScheduleType::class,[])->getForm();
+          
+         $formSchedule->handleRequest($request);
          
-          $scheduleData = array();
-         $times = $this->createFormBuilder($scheduleData)
-        ->add('fromHour', TimeType::class, array ('label' => 'Abre a las:',
-                                                                'attr' => array(
-                                                                    'class' =>'form-control'
-                                                                )
-            ))
-       ->add('toHour', TimeType::class, array ('label' => 'Cierra a las:',
-                                                                'attr' => array(
-                                                                    'class' =>'form-control'
-                                                                    )
-            ))        
-        ->add('submitSchedule', SubmitType::class, array('label' => 'Guardar',
-                                                                'attr' => array(
-                                                                    'class' =>'btn btn-outline-primary col-auto'
-                                                                )
-                ))
-                 
-        ->getForm();
-         $times->handleRequest($request);
-         
-         if ($times->isSubmitted() && $times->isValid()) {
-        $dataSchedule = $times->getData();
-        if(isset($dataSchedule['fromHour'])){
-            $dataSchedule['cafeteria'] = $cafeteria_name;
-            $dataSchedule['fromHour'] = $dataSchedule['fromHour']->format('H:i');
-            $dataSchedule['toHour'] = $dataSchedule['toHour']->format('H:i');
+         if ($formSchedule->isSubmitted() && $formSchedule->isValid()) {
+            $dataSchedule = $formSchedule->getData();
+            $result = array();
+            foreach($dataSchedule as $day => $hour){
+                $result['schedule'][$day] = array(
+                  'fromHour' => $hour['fromHour']->format('H:i'),
+                  'toHour' => $hour['toHour']->format('H:i')
+                );
+            }
+            $result['cafeteria']=$cafeteria_name;
             $cookie = $request->cookies->get('TOKEN');
-            $bodySchedule = $this->APICall($dataSchedule, "updateSchedule", $cookie);
-        }
-       
+            $bodySchedule = $this->APICall($result, "updateSchedule", $cookie);
         if(isset($bodySchedule->status) && $bodySchedule->status == 'OK'){
             echo("Cambios realizados");
             
@@ -261,9 +269,9 @@ class AdminController extends Controller
     
     $response = $this->render('Administrator/settings.html.twig', array(
             //'last_username' => $lastUsername,
-            'form' => $form->createView(),
+            'form' => $formPassword->createView(),
             'configuration' => $configuration->createView(),
-            'schedule' => $times->createView(),
+            'schedule' => $formSchedule->createView(),
             'cafeteria' => $cafeteria_name
             ));
     
