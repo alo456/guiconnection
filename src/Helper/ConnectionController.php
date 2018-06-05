@@ -38,6 +38,7 @@ class ConnectionController extends Controller {
                 return false;
             }
         }
+        return true;
     }
     
     

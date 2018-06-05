@@ -11,7 +11,7 @@
           <strong>Administrador</strong>
         </div>
         <div class="text-muted">
-            <small>{{cafeteria|title}}</small>
+            <small>{{cafeteria | title | replace({'_': ' '})}}</small>
         </div>
 
             <div class="dropdown-menu" id = "cafeterias">
@@ -40,7 +40,7 @@
   <ul class="nav-dropdown-items">
 
     <li class="nav-item">
-      <a class="nav-link"href="{{ path('personal') }}"> <i class="icon-user"></i>Información personal</a>
+      <a class="nav-link"href="{{path('personal', {'cafeteria': cafeteria }) }}"> <i class="icon-user"></i>Información personal</a>
     </li>
     <li class="nav-item">
       <a class="nav-link"href="{{path('settings', {'cafeteria': cafeteria }) }}"> <i class="icon-settings"></i>Configuración</a>

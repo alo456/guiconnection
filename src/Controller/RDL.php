@@ -49,6 +49,7 @@ class RDL extends Controller{
             case 'item':
                 $data['item'] = $id;
                 $body = $this->APICall($data, 'getItem', $cookie);
+                var_dump($body);echo $body ;die;
                 if ($body->status == 'OK') { 
                     $item = is_object($body->payload) ? get_object_vars($body->payload) : $body->payload;
                     $data['cafeteria'] = $item['cafeteria'];

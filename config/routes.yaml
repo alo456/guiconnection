@@ -23,7 +23,7 @@ POSAccess:
     controller: App\Controller\POSController::access
 
 personal:
-    path: /admin/personal
+    path: /admin/{cafeteria}/personal
     controller: App\Controller\AdminController::personal
     
 settings:

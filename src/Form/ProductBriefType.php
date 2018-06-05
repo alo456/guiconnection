@@ -25,7 +25,7 @@ class ProductBriefType extends AbstractType {
                         'class' => 'form-control',
                         'placeholder' => 'Cantidad'
                     )
-                ));
+        ));
     }
 
 }

@@ -11,33 +11,32 @@ use App\Form\IngredientType;
 
 class IngredientPerProductType extends AbstractType
 {
-    public function buildForm(FormBuilderInterface $builder, array $options)
-    {
+    public function buildForm(FormBuilderInterface $builder, array $options){
         $builder
-           ->add('ingredients', CollectionType::class, [
-                'entry_type'   => IngredientType::class,
-                'label'=> "Lista de Ingredientes",
-                'entry_options' => [
+                ->add('ingredients', CollectionType::class, [
+                    'entry_type' => IngredientType::class,
+                    'label' => "Lista de Ingredientes",
+                    'entry_options' => [
+                        'attr' => [
+                            'class' => 'ingredient', // we want to use 'tr.item' as collection elements' selector
+                        ]
+                    ],
+                    'allow_add' => true,
+                    'allow_delete' => true,
+                    'prototype' => true,
+                    'required' => false,
+                    'by_reference' => true,
+                    'delete_empty' => true,
                     'attr' => [
-                        'class' => 'ingredient', // we want to use 'tr.item' as collection elements' selector
-                    ]
-                ],
-                'allow_add'    => true,
-                'allow_delete' => true,
-                'prototype'    => true,
-                'required'     => false,
-                'by_reference' => true,
-                'delete_empty' => true,
-                'attr' => [
-                    'class' => 'table ingredient-collection',
-                ],
-
-            ])
-            ->add('save', SubmitType::class, [
-                'label' => 'Guardar',
-                'attr'=>array(
-                             'class'=>'btn btn-primary'
-                            )
-            ]);
+                        'class' => 'table ingredient-collection',
+                    ],
+                ])
+                ->add('save', SubmitType::class, [
+                    'label' => 'Guardar',
+                    'attr' => array(
+                        'class' => 'btn btn-primary'
+                    )
+        ]);
     }
+
 }

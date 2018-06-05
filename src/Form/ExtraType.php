@@ -4,6 +4,7 @@ namespace App\Form;
 
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
@@ -27,7 +28,7 @@ class ExtraType extends AbstractType {
                         'form' => 'itemform'
                     )
                 ))
-                ->add('quantity', NumberType::class, array(
+                ->add('quantity', IntegerType::class, array(
                     'label' => false,
                     'attr' => array(
                         'class' => 'form-control',
@@ -40,7 +41,8 @@ class ExtraType extends AbstractType {
                     'attr' => array(
                         'class' => 'form-control',
                         'placeholder' => 'Unidad',
-                        'form' => 'itemform'
+                        'form' => 'itemform',
+                        'readonly' => true
                     )
                 ))
                 ->add('cost', NumberType::class, array(
@@ -49,8 +51,9 @@ class ExtraType extends AbstractType {
                         'class' => 'form-control',
                         'placeholder' => 'Costo',
                         'form' => 'itemform'
-                    )
-                ));
+                    ),
+                    'required' => true
+        ));
     }
 
 }

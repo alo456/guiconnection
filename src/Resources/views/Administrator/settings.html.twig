@@ -47,39 +47,44 @@
 
                 <div class="card-body">
                     {{form_start (schedule) }}
-                    <table>
+                    {{ form_row(schedule.submit) }}
+                    <table class="table table-responsive-sm">
                         <tr>
-                            <td></td>
-                            <th scope="col">Lunes</th>
-                            <th scope="col">Martes</th>
-                            <th scope="col">Miercoles</th>
-                            <th scope="col">Jueves</th>
-                            <th scope="col">Viernes</th>
-                            <th scope="col">Sábado</th>
-                            <th scope="col">Domingo</th>
+                            <th scope="col" id="MO">Lunes</th>
+                            <th scope="col" id="TU">Martes</th>
+                            <th scope="col" id="WE">Miercoles</th>
+                            <th scope="col" id="TH">Jueves</th>
+                            <th scope="col" id="FR">Viernes</th>
+                            <th scope="col" id="SA">Sábado</th>
+                            <th scope="col" id="SU">Domingo</th>
                         </tr>
                         <tr>
-                            <th scope="row">Apertura</th>
-                            <td>{{form_widget(schedule.monday.fromHour)}}</td>
-                            <td>{{form_row(schedule.tuesday.fromHour)}}</td>
-                            <td>{{form_row(schedule.wednesday.fromHour)}}</td>
-                            <td>{{form_row(schedule.thursday.fromHour)}}</td>
-                            <td>{{form_row(schedule.friday.fromHour)}}</td>
-                            <td>{{form_row(schedule.saturday.fromHour)}}</td>
-                            <td>{{form_row(schedule.sunday.fromHour)}}</td>
-                        </tr>
-                         <tr>
-                            <th scope="row">Cierre</th>
-                            <td>{{form_row(schedule.monday.toHour)}}</td>
-                            <td>{{form_row(schedule.tuesday.toHour)}}</td>
-                            <td>{{form_row(schedule.wednesday.toHour)}}</td>
-                            <td>{{form_row(schedule.thursday.toHour)}}</td>
-                            <td>{{form_row(schedule.friday.toHour)}}</td>
-                            <td>{{form_row(schedule.saturday.toHour)}}</td>
-                            <td>{{form_row(schedule.sunday.toHour)}}</td>
+                            {%form_theme schedule  'jquery.collection.html.twig' %}
+                            <td>
+                                {{ form_widget(schedule.MO) }} 
+                            </td>
+                            <td>
+                                {{ form_widget(schedule.TU) }} 
+                            </td>
+                            <td>
+                                {{ form_widget(schedule.WE) }} 
+                            </td>
+                            <td>
+                                {{ form_widget(schedule.TH) }} 
+                            </td>
+                            <td>
+                                {{ form_widget(schedule.FR) }} 
+                            </td>
+                            <td>
+                                {{ form_widget(schedule.SA) }} 
+                            </td>
+                            <td>
+                                {{ form_widget(schedule.SU) }} 
+                            </td>
+                            
                         </tr>
                     </table>
-                        {{form_end(schedule)}}
+                    {{ form_end(schedule) }}
                 </div>
                 
                 </div>
@@ -105,4 +110,26 @@
   </div>
    
     </main>
+{% endblock %}
+{%  block javascripts %}
+    <script>
+        $('.schedule-collection').collection({
+            add: '<a href="#" class="float-right text-success" title="Add element"><i class="fa fa-lg fa-plus-circle"></i></a>',
+            remove: '<a href="#" class="btn btn-danger" title="Delete element"><i class="fa fa-l fa-minus-circle"></i></a>',
+            add_at_the_end: true,
+            init_with_n_elements: 1,
+            allow_up: false,
+            allow_down: false,
+        });
+        
+        $("#MO").append($(".Schedule_MO-collection-rescue-add"));
+        $("#TU").append($(".Schedule_TU-collection-rescue-add"));
+        $("#WE").append($(".Schedule_WE-collection-rescue-add"));
+        $("#TH").append($(".Schedule_TH-collection-rescue-add"));
+        $("#FR").append($(".Schedule_FR-collection-rescue-add"));
+        $("#SA").append($(".Schedule_SA-collection-rescue-add"));
+        $("#SU").append($(".Schedule_SU-collection-rescue-add"));
+        
+    </script>
+ 
 {% endblock %}

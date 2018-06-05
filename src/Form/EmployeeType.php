@@ -18,7 +18,7 @@ class EmployeeType extends AbstractType
         $builder
                 ->add('cancel', ResetType::class, array(
                     'label' => 'Cancelar',
-                    'attr' => array (
+                    'attr' => array(
                         'class' => 'btn btn-secondary',
                         'data-dismiss' => 'modal'
                     )
@@ -28,79 +28,79 @@ class EmployeeType extends AbstractType
                     'attr' => array(
                         'class' => 'btn btn-primary'
                     )
-                ));
-        
+        ));
+
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             $employee = $event->getData();
             $form = $event->getForm();
             if (!isset($employee['employee'])) {
                 $form
-                    ->add('firstname', TextType::class, array(
-                    'label' => false,
-                    'attr' => array(
-                        'class' => 'form-control',
-                        'placeholder' => 'Nombre'
-                        )
-                    ))
-                    ->add('lastname', TextType::class, array(
-                        'label' => false,
-                        'attr' => array(
-                        'class' => 'form-control',
-                        'placeholder' => 'Apellidos'
-                        )
-                    ))
-                    ->add('username', TextType::class, array(
-                        'label' => false,
-                        'attr' => array(
-                        'class' => 'form-control',
-                        'placeholder' => 'Nombre de Usuario'
-                    )
-                ))
-                    ->add('password', PasswordType::class, array(
-                        'label' => false,
-                        'attr' => array(
-                        'class' => 'form-control',
-                        'placeholder' => 'Contraseña'
-                    )
-                    ));
+                        ->add('firstname', TextType::class, array(
+                            'label' => false,
+                            'attr' => array(
+                                'class' => 'form-control',
+                                'placeholder' => 'Nombre'
+                            )
+                        ))
+                        ->add('lastname', TextType::class, array(
+                            'label' => false,
+                            'attr' => array(
+                                'class' => 'form-control',
+                                'placeholder' => 'Apellidos'
+                            )
+                        ))
+                        ->add('username', TextType::class, array(
+                            'label' => false,
+                            'attr' => array(
+                                'class' => 'form-control',
+                                'placeholder' => 'Nombre de Usuario'
+                            )
+                        ))
+                        ->add('password', PasswordType::class, array(
+                            'label' => false,
+                            'attr' => array(
+                                'class' => 'form-control',
+                                'placeholder' => 'Contraseña'
+                            )
+                ));
             } else {
                 $form
-                    ->add('firstname', TextType::class, array(
-                        'label' => false,
-                        'attr' => array(
-                            'class' => 'form-control',
-                            'placeholder' => 'Nombre'
-                        ),
-                        'required' => false
-                    ))
-                    ->add('lastname', TextType::class, array(
-                        'label' => false,
-                        'attr' => array(
-                            'class' => 'form-control',
-                            'placeholder' => 'Apellidos'
-                        ),
-                        'required' => false
-                    ))
-                    ->add('username', TextType::class, array(
-                        'label' => false,
-                        'attr' => array(
-                        'class' => 'form-control',
-                        'placeholder' => 'Nombre de Usuario'
-                        ),
-                        'disabled' => true,
-                        'required' => false
-                    ))
-                    ->add('password', PasswordType::class, array(
-                        'label' => false,
-                        'attr' => array(
-                        'class' => 'form-control',
-                        'placeholder' => 'Contraseña'
-                        ),
-                        'required' => false
-                    ));
+                        ->add('firstname', TextType::class, array(
+                            'label' => false,
+                            'attr' => array(
+                                'class' => 'form-control',
+                                'placeholder' => 'Nombre'
+                            ),
+                            'required' => false
+                        ))
+                        ->add('lastname', TextType::class, array(
+                            'label' => false,
+                            'attr' => array(
+                                'class' => 'form-control',
+                                'placeholder' => 'Apellidos'
+                            ),
+                            'required' => false
+                        ))
+                        ->add('username', TextType::class, array(
+                            'label' => false,
+                            'attr' => array(
+                                'class' => 'form-control',
+                                'placeholder' => 'Nombre de Usuario'
+                            ),
+                            'disabled' => true,
+                            'required' => false
+                        ))
+                        ->add('password', PasswordType::class, array(
+                            'label' => false,
+                            'attr' => array(
+                                'class' => 'form-control',
+                                'placeholder' => 'Contraseña'
+                            ),
+                            'required' => false
+                ));
             }
         });
-        
     }
+
 }
 

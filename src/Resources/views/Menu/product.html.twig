@@ -43,6 +43,7 @@
                                                 {{ form_row(formItem.information.cost) }}
                                                 {{ form_row(formItem.information.cookingtime) }}
                                                 {{ form_row(formItem.information.menu) }}
+                                                {{ form_row(formItem.information.photo) }}
                                                 <hr/>
                                             </div>
                                         </div>
@@ -155,7 +156,19 @@
             allow_up: false,
             allow_down: false,
             after_add: function (collection, element) {
-                $(element).find('select').select2(select2cont())
+                $(element).find('select').select2(select2cont());
+                $(element).find('select').on("select2:select", function (e) {
+                    var unit = $(this).select2('data')[0]['unit'];
+                    var alias = $(this).select2('data')[0]['alias'];
+                    $(this).parent().parent().find("input[readonly]").val(unit);
+                    if(!(alias == null)){
+                        $(this).parent().parent().find("input[placeholder='Alias']").prop("disabled",true);
+                    } else  $(this).parent().parent().find("input[placeholder='Alias']").prop("disabled",false);
+                    if(element.attr('id').indexOf('extras')!=-1){
+                        $(this).parent().parent().find("input[placeholder='Cantidad']").prop('required',true);
+                        $(this).parent().parent().find("input[placeholder='Costo']").prop('required',true);
+                    }
+                });
             },
             add: '<a href="#" id="{{formItem.ingredients.vars.name}}_add_button" class="float-right text-success" title="Add element"><i class="fa fa-lg fa-plus-circle"></i></a>',
             init_with_n_elements: 1,
@@ -165,24 +178,7 @@
             elements_parent_selector: '%id% tbody'
         });
         $("#{{formItem.ingredients.vars.name}}_add_button").appendTo($('#{{formItem.ingredients.vars.id}}_action'));
-
-        $('.extra-collection').collection({
-            allow_duplicate: false,
-            allow_up: false,
-            allow_down: false,
-            after_add: function (collection, element) {
-                $(element).find('select').select2(select2cont())
-            },
-            add: '<a href="#" id="{{formItem.extras.vars.name}}_add_button" class="float-right text-success" title="Add element"><i class="fa fa-lg fa-plus-circle"></i></a>',
-            init_with_n_elements: 1,
-            add_at_the_end: true,
-            // here is the magic!
-            elements_selector: 'tr.extra',
-            elements_parent_selector: '%id% tbody'
-        });
-        $("#{{formItem.extras.vars.name}}_add_button").appendTo($('#{{formItem.extras.vars.id}}_action'));
-
-
+        $(".Item_extras-collection-rescue-add").appendTo($('#{{formItem.extras.vars.id}}_action'));
         var urling = "https://s3.us-east-2.amazonaws.com/taitech.tueat/ingredients/";
         $(".select2").select2(select2cont());
         function formatIng(ing) {
@@ -213,8 +209,9 @@
                             data: function (params) {
                                 var query = {
                                     q: params.term,
-                                    page: params.page
-                                }
+                                    page: params.page,
+                                    cafeteria: "{{cafeteria}}"
+                                };
                                 return query;
                             },
                             processResults: function (data, params) {
@@ -234,12 +231,14 @@
                                             
                                                 if(fVal.id == val.id){
                                                     val.text = fVal.text;
+                                                    val.alias = true;
                                                     console.log("entra al if");
                                                     flag = true;
                                                 }   
                                         });
                                         if(!flag){
                                             console.log("entra bandera");
+                                            fVal.alias = true;
                                             data.results.push(fVal);
                                         }
                                     }

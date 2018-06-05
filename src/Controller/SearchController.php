@@ -11,6 +11,7 @@ class SearchController extends Controller{
     public function search(Request $request){
         $data = array();
         $data['q'] = $request->request->get('q');
+        $data['cafeteria'] = $request->request->get('cafeteria');
         $cookie = $request->cookies->get('TOKEN');
         $body = $this->APICall($data, 'searchIngredient', $cookie);
         if ($body->status == 'OK') {

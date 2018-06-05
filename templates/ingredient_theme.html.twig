@@ -52,9 +52,9 @@
 
     {# widget_attributes will generate class="item" from the DiscountCollectionType.entry_options configuration #}
     <tr {{ block('widget_attributes') }}>
-        <td>{{ form_widget(form.ingredient) }}</td>
+        <td>{{ form_widget(form.ingredient, { 'attr': {'required': 'required'} }) }}</td>
         <td>{{ form_widget(form.alias) }}</td>
-        <td>{{ form_widget(form.quantity) }}</td>
+        <td>{{ form_widget(form.quantity, { 'attr': {'required': 'required'} }) }}</td>
         <td>{{ form_widget(form.unit) }}</td>
         <td class="text-center">
             <a href="#" class="collection-remove btn btn-danger" title="Delete element"><i class="fa fa-l fa-minus-circle"></i></a>
