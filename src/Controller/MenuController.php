@@ -158,10 +158,12 @@ class MenuController extends Controller
         if ($formItem->isSubmitted() && $formItem->isValid()) {
             $item = $request->request->get('Item');
             $data = $item['information'];
-            $data['photo'] = base64_encode($formItem->getData()['information']['photo']);
+            $data['background'] = base64_encode($formItem->getData()['information']['background']);
             $data['ingredients'] = isset($item['ingredients']) ? json_encode($item['ingredients']) : json_encode([]);
             $data['extras'] = isset($item['extras']) ? json_encode($item['extras']) : json_encode([]);
-           
+            var_dump($item);
+            var_dump($data);
+            die;
             $body = $this->APICall($data, 'createItem', $cookie);
             
             if ($body->status == 'OK') {

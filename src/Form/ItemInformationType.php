@@ -46,7 +46,7 @@ class ItemInformationType extends AbstractType
                     'placeholder' => 'Selecciona un menú',
                     'choices' => $options['data']
                 ))
-                ->add('photo', FileType::class, array(
+                ->add('background', FileType::class, array(
                     'label' => 'Fotografía',
                     'attr' => array(
                         'class' => 'form-control',

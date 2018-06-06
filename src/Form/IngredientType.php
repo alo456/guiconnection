@@ -25,7 +25,9 @@ class IngredientType extends AbstractType {
                     'attr' => array(
                         'class' => 'form-control',
                         'placeholder' => 'Alias',
-                        'form' => 'itemform'
+                        'form' => 'itemform',
+                        'style' => 'text-transform: capitalize'
+                       
                     )
                 ))
                 ->add('quantity', IntegerType::class, array(

@@ -43,7 +43,7 @@
                                                 {{ form_row(formItem.information.cost) }}
                                                 {{ form_row(formItem.information.cookingtime) }}
                                                 {{ form_row(formItem.information.menu) }}
-                                                {{ form_row(formItem.information.photo) }}
+                                                {{ form_row(formItem.information.background) }}
                                                 <hr/>
                                             </div>
                                         </div>
@@ -157,13 +157,13 @@
             allow_down: false,
             after_add: function (collection, element) {
                 $(element).find('select').select2(select2cont());
-                $(element).find('select').on("select2:select", function (e) {
+                $(element).find('select').on("select2:select", function () {
                     var unit = $(this).select2('data')[0]['unit'];
                     var alias = $(this).select2('data')[0]['alias'];
-                    $(this).parent().parent().find("input[readonly]").val(unit);
+                    $(this).parent().parent().find("input[placeholder='Unidad']").val(unit);
                     if(!(alias == null)){
-                        $(this).parent().parent().find("input[placeholder='Alias']").prop("disabled",true);
-                    } else  $(this).parent().parent().find("input[placeholder='Alias']").prop("disabled",false);
+                        $(this).parent().parent().find("input[placeholder='Alias']").prop("readonly",true);
+                    } else  $(this).parent().parent().find("input[placeholder='Alias']").prop("readonly",false);
                     if(element.attr('id').indexOf('extras')!=-1){
                         $(this).parent().parent().find("input[placeholder='Cantidad']").prop('required',true);
                         $(this).parent().parent().find("input[placeholder='Costo']").prop('required',true);
