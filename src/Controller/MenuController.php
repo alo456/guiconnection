@@ -3,12 +3,8 @@ namespace App\Controller;
 
 use App\Form\BundleType;
 use App\Form\ItemType;
+use App\Form\MenuType;
 use App\Helper\ConnectionController as Controller;
-use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
-use Symfony\Component\Form\Extension\Core\Type\ColorType;
-use Symfony\Component\Form\Extension\Core\Type\FileType;
-use Symfony\Component\Form\Extension\Core\Type\SubmitType;
-use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\HttpFoundation\Request;
 class MenuController extends Controller
 {
@@ -28,44 +24,9 @@ class MenuController extends Controller
 
         //------------------
         //Form Builder 
-        $formCreateMenu = $this->createFormBuilder([])
-                ->add('name', TextType::class, array(
-                    'label' => 'Nombre',
-                    'attr' => array(
-                        'class' => 'form-control',
-                        'placeholder' => 'Nombre de la categoria'
-                    )
-                ))
-                ->add('description', TextType::class, array(
-                    'label' => 'Descripcion',
-                    'attr' => array(
-                        'class' => 'form-control',
-                        'placeholder' => 'Description'
-                    )
-                ))
-                ->add('menu', ChoiceType::class, array(
-                    'label' => 'Categoria Padre',
-                    'required' => false,
-                    'attr' => array(
-                        'class' => 'form-control'
-                    ),
-                    'choices' => $menus,
-                    'placeholder' => 'Seleciona una categoria'
-                ))
-                ->add('background', FileType::class, array(
-                    'label' => 'Imagen de Fondo',
-                    'required' => false,
-                    'attr' => array(
-                        'class' => 'form-control',
-                        'accept' => '.png'
-                    )
-                ))
-                ->add('submit', SubmitType::class, array('label' => 'Guardar',
-                    'attr' => array(
-                        'class' => 'btn btn-primary px-4'
-                    )
-                ))
-                ->getForm();
+        $form = $this->get('form.factory');
+        $formCreateMenu = $form->createNamedBuilder("Menu", MenuType::class, $menus)->getForm();
+       
         //------------------
         //Form Request
         $formCreateMenu->handleRequest($request);
@@ -86,7 +47,8 @@ class MenuController extends Controller
         $response = $this->render('Menu/category.html.twig', array(
             'cafeteria' => $cafeteria_name,
             'formCreateMenu' => $formCreateMenu->createView(),
-            'message' => $message
+            'message' => $message,
+            'menus' => $menus
         ));
         return $response;
     }
