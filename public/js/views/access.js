@@ -39,7 +39,7 @@ function deleteEmployee(button){
                                             label: '<i class="fa fa-check"></i> Ok',
                                             className: 'btn-success',
                                             callback: function () {
-
+                                                location.reload();
                                             }
                                         }
                                     }

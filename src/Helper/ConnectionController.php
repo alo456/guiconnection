@@ -26,6 +26,15 @@ class ConnectionController extends Controller {
         return $responseAPI->body;
     }
     
+    public function GraphCall($data, $cookie){
+        $url = "http://localhost/taiuniversityapi/public/admin/gql";
+        $headers = array('Accept' => 'application/json');
+        $body = Body::form(array("query"=>$data));
+        RequestAPI::cookie("TOKEN=" . $cookie);
+        $responseAPI = RequestAPI::post("$url", $headers, $body);
+        return $responseAPI->body;
+    }
+    
     public function cookieCafeterias($cafeterias,$cookie){
         if(!$cafeterias){
             $body = $this->APICall([], 'getCafeterias', $cookie);

@@ -13,9 +13,11 @@ class MenuController extends Controller
         $menus = [];
         //Get menus from cafeteria
         $cafeteria_name = strtolower(str_replace("_", " ", $cafeteria));
-        $data['cafeteria'] = $cafeteria_name;
+        $data= "{admin{firstName}}";
         $cookie = $request->cookies->get('TOKEN');
-        $body = $this->APICall($data, 'getMenus', $cookie);
+        $body = $this->GraphCall($data, $cookie);
+        //var_dump($body->payload->query->data->admin);
+        //die;
         if ($body->status == 'OK') {
             $menus = is_object($body->payload) ? get_object_vars($body->payload) : $body->payload;
         } else {
@@ -33,7 +35,7 @@ class MenuController extends Controller
         if ($formCreateMenu->isSubmitted() && $formCreateMenu->isValid()) {
             $data = $formCreateMenu->getData();
             $data['background'] = base64_encode($data['background']);
-            $body = $this->APICall($data, 'createMenu', $cookie);
+            $body = $this->GraphCallCall($data, 'createMenu', $cookie);
             if ($body->status == 'OK') {
                 $message = "Menu creado";
             } else {

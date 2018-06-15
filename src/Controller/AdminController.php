@@ -144,6 +144,7 @@ class AdminController extends Controller
             $body = $this->APICall($data, "updateInformation", $cookie);
             if ($body->status == 'OK') {
                 $message .= "Cambios realizados";
+                header("Refresh:0");
             } else {
                 $message .= $body->message;
             }
