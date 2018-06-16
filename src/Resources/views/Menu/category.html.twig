@@ -50,35 +50,12 @@
                                     <div class="card-body">
                                         <div class="row">
                                             <div class="col-md-12 mb-4">
-                                                <div class="row">
-                                                    <div class="col-sm-5">
-                                                        <h3 class="card-title clearfix mb-0"> </h3>
-                                                    </div>
-                                                </div>
                                                 <!-- TABLAS -->
-                                                <table class= "table table-responsive-sm table-hover table-outline mb-0 ">
-                                                    <!-- TITULOS DE TABLA -->
-                                                    <thead class="thead-light ">
-                                                        <tr>
-                                                            <th>#</th>
-                                                            <th>Nombre del Menu</th>
-                                                            <th>Descripción</th>
-                                                            <th>Menu Padre</th>
-                                                            <th>Editar</th>
-                                                            <th>Eliminar</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <!-- tbody de tabla -->
-                                                    <tbody>
-                                                        <!-- FILA 1 -->
-                                                        {{ dump(menus) }}
-                                                        {% for menu in menus %}
-                                                            <tr>
-                                                                <td> </td>
-                                                        {% endfor %}
-
-                                                    </tbody>
+                                                <table id="jqGrid" class= "table table-responsive-sm table-hover table-outline mb-0 ">
+                                                    
+   
                                                 </table>
+                                                <div id="jqGridPager"></div>
                                             </div>
                                         </div>
                                         <hr/>
@@ -93,4 +70,113 @@
         </div>
     </div>
 </main>
+{% endblock %}
+
+{% block javascripts %}
+    <script src="{{asset('vendors/js/jquery.jqGrid.js')}}"></script>
+    <script>
+		$.jgrid.defaults.width = 780;
+		$.jgrid.defaults.responsive = true;
+		$.jgrid.defaults.styleUI = 'Bootstrap';
+    </script>
+    <script type="text/javascript"> 
+    
+        $(document).ready(function () {
+            $("#jqGrid").jqGrid({
+                url: 'http://localhost/guiconnection/public/test.json',
+                mtype: "GET",
+                datatype: "json",
+                page: 1,
+                colModel: [
+                    { label: 'Nombre del Menú', name: 'name', width: 150 },
+                    { label: 'Descripción', name: 'description', width: 150 }
+                ],
+                loadonce: true,
+                width: 780,
+                height: 250,
+                rowNum: 20,
+                subGrid: true, // set the subGrid property to true to show expand buttons for each row
+                subGridRowExpanded: showChildGrid, // javascript function that will take care of showing the child grid
+                pager: "#jqGridPager"
+            });
+        });
+
+        // the event handler on expanding parent row receives two parameters
+        // the ID of the grid tow  and the primary key of the row
+        function showChildGrid(parentRowID, parentRowKey) {
+            consolelog("gosas");
+            var childGridID = parentRowID + "_table";
+            var childGridPagerID = parentRowID + "_pager";
+
+            // send the parent row primary key to the server so that we know which grid to show
+            var childGridURL = parentRowKey+".json";
+
+            // add a table and pager HTML elements to the parent grid row - we will render the child grid here
+            $('#' + parentRowID).append('<table id=' + childGridID + '></table><div id=' + childGridPagerID + ' class=scroll></div>');
+
+            $("#" + childGridID).jqGrid({
+                url: childGridURL,
+                mtype: "GET",
+                datatype: "json",
+                page: 1,
+                colModel: [
+                    { label: 'Order ID', name: 'OrderID', key: true, width: 75 },
+                    { label: 'Required Date', name: 'RequiredDate', width: 100 },
+                    { label: 'Ship Name', name: 'ShipName', width: 100 },
+                    { label: 'Ship City', name: 'ShipCity', width: 100 },
+                    { label: 'Freight', name: 'Freight', width: 75 }
+                ],
+                                loadonce: true,
+                width: '600',
+                height: '150',
+                subGrid: true, // set the subGrid property to true to show expand buttons for each row
+                subGridRowExpanded: showThirdLevelChildGrid, // javascript function that will take care of showing the child grid
+                pager: "#" + childGridPagerID
+            });
+
+        }
+
+        // the event handler on expanding parent row receives two parameters
+        // the ID of the grid tow  and the primary key of the row
+        function showThirdLevelChildGrid(parentRowID, parentRowKey) {
+            var childGridID = parentRowID + "_table";
+            var childGridPagerID = parentRowID + "_pager";
+
+            // send the parent row primary key to the server so that we know which grid to show
+            var childGridURL = "child3.json";
+
+            // add a table and pager HTML elements to the parent grid row - we will render the child grid here
+            $('#' + parentRowID).append('<table id=' + childGridID + '></table><div id=' + childGridPagerID + ' class=scroll></div>');
+
+            $("#" + childGridID).jqGrid({
+                url: childGridURL,
+                mtype: "GET",
+                datatype: "json",
+                colModel: [
+                    { label: 'Order ID', name: 'OrderID', key: true, width: 75, hidden: true },
+                    { label: 'Product ID', name: 'ProductID', width: 100 },
+                                        { label: 'Quantity', name: 'Quantity', width: 100},
+                    {label: 'Unit Price', name: 'UnitPrice', width: 100},
+                    {
+                        label: 'Total',
+                        name: 'Total',
+                        width: 100,
+                        sortable: false,
+                        formatter: function (cellValue, options, row) {   // custom calculations at client side
+                            return parseFloat(row.Quantity) * parseFloat(row.UnitPrice);
+                        }
+                    }
+                ],
+                loadonce: true,
+                width: 'auto',
+                height: '150',
+                pager: "#" + childGridPagerID
+            });
+
+        }
+
+    </script>
+{% endblock %}
+{% block stylesheets %}
+    <link href="{{asset('vendors/css/ui.jqgrid-bootstrap.css')}}" rel="stylesheet">
 {% endblock %}
