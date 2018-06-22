@@ -13,13 +13,24 @@ class MenuController extends Controller
         $menus = [];
         //Get menus from cafeteria
         $cafeteria_name = strtolower(str_replace("_", " ", $cafeteria));
-        $data= "{admin{firstName}}";
+        $data= "{cafeteria(name:".'"'.$cafeteria_name.'"'."){
+                menus{
+                    id
+                    name
+                }
+        }}";
+//        var_dump($data);
+//        die;
         $cookie = $request->cookies->get('TOKEN');
         $body = $this->GraphCall($data, $cookie);
-        //var_dump($body->payload->query->data->admin);
-        //die;
+        
+//        var_dump($body->payload->query->data->cafeteria[0]->menus);
+//        die;
         if ($body->status == 'OK') {
-            $menus = is_object($body->payload) ? get_object_vars($body->payload) : $body->payload;
+        $body = $body->payload->query->data->cafeteria[0]->menus;
+        $menus = is_object($body) ? get_object_vars($body) : $body;
+        //var_dump($menus);
+//        die;
         } else {
             $message = $body->message;
         }
@@ -29,20 +40,20 @@ class MenuController extends Controller
         $form = $this->get('form.factory');
         $formCreateMenu = $form->createNamedBuilder("Menu", MenuType::class, $menus)->getForm();
        
-        //------------------
-        //Form Request
-        $formCreateMenu->handleRequest($request);
-        if ($formCreateMenu->isSubmitted() && $formCreateMenu->isValid()) {
-            $data = $formCreateMenu->getData();
-            $data['background'] = base64_encode($data['background']);
-            $body = $this->GraphCallCall($data, 'createMenu', $cookie);
-            if ($body->status == 'OK') {
-                $message = "Menu creado";
-            } else {
-                $message = $body->message;
-            }
-        }
-        //-----------------
+//        //------------------
+//        //Form Request
+//        $formCreateMenu->handleRequest($request);
+//        if ($formCreateMenu->isSubmitted() && $formCreateMenu->isValid()) {
+//            $data = $formCreateMenu->getData();
+//            $data['background'] = base64_encode($data['background']);
+//            $body = $this->GraphCallCall($data, 'createMenu', $cookie);
+//            if ($body->status == 'OK') {
+//                $message = "Menu creado";
+//            } else {
+//                $message = $body->message;
+//            }
+//        }
+//        //-----------------
         if (!$this->cookieCafeterias($request->cookies->get('CAFETERIAS'), $cookie)) {
             $message .= "Error del sistema";
         }

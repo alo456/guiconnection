@@ -80,6 +80,14 @@ resource:
     path: /admin/{cafeteria}/resources/{resource}
     controller: App\Controller\RDL::getResource
     
+gqlresource:
+    path: /admin/{cafeteria}/resources/gql/{resource}
+    controller: App\Controller\RDL::getGQLResource
+    
 helper:
     path: /admin/{context}  
     controller: App\Controller\Helper::delete
+    
+create:
+    path: /admin/{cafeteria}/{context}  
+    controller: App\Controller\RDL::create

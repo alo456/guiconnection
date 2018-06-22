@@ -1,12 +1,42 @@
-{"rows": [
-									{
-										"name": "DESAYUNOS CHIDOS SIN IMAGEN",
-										"description": "SDSDFASDF"
-									},
-									{
-										"name": "hola",
-										"description": "asas"
-									}
-								]
-								
+{
+    "rows": [
+        {
+            "id": "1",
+            "name": "Desayunos",
+            "parent_id": null,
+            "level": 0,
+            "isLeaf": "false",
+            "loaded": "true",
+            "expanded": "false"
+        },
+        {
+            "id": "2",
+            "name": "Veganos",
+            "parent_id": "1",
+            "level": 1,
+            "isLeaf": "false",
+            "loaded": "true",
+            "expanded": "false"
+        },
+        {
+            "id": "3",
+            "name": "Light",
+            "parent_id": "2",
+            "level": 2,
+            "isLeaf": "true",
+            "loaded": "true",
+            "expanded": "false"
+        },
+         {
+            "id": "4",
+            "name": "No Light",
+            "parent_id": "2",
+            "level": 2,
+            "isLeaf": "true",
+            "loaded": "true",
+            "expanded": "false"
+        }
+              
+
+    ]
 }
