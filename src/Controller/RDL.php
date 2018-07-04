@@ -154,6 +154,7 @@ class RDL extends Controller {
     }
 
     public function create(Request $request, $context, $cafeteria) {
+       // var_dump($request->request);
         $form = $this->get('form.factory');
         $cookie = $request->cookies->get('TOKEN');
         $menus = [];
@@ -182,22 +183,28 @@ class RDL extends Controller {
                     $data = $request->request->get('Menu');
                     $data['cafeteria'] = $cafeteria_name;
                     $data['background'] = base64_encode($formCreateMenu->getData()['background']);
-                    var_dump($data);
-                    //die;
+//                    var_dump($formCreateMenu->getData()['background']);
+//                    die;
                     $body = $this->APICall($data, 'createMenu', $cookie);
+//                    var_dump($body);
+//                    die;
                     if ($body->status == 'OK') {
                         $message = "Menu creado";
-                        
+                        return  $this->redirectToRoute('menuCategory',array(
+                            'cafeteria'=>$cafeteria
+                        ));
                     } else {
                         $message = $body->message;
-                        var_dump($message);
+//                        var_dump($message);
                         //die;
                     }
                     
                 }
-                
+                //die;
                 return $this->render('create_menu.html.twig',[
-                    'form' => $formCreateMenu->createView()
+                    'form' => $formCreateMenu->createView(),
+                    'cafeteria' => $cafeteria,
+                    'context' =>$context
                 ]);
         }
     }

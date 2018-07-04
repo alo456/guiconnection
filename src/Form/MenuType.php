@@ -59,8 +59,16 @@ class MenuType extends AbstractType
                     'attr' => array(
                         'class' => 'btn btn-primary'
                     )
-        ));
-
+                ));
+                   
+//         $builder ->addEventListener(FormEvents::SUBMIT, function (FormEvent $event) {
+//             $user = $event->getData();
+//             $form = $event->getForm();
+//             file_put_contents('php://stderr', print_r($foo, TRUE));
+//             var_dump($user);
+//             //die;
+//         });
+         
         $builder->addEventListener(FormEvents::PRE_SET_DATA, function (FormEvent $event) {
             $data = $event->getData();
             $form = $event->getForm();

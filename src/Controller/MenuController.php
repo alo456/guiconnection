@@ -9,6 +9,7 @@ use Symfony\Component\HttpFoundation\Request;
 class MenuController extends Controller
 {
     public function category(Request $request, $cafeteria) {
+        //var_dump($request->request);
         $message = "";
         $menus = [];
         //Get menus from cafeteria
@@ -27,6 +28,7 @@ class MenuController extends Controller
 //        var_dump($body->payload->query->data->cafeteria[0]->menus);
 //        die;
         if ($body->status == 'OK') {
+           // var_dump($body);
         $body = $body->payload->query->data->cafeteria[0]->menus;
         $menus = is_object($body) ? get_object_vars($body) : $body;
         //var_dump($menus);
@@ -38,7 +40,6 @@ class MenuController extends Controller
         //------------------
         //Form Builder 
         $form = $this->get('form.factory');
-        $formCreateMenu = $form->createNamedBuilder("Menu", MenuType::class, $menus)->getForm();
        
 //        //------------------
 //        //Form Request
@@ -59,7 +60,6 @@ class MenuController extends Controller
         }
         $response = $this->render('Menu/category.html.twig', array(
             'cafeteria' => $cafeteria_name,
-            'formCreateMenu' => $formCreateMenu->createView(),
             'message' => $message,
             'menus' => $menus
         ));
