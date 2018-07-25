@@ -991,3 +991,5 @@ td.menu_text {
 	font-size:inherit;
 	width:auto
 }
+
+.ui-jqgrid-btable .ui-state-highlight { background: #63c2de; }

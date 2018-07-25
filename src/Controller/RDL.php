@@ -113,13 +113,22 @@ class RDL extends Controller {
                 $element ['parent_id'] = '';
                 $element ['level'] = '';
                 $element ['isLeaf'] = '';
-                $element ['loaded'] = true;
+                $element ['loaded'] = false;
                 $element ['expanded'] = false;
-                
-                if($request->get('nodeid')!=null){
-                    
-                }else{    
-                    $data ="{menusPerCafeteria(cafeteria:" . '"' . $cafeteria_name . '"' . ", id:". '"'. "null" . '"'. " ){
+
+                if ($request->request->get('nodeid') != null) {
+                    $data = "{menusPerCafeteria(cafeteria:" . '"' . $cafeteria_name . '"' . ", id:" . '"' . $request->request->get('nodeid') . '"' . " ){
+                                    submenus{
+                                        id
+                                        name
+                                        description
+                                        submenus{
+                                            id
+                                        }
+                                    }
+                                  }}";
+                } else {
+                    $data = "{menusPerCafeteria(cafeteria:" . '"' . $cafeteria_name . '"' . ", id:" . '"' . "null" . '"' . " ){
                                     id
                                     name
                                     description
@@ -128,23 +137,22 @@ class RDL extends Controller {
                                     }
                                   }}";
                 }
-               // var_dump($data);
+                // var_dump($data);
                 $response = $this->GraphCall($data, $cookie);
-            
                 $response = $response->payload->query->data->menusPerCafeteria;
                 $menus = is_object($response) ? get_object_vars($response) : $response;
                 $elements = [];
+                $parent = $request->request->get('nodeid',null);
+                $level = $request->request->get('n_level',null);
                 foreach ($menus as $menu) {
-                       
-                    $element['id'] = $menu->id;
-                    $element['name'] = $menu->name;
-                    $element['description'] = $menu->description;
-                    $element['parent_id'] = isset($menu->menu->id) ? $menu->menu->id : null;
-                    $element['level'] = isset($menu->menu->id) ? 1 : 0;
-                    $element['isLeaf'] = isset($menu->submenus) ? false : true;
+                    $element['id'] = isset($menu->id) ? $menu->id : $menu->submenus[0]->id;
+                    $element['name'] = isset($menu->name) ? $menu->name : $menu->submenus[0]->name;
+                    $element['description'] = isset($menu->description) ? $menu->description : $menu->submenus[0]->description;
+                    $element['parent_id'] = $parent != null ? $parent : null;
+                    $element['level'] = $level != null ? $level + 1 : 0 ;
+                    $element['isLeaf'] = isset($menu->submenus[0]->submenus) && !empty($menu->submenus[0]->submenus) ? false : isset($menu->submenus[0]->submenus) && empty($menu->submenus[0]->submenus) ? true : empty($menu->submenus)? true: false;
                     $elements[] = $element;
                 }
-
                 $response = $elements;
                 break;
         }
@@ -154,7 +162,7 @@ class RDL extends Controller {
     }
 
     public function create(Request $request, $context, $cafeteria) {
-       // var_dump($request->request);
+        // var_dump($request->request);
         $form = $this->get('form.factory');
         $cookie = $request->cookies->get('TOKEN');
         $menus = [];
@@ -176,7 +184,7 @@ class RDL extends Controller {
                     $message = $body->message;
                 }
                 $formCreateMenu = $form->createNamedBuilder("Menu", MenuType::class, $menus)->getForm();
-                
+
                 //Form Request
                 $formCreateMenu->handleRequest($request);
                 if ($formCreateMenu->isSubmitted() && $formCreateMenu->isValid()) {
@@ -190,21 +198,20 @@ class RDL extends Controller {
 //                    die;
                     if ($body->status == 'OK') {
                         $message = "Menu creado";
-                        return  $this->redirectToRoute('menuCategory',array(
-                            'cafeteria'=>$cafeteria
+                        return $this->redirectToRoute('menuCategory', array(
+                                    'cafeteria' => $cafeteria
                         ));
                     } else {
                         $message = $body->message;
 //                        var_dump($message);
                         //die;
                     }
-                    
                 }
                 //die;
-                return $this->render('create_menu.html.twig',[
-                    'form' => $formCreateMenu->createView(),
-                    'cafeteria' => $cafeteria,
-                    'context' =>$context
+                return $this->render('create_menu.html.twig', [
+                            'form' => $formCreateMenu->createView(),
+                            'cafeteria' => $cafeteria,
+                            'context' => $context
                 ]);
         }
     }

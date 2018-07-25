@@ -3,171 +3,151 @@
     Categorias
 {% endblock %}
 {% block classBody 'app header-fixed sidebar-fixed aside-menu-fixed aside-menu-hidden aside-menu-off-canvas' %}
-{% block body %}
-<main class="main">
-    
-    <br>
-    <div class="container-fluid">
-        <div class="animated fadeIn">
-            <!-- Page Header-->
-            <div class="jumbotron jumbotron-fluid">
-                <div class="container">
-                    <h3 class="display-4">Vamos a crear la categorias de tu menu</h3>
-                    <p class="lead">Crea categorias y subcategorias de tu menu</p>
-                    {% if message is not empty %}
-                        <p class="lead"> <b>{{message}}</b> </p>
-                    {% endif %}    
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-12 col-md-6 mb-4">
-                    <ul class="nav nav-tabs" role="tablist">
-                        <li class="nav-item">
-                            <a class="nav-link" data-toggle="tab" href="#exist" role="tab" aria-controls="graficas"><i class="fa fa-bar-chart"></i>Existentes</a>
-                        </li>
-                    </ul>
-                        <div class="tab-pane" id="exist" role="tabpanel">
-                            <div class="animated fadeIn">
-                                <div class="card">
-                                    <div class="card-body">
-                                        <div class="row">
-                                            <div class="col-md-12 mb-4">
-                                                <!-- TABLAS -->
-                                                <table id="tree" class= "table table-responsive-sm table-hover table-outline mb-0 ">
-                                                    
-   
-                                                </table>
-                                                <div id="pager"></div>
+    {% block body %}
+        <main class="main">
+
+            <br>
+            <div class="container-fluid">
+                <div class="animated fadeIn">
+                    <!-- Page Header-->
+                    <div class="jumbotron jumbotron-fluid">
+                        <div class="container">
+                            <h3 class="display-4">Vamos a crear la categorias de tu menu</h3>
+                            <p class="lead">Crea categorias y subcategorias de tu menu</p>
+                            {% if message is not empty %}
+                                <p class="lead"> <b>{{message}}</b> </p>
+                            {% endif %}    
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12 col-md-6 mb-4">
+                            <div class="tab-pane"  role="tabpanel">
+                                <div class="animated fadeIn">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <div class="row">
+                                                <div class="col-md-12 mb-4">
+                                                    <!-- TABLAS -->
+                                                    <table id="tree" class= "table table-responsive-sm table-outline mb-0 ">
+
+
+                                                    </table>
+                                                    <div id="pager"></div>
+                                                </div>
                                             </div>
+                                            <hr/>
                                         </div>
-                                        <hr/>
                                     </div>
                                 </div>
-                            </div>
-                        </div>                     
+                            </div>                     
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-    </div>
-</main>
-{% endblock %}
+        </main>
+    {% endblock %}
 
-{% block javascripts %}
-    <script src="{{asset('vendors/js/jquery.jqGrid.min.js')}}"></script>
-    
-    <script type="text/javascript"> 
-        
-        $(document).ready(function() {
-              jQuery('#tree').jqGrid({
-			"width":"780",
-			"hoverrows":false,
-			"viewrecords":false,
-			"gridview":true,
-			"url": "http://localhost/guiconnection/public/admin/{{cafeteria}}/resources/gql/menus",
-			"ExpandColumn":"name",
-			"height":"auto",
-			"sortname":"id",
-			"scrollrows":true,
-			"treeGrid":true,
-			"treedatatype":"json",
-			"treeGridModel":"nested",
-			"loadonce":false,
-			"rowNum":1000,
-			"treeReader":{
-				"parent_id_field":"parent_id",
-				"level_field":"level",
-				"leaf_field":"isLeaf",
-				"expanded_field":"expanded",
-				"loaded":"loaded",
-				"icon_field":"icon"
-			},
-                                                         "treeIcons" : {
-					"plus": "fa fa-angle-right",
-					"minus": "fa fa-angle-up",
-					"leaf" : "fa fa-circle-thin"
-			},
-			"datatype":"json",
-			"colModel":[
-				{
-					"name":"id",
-					"key":true,
-					"hidden":true
-				},{
-					"name":"name",
-					"label":"Nombre del Menú",
-					"width":170,
-					"editable":true
-				},{
-					"name":"description",
-					"label":"Descripción",
-					"width":170,
-					"editable":true
-				},{
-					"name":"parent_id",
-					"hidden":true
-				}
-			],
-			"pager":"#pager",
-                                                          "beforeRequest" : function() {
-                                                                                                console.log(this.p.postData);
-					if(this.p.postData.nodeid != null) {
-						console.log(this.p.postData);
-                                                                                                                            this.p.url = "http://localhost/guiconnection/public/{{cafeteria}}/resources/gql/menus"
-						
-					}else{
-                                                                                                    console.log("else");
-                                                                                                }
-                                                        },
-                                                        "onHeaderClick":function(){
-                                                                console.log("jalaHeader");
-                                                            
-                                                        }
-		});
+    {% block javascripts %}
+        <script src="{{asset('vendors/js/jquery.jqGrid.min.js')}}"></script>
+        <script src="{{asset('js/views/category.js')}}"></script>
+
+        <script type="text/javascript">
+
+            jQuery(document).ready(function ($) {
+                jQuery('#tree').jqGrid({
+                    url : "http://localhost/guiconnection/public/admin/{{cafeteria}}/resources/gql/menus",
+                    colModel: [
+                        {
+                            name: "id",
+                            index : "id",
+                            key: true,
+                            hidden: true
+                        }, {
+                            name: "name",
+                            label: "Nombre del Menú",
+                            width: 170,
+                            editable: true
+                        }, {
+                            name: "description",
+                            label: "Descripción",
+                            width: 170,
+                            editable: true
+                        }
+                    ],
+                    mtype:'POST',
+                    width: "780",
+                    hoverrows: false,
+                    viewrecords: false,
+                    gridview: true,
+                    height: "auto",
+                    sortname: "lft",
+                    loadonce: false,
+                    rowNum: 100,
+                    scrollrows: true,
+                    // enable tree grid
+                    treeGrid: true,
+                    // which column is expandable
+                    ExpandColumn: "name",
+                    // datatype
+                    treedatatype: "json",
+                    // the model used
+                    treeGridModel: "adjacency",
+                    // configuration of the data comming from server
+                    treeReader: {
+                        parent_id_field: "parent_id",
+                        level_field: "level",
+                        leaf_field: "isLeaf",
+                        expanded_field: "expanded"
+                    },
+                    treeIcons: {
+                        plus: "fa fa-angle-right",
+                        minus: "fa fa-angle-up",
+                        leaf: "fa fa-circle-thin"
+                    },
+                    sortorder: "asc",
+                    datatype: "json",
+                    pager: "#pager"
+                });
                 
-                jQuery("#tree").navGrid('#pager',{edit: false, add: false, del:false, search:false, refresh: false}).navButtonAdd('#pager',{
+                jQuery("#tree").navGrid('#pager', {edit: false, add: false, del: false, search: false, refresh: false}
+                ).navButtonAdd('#pager', {
                     buttonicon: "fa fa-plus",
                     caption: '',
-                    onClickButton:function(){
-                            $.get("http://localhost/guiconnection/public/admin/{{cafeteria}}/menu", function(data){
-                                bootbox.dialog({
-                                    className:'modal',
-                                    closeButton: false,
-                                    title:'Crear Menú',
-                                    message:data                                    
-                                }); 
+                    onClickButton: function () {
+                        $.get("http://localhost/guiconnection/public/admin/{{cafeteria}}/menu", function (data) {
+                            bootbox.dialog({
+                                className: 'modal',
+                                closeButton: false,
+                                title: 'Crear Menú',
+                                message: data
                             });
-                        },
+                        });
+                    },
                     position: "last"
-            }).navButtonAdd('#pager',{
-                    buttonicon: "fa fa-trash",
-                    caption: '',
-                    onClickButton:function(){
-                            alert("aios");
-                        },
-                    position: "last"
-            }).navButtonAdd('#pager',{
+                }).navButtonAdd('#pager', {
                     buttonicon: "fa fa-edit",
                     caption: '',
-                    onClickButton:function(){
-                            alert("editar");
-                        },
+                    onClickButton: function () {
+                        
+                    },
                     position: "last"
-            }).navButtonAdd('#pager',{
-                    buttonicon: "fa fa-retweet",
+                }).navButtonAdd('#pager', {
+                    buttonicon: "fa fa-trash",
                     caption: '',
-                    onClickButton:function(){
-                            alert("refrescar");
-                        },
+                    onClickButton: function () {
+                        selRowId = $('#tree').jqGrid ('getGridParam', 'selrow');
+                        deleteMenu(selRowId);
+                    },
                     position: "last"
+                });
+                
             });
-		// nable add
-	
-            });
-    </script>
-     
-        
-{% endblock %}
-{% block stylesheets %}
-    <link href="{{asset('vendors/css/ui.jqgrid-bootstrap.css')}}" rel="stylesheet">
-    <link href="{{asset('vendors/css/jquery.treegrid.css')}}" rel="stylesheet">
-{% endblock %}
+            
+        </script>
+
+
+    {% endblock %}
+    {% block stylesheets %}
+        <link href="{{asset('vendors/css/ui.jqgrid-bootstrap.css')}}" rel="stylesheet">
+        <link href="{{asset('vendors/css/jquery.treegrid.css')}}" rel="stylesheet">
+    {% endblock %}

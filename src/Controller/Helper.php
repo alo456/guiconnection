@@ -27,6 +27,12 @@ class Helper extends Controller{
                 break;
             case 'bundle':
                 break;
+            case 'menu':
+                $data['id_menu'] = $request->request->get('id_menu');
+                $cookie = $request->cookies->get('TOKEN');
+                $body = $this->APICall($data, $action, $cookie);
+                return new Response(json_encode($body));
+                break;
         }
     }
     
