@@ -128,7 +128,8 @@
                     buttonicon: "fa fa-edit",
                     caption: '',
                     onClickButton: function () {
-                        
+                        selRowId = $('#tree').jqGrid ('getGridParam', 'selrow');
+                        updateMenu('/guiconnection/public/admin/{{cafeteria}}/resources/menu/'+ selRowId);
                     },
                     position: "last"
                 }).navButtonAdd('#pager', {

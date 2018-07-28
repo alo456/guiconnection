@@ -11,7 +11,8 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RDL extends Controller {
 
-    public function update(Request $request, $context, $id) {
+    public function update(Request $request, $cafeteria , $context, $id) {
+        $cafeteria_name = strtolower(str_replace("_", " ", $cafeteria));
         $form = $this->get('form.factory');
         $data = array();
         $cookie = $request->cookies->get('TOKEN');
@@ -21,7 +22,7 @@ class RDL extends Controller {
                 $body = $this->APICall($data, 'getEmployee', $cookie);
                 if ($body->status == 'OK') {
                     $employee = is_object($body->payload) ? get_object_vars($body->payload) : $body->payload;
-                    $cafeteria_name = strtolower(str_replace("_", " ", $employee['cafeteria']));
+                    $cafeteria_name = $cafeteria;
                     $formUpdateEmp = $form->createNamedBuilder("UpdateEmployee", EmployeeType::class, $data)->getForm();
                     $formUpdateEmp->handleRequest($request);
                     if ($formUpdateEmp->isSubmitted()) {
@@ -80,6 +81,47 @@ class RDL extends Controller {
                 }
                 break;
             case 'bundle':
+                break;
+            case 'menu':
+                $data = "{menusPerCafeteria(cafeteria:" . '"' . $cafeteria_name . '"' . ", id:" . '"' . $id . '"' . " ){
+                                    id
+                                    name
+                                    description
+                                    background
+                                  }}";
+                $response = $this->GraphCall($data, $cookie);
+                $response = $response->payload->query->data->menusPerCafeteria;
+                var_dump($response[0]);die;
+                $menu = is_object($response) ? get_object_vars($response) : $response;
+                
+                if ($body->status == 'OK') {
+                    $menu = is_object($body->payload) ? get_object_vars($body->payload) : $body->payload;
+                    $cafeteria_name = strtolower(str_replace("_", " ", $menu['cafeteria']));
+                    $formUpdateMenu = $form->createNamedBuilder("UpdateMenu", MenuType::class, $data)->getForm();
+                    $formUpdateMenu->handleRequest($request);
+                    if ($formUpdateMenu->isSubmitted()) {
+                        $data = $formUpdateMenu->getData();
+                        $data['menu'] = $id;
+                        $cookie = $request->cookies->get('TOKEN');
+                        $body = $this->APICall($data, 'updateMenu', $cookie);
+                        if ($body->status == 'OK') {
+                            $message = "Empleado creado";
+                            return $this->redirectToRoute('category', array(
+                                        'cafeteria' => $cafeteria_name
+                            ));
+                        } else {
+                            $message = $body->message;
+                        }
+                    }
+
+                    return $this->render('edit_menu.html.twig', [
+                                'form' => $formUpdateMenu->createView(),
+                                'menu' => $menu
+                    ]);
+                } else {
+                    $message = $body->message;
+                }
+                
                 break;
         }
     }

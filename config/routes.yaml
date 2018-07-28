@@ -69,7 +69,7 @@ tutorial:
     controller: App\Controller\AboutController::tutorial
  
 resources:
-    path: /admin/resources/{context}/{id}
+    path: /admin/{cafeteria}/resources/{context}/{id}
     controller: App\Controller\RDL::update
 
 search:

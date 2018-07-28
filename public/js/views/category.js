@@ -84,3 +84,14 @@ function deleteMenu(id){
     });
 }
 
+function updateMenu(url){
+    $.get(url, function (data) {
+        bootbox.dialog({
+            className: 'modal',
+            closeButton: false,
+            title: 'Editar Menu',
+            message: data
+        });
+        
+    });         
+}
