@@ -55,7 +55,7 @@
 
             jQuery(document).ready(function ($) {
                 jQuery('#tree').jqGrid({
-                    url : "http://localhost/guiconnection/public/admin/{{cafeteria}}/resources/gql/menus",
+                    url : "http://localhost/guiconnection/public/admin/{{cafeteria}}/gqlresources/menus",
                     colModel: [
                         {
                             name: "id",
@@ -114,12 +114,14 @@
                     buttonicon: "fa fa-plus",
                     caption: '',
                     onClickButton: function () {
-                        $.get("http://localhost/guiconnection/public/admin/{{cafeteria}}/menu", function (data) {
+                        $.get("http://localhost/guiconnection/public/admin/{{cafeteria}}/menu/create", function (data) {
                             bootbox.dialog({
                                 className: 'modal',
-                                closeButton: false,
+                                backdrop: true,
                                 title: 'Crear Menú',
-                                message: data
+                                closeButton: false,
+                                message: data,
+                                onEscape: true
                             });
                         });
                     },

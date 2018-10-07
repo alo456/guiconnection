@@ -1,15 +1,11 @@
 var url = "http://localhost/guiconnection/public/admin/menu";
 
 function deleteMenu(id){
-    var data = {}; 
-    data['action'] = 'deleteMenu';
-    data['id_menu'] = id;
-    console.log(data);
     bootbox.dialog({
         className: 'modal',
         closeButton: false,
         title: 'Confirmación de Cambios',
-        message: "<p>Al eliminar este menú, se eliminaran todos los menús relacionados a él. ¿Seguro qué quieres continuar?</p>",
+        message: "<p>Al eliminar este menú, se eliminaran todos los submenús relacionados a él. ¿Seguro qué quieres continuar?</p>",
         buttons: {
             Cancelar: {
                 label: 'Cancelar',
@@ -23,15 +19,11 @@ function deleteMenu(id){
                 callback: function () {
                     $.ajax({
                         type: 'POST',
-                        data: data,
-                        url: url,
+                        url: "http://localhost/guiconnection/public/admin/menu/delete/" + id ,
                         cache: false,
                         async: true,
                         success: function (data) {
-                            data = JSON.parse(data);
-                            console.log(data);
-                            if (data['status'] == 'OK') {
-
+                            if (data == 'OK') {
                                 bootbox.dialog({
                                     className: 'modal-success',
                                     closeButton: false,
@@ -52,7 +44,7 @@ function deleteMenu(id){
                                     className: 'modal-danger',
                                     closeButton: false,
                                     title: '<i class="fa fa-times fa-lg"></i>Error',
-                                    message: "<p>No se han podido realizar los cambios, verifica que los campos esten correctos e intente de nuevo</p>",
+                                    message: "<p>Opps! Algo ha salido mal. Intente de nuevo.</p>",
                                     buttons: {
                                         ok: {
                                             label: '<i class="fa fa-times"></i> Ok',
@@ -67,7 +59,7 @@ function deleteMenu(id){
                                 className: 'modal-danger',
                                 closeButton: false,
                                 title: '<i class="fa fa-times fa-lg"></i>Error del Sistema',
-                                message: "<p>No se han podido realizar los cambios, contacte con el Administrador</p>",
+                                message: "<p>Error, contacte con Soporte</p>",
                                 buttons: {
                                     ok: {
                                         label: '<i class="fa fa-times"></i> Ok',
@@ -90,7 +82,8 @@ function updateMenu(url){
             className: 'modal',
             closeButton: false,
             title: 'Editar Menu',
-            message: data
+            message: data,
+            onEscape: true
         });
         
     });         

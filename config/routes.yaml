@@ -68,9 +68,17 @@ tutorial:
     path: /admin/about/tutorial
     controller: App\Controller\AboutController::tutorial
  
-resources:
-    path: /admin/{cafeteria}/resources/{context}/{id}
+update:
+    path: /admin/{context}/update/{id}
     controller: App\Controller\RDL::update
+    
+create:
+    path: /admin/{cafeteria}/{context}/create
+    controller: App\Controller\RDL::create
+    
+delete:
+    path: /admin/{context}/delete/{id}
+    controller: App\Controller\RDL::delete    
 
 search:
     path: /admin/search
@@ -81,13 +89,10 @@ resource:
     controller: App\Controller\RDL::getResource
     
 gqlresource:
-    path: /admin/{cafeteria}/resources/gql/{resource}
+    path: /admin/{cafeteria}/gqlresources/{resource}
     controller: App\Controller\RDL::getGQLResource
     
 helper:
     path: /admin/{context}  
     controller: App\Controller\Helper::delete
     
-create:
-    path: /admin/{cafeteria}/{context}  
-    controller: App\Controller\RDL::create

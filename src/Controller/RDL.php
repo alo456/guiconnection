@@ -245,8 +245,8 @@ class RDL extends Controller {
                         ));
                     } else {
                         $message = $body->message;
-//                        var_dump($message);
-                        //die;
+                        var_dump($message);
+                        die;
                     }
                 }
                 //die;
@@ -256,6 +256,28 @@ class RDL extends Controller {
                             'context' => $context
                 ]);
         }
+    }
+    
+    public function delete(Request $request, $context , $id){
+        $cookie = $request->cookies->get('TOKEN');
+        switch($context){
+            case 'menu':
+                $body = $this->APICall(['id_menu' => $id],'deleteMenu',$cookie);
+                if ($body->status == 'OK') {
+                    $message = "OK";
+                    $response = new Response($message);
+                    return $response->setStatusCode(200);
+                } else {
+                    $message = $body->message;
+                    $response = new Response($message);
+                    return $response->setStatusCode(200);
+                }
+                break;
+            default:
+                break;
+        }
+        
+        
     }
 
 }
