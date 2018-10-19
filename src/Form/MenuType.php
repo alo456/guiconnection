@@ -37,13 +37,7 @@ class MenuType extends AbstractType
                     'attr' => array(
                         'class' => 'form-control'
                     ),
-                    'choices' => $options['data'],
-                    'choice_label'=>function($key){
-                        return $key?$key->name:'';
-                    },
-                    'choice_value' => function($key){
-                        return $key?$key->id:'';                        
-                    },
+                    'choices' => array_flip($options['data']),
                     'placeholder' => 'Seleciona una categoria'
                 ))
                 ->add('background', FileType::class, array(

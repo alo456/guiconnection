@@ -1,6 +1,20 @@
 var url = "http://localhost/guiconnection/public/admin/menu";
 
-function deleteMenu(id){
+function addMenu(cafeteria) {
+    $.get("http://localhost/guiconnection/public/admin/" + cafeteria + "/menu/create", function (data) {
+        bootbox.dialog({
+            className: 'modal',
+            backdrop: true,
+            title: 'Crear Menú',
+            closeButton: false,
+            message: data,
+            onEscape: true
+        });
+    });
+}
+
+
+function deleteMenu(id) {
     bootbox.dialog({
         className: 'modal',
         closeButton: false,
@@ -19,7 +33,7 @@ function deleteMenu(id){
                 callback: function () {
                     $.ajax({
                         type: 'POST',
-                        url: "http://localhost/guiconnection/public/admin/menu/delete/" + id ,
+                        url: "http://localhost/guiconnection/public/admin/menu/delete/" + id,
                         cache: false,
                         async: true,
                         success: function (data) {
@@ -76,8 +90,8 @@ function deleteMenu(id){
     });
 }
 
-function updateMenu(url){
-    $.get(url, function (data) {
+function updateMenu(id) {
+    $.get("/guiconnection/public/admin/menu/update/" + id, function (data) {
         bootbox.dialog({
             className: 'modal',
             closeButton: false,
@@ -85,6 +99,5 @@ function updateMenu(url){
             message: data,
             onEscape: true
         });
-        
-    });         
+    });
 }

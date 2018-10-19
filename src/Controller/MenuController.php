@@ -1,20 +1,21 @@
 <?php
+
 namespace App\Controller;
 
 use App\Form\BundleType;
 use App\Form\ItemType;
-use App\Form\MenuType;
 use App\Helper\ConnectionController as Controller;
 use Symfony\Component\HttpFoundation\Request;
-class MenuController extends Controller
-{
+
+class MenuController extends Controller {
+
     public function category(Request $request, $cafeteria) {
         //var_dump($request->request);
         $message = "";
         $menus = [];
         //Get menus from cafeteria
         $cafeteria_name = strtolower(str_replace("_", " ", $cafeteria));
-        $data= "{cafeteria(name:".'"'.$cafeteria_name.'"'."){
+        $data = "{cafeteria(name:" . '"' . $cafeteria_name . '"' . "){
                 menus{
                     id
                     name
@@ -24,23 +25,27 @@ class MenuController extends Controller
 //        die;
         $cookie = $request->cookies->get('TOKEN');
         $body = $this->GraphCall($data, $cookie);
-        
+
 //        var_dump($body->payload->query->data->cafeteria[0]->menus);
 //        die;
         if ($body->status == 'OK') {
-           // var_dump($body);
-        $body = $body->payload->query->data->cafeteria[0]->menus;
-        $menus = is_object($body) ? get_object_vars($body) : $body;
-        //var_dump($menus);
+            // var_dump($body);
+            $body = $body->payload->query->data->cafeteria[0]->menus;
+            $body = is_object($body) ? get_object_vars($body) : $body;
+            //var_dump($body);die;
+            foreach($body as $menu){
+                $menus[$menu->id] = $menu->name;
+            }
+            //var_dump($menus);
 //        die;
         } else {
             $message = $body->message;
         }
-
+        //var_dump($menus);die;
         //------------------
         //Form Builder 
         $form = $this->get('form.factory');
-       
+
 //        //------------------
 //        //Form Request
 //        $formCreateMenu->handleRequest($request);
@@ -59,10 +64,12 @@ class MenuController extends Controller
             $message .= "Error del sistema";
         }
         $response = $this->render('Menu/category.html.twig', array(
-            'cafeteria' => $cafeteria_name,
-            'message' => $message,
-            'menus' => $menus
+            'cafeteria' => $cafeteria,
+            'message' => $message
         ));
+        
+        $cookie = new \Symfony\Component\HttpFoundation\Cookie('MENUS',json_encode($menus, JSON_UNESCAPED_UNICODE));
+        $response->headers->setCookie($cookie);
         return $response;
     }
 
@@ -140,7 +147,7 @@ class MenuController extends Controller
             var_dump($data);
             die;
             $body = $this->APICall($data, 'createItem', $cookie);
-            
+
             if ($body->status == 'OK') {
                 $message .= $body->payload;
             } else {
@@ -162,4 +169,3 @@ class MenuController extends Controller
     }
 
 }
-

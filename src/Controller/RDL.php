@@ -11,13 +11,13 @@ use Symfony\Component\HttpFoundation\Response;
 
 class RDL extends Controller {
 
-    public function update(Request $request, $cafeteria , $context, $id) {
-        $cafeteria_name = strtolower(str_replace("_", " ", $cafeteria));
+    public function update(Request $request, $context, $id) {
         $form = $this->get('form.factory');
         $data = array();
         $cookie = $request->cookies->get('TOKEN');
         switch ($context) {
             case 'employee':
+                /*
                 $data['employee'] = $id;
                 $body = $this->APICall($data, 'getEmployee', $cookie);
                 if ($body->status == 'OK') {
@@ -47,8 +47,11 @@ class RDL extends Controller {
                 } else {
                     $message = $body->message;
                 }
+                 * 
+                 */
                 break;
             case 'item':
+                /*
                 $data['item'] = $id;
                 $body = $this->APICall($data, 'getItem', $cookie);
                 var_dump($body);
@@ -79,24 +82,29 @@ class RDL extends Controller {
                 } else {
                     $message = $body->message;
                 }
+                 * 
+                 */
                 break;
             case 'bundle':
                 break;
             case 'menu':
-                $data = "{menusPerCafeteria(cafeteria:" . '"' . $cafeteria_name . '"' . ", id:" . '"' . $id . '"' . " ){
-                                    id
-                                    name
-                                    description
-                                    background
-                                  }}";
-                $response = $this->GraphCall($data, $cookie);
-                $response = $response->payload->query->data->menusPerCafeteria;
-                var_dump($response[0]);die;
-                $menu = is_object($response) ? get_object_vars($response) : $response;
+                $data = "{
+                    menu(id :" .'"' . $id .'"' . "){
+                        name
+                        menu{
+        			name
+        		}
+                	background
+                        description
+                    }
+                }";
+                $body = $this->GraphCall($data, $cookie);
+                $response = $body->payload->query->data->menu;
+                $menu = is_object($response[0]) ? get_object_vars($response[0]) : $response;
                 
+                
+                var_dump($response);
                 if ($body->status == 'OK') {
-                    $menu = is_object($body->payload) ? get_object_vars($body->payload) : $body->payload;
-                    $cafeteria_name = strtolower(str_replace("_", " ", $menu['cafeteria']));
                     $formUpdateMenu = $form->createNamedBuilder("UpdateMenu", MenuType::class, $data)->getForm();
                     $formUpdateMenu->handleRequest($request);
                     if ($formUpdateMenu->isSubmitted()) {
@@ -203,59 +211,41 @@ class RDL extends Controller {
         return new Response(json_encode($response));
     }
 
-    public function create(Request $request, $context, $cafeteria) {
+    public function create(Request $request, $cafeteria , $context) {
         // var_dump($request->request);
         $form = $this->get('form.factory');
+        $cafeteria_name = strtolower(str_replace("_", " ", $cafeteria));
         $cookie = $request->cookies->get('TOKEN');
-        $menus = [];
+        $menus = json_decode($request->cookies->get('MENUS'), true);
+        //var_dump($menus); die;
         switch ($context) {
             case 'menu':
-                $cafeteria_name = strtolower(str_replace("_", " ", $cafeteria));
-                $data = "{cafeteria(name:" . '"' . $cafeteria_name . '"' . "){
-                                    menus{
-                                                id
-                                                name
-                                    }
-                                  }}";
-                $body = $this->GraphCall($data, $cookie);
-
-                if ($body->status == 'OK') {
-                    $body = $body->payload->query->data->cafeteria[0]->menus;
-                    $menus = is_object($body) ? get_object_vars($body) : $body;
-                } else {
-                    $message = $body->message;
-                }
                 $formCreateMenu = $form->createNamedBuilder("Menu", MenuType::class, $menus)->getForm();
-
                 //Form Request
                 $formCreateMenu->handleRequest($request);
                 if ($formCreateMenu->isSubmitted() && $formCreateMenu->isValid()) {
+                    var_dump("hola alo" );
                     $data = $request->request->get('Menu');
                     $data['cafeteria'] = $cafeteria_name;
                     $data['background'] = base64_encode($formCreateMenu->getData()['background']);
-//                    var_dump($formCreateMenu->getData()['background']);
-//                    die;
                     $body = $this->APICall($data, 'createMenu', $cookie);
-//                    var_dump($body);
-//                    die;
                     if ($body->status == 'OK') {
                         $message = "Menu creado";
                         return $this->redirectToRoute('menuCategory', array(
-                                    'cafeteria' => $cafeteria
+                                    'cafeteria' => str_replace(" ", "_", $cafeteria)
                         ));
                     } else {
                         $message = $body->message;
-                        var_dump($message);
-                        die;
                     }
                 }
                 //die;
                 return $this->render('create_menu.html.twig', [
                             'form' => $formCreateMenu->createView(),
-                            'cafeteria' => $cafeteria,
-                            'context' => $context
+                            'context' => $context,
+                            'cafeteria' => $cafeteria
                 ]);
         }
+        
     }
     
     public function delete(Request $request, $context , $id){
